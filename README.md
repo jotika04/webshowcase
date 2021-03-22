@@ -1,2 +1,1 @@
-# webshowcaseg1
-Group 1
+# webshowcase
