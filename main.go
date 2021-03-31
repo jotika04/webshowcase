@@ -97,11 +97,9 @@ func QueryUser(username string) users {
 }
 
 func home(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("testing...")
 	session := sessions.Start(w, r)
 
 	if len(session.GetString("username")) == 0 {
-		fmt.Println("not logged in...")
 		var data = map[string]string{
 			"login": "false",
 		}
@@ -268,11 +266,7 @@ func routes() {
 func main (){
 
 	connect_db()
-
-	http.HandleFunc("/", home)
-	http.HandleFunc("/register", register)
-	http.HandleFunc("/login", login)
-	http.HandleFunc("/logout", logout)
+	routes()
 	
 
 	defer db.Close()
