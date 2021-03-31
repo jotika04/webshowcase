@@ -105,7 +105,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 		var data = map[string]string{
 			"login": "false",
 		}
-		var t, err = template.ParseFiles("views/accountcontroller/home.gohtml")
+		var t, err = template.ParseFiles("views/accountcontroller/home.html")
 		if err != nil {
 			fmt.Println(err.Error())
 			return
@@ -122,7 +122,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 		"login": "true",
 		"message":  "Welcome to the Go !",
 	}
-	var t, err = template.ParseFiles("views/accountcontroller/home.gohtml")
+	var t, err = template.ParseFiles("views/accountcontroller/home.html")
 	if err != nil {
 		fmt.Println(err.Error())
 		return
@@ -157,8 +157,18 @@ func register(w http.ResponseWriter, r *http.Request) {
 
 
 	user := QueryUser(username)
-	if len(password) <= 8{
-		fmt.Println()
+	if len(password) < 8{
+		fmt.Println("Password needs to be at least 8 characters")
+		var data = map[string]string{
+			"warning": "Password needs to be at least 8 characters",
+		}
+		var t, err = template.ParseFiles("views/accountcontroller/register.html")
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
+		t.Execute(w, data)
+		return
 	}
 	if password == checkPass{
 		if (users {}) == user{
