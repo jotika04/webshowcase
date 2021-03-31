@@ -1,0 +1,47 @@
+.name-text{
+    padding:10px;
+    top:120px;
+    left:50px;
+    width:400px;
+    margin:10px;
+}
+
+.email-text{
+    padding:10px;
+    top:130px;
+    left:50px;
+    width:400px;
+    margin:10px;
+}
+
+.password-text{
+    padding:10px;
+    top:130px;
+    left:50px;
+    width:400px;
+    margin:10px;
+}
+
+.confirm-text{
+    padding:10px;
+    top:130px;
+    left:50px;
+    width:400px;
+    margin:10px;
+}
+
+.login-button-registerpage{
+    padding:10px;
+    height:38px;
+    width:400px;
+    top: 30%;
+    left: 12%;
+}
+
+.binus-register-logo{
+    padding:10px;
+    height:73px;
+    width:122px;
+    margin:auto 170px;
+    position:absolute;
+}

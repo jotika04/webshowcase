@@ -74,7 +74,7 @@ function Frontlogin() {
                   Login
                 </Button>
               </Link>
-              <Link to="/registerpage" style={{ textDecoration: 'none' }} className="nav-links">
+              <Link to="/registerpage" style={{ textDecoration: 'none' }} >
                 <Button variant="contained" color="primary" className="button-register">
                   Register
                 </Button>

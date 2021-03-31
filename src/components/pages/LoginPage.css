@@ -1,0 +1,26 @@
+.text-field-user{
+    padding:25px;
+    top:120px;
+    left:40px;
+    width:240px;
+    
+}
+.text-field-pass{
+    padding:25;
+    top:150px;
+    left:40px;
+    width:240px;
+
+}
+
+.button-for-login{
+    padding:25;
+    height:38px;
+    width:255px;
+    top: 50%;
+    left: 10%;
+}
+.button-for-register{
+    text-align:center ;
+    text-indent: 100%;
+}

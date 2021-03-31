@@ -8,18 +8,32 @@ import './LoginPage.css';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
-import {Grid, Paper} from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import {Grid, Paper, TextField} from '@material-ui/core'
+import { makeStyles, ThemeProvider,createMuiTheme } from '@material-ui/core/styles'
 import { blue, grey } from '@material-ui/core/colors';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
+
+const theme = createMuiTheme({
+    palette:{
+      primary: {
+        main: blue[700],
+      }
+    },
+    typography:{
+      fontFamily:[
+        "sans-serif"
+      ]
+    }
+  })
+  
 const useStyles = makeStyles((theme) => ({
     root:{
       "& > *": {
-        // padding : 20,
-        // height: '70vh',
-        // width:280,
-        // margin:"20px auto"
+        marginLeft : 0,
+        top:50,
+        padding:'170px 200px'
       }
     },
       bluepaper: {
@@ -47,20 +61,30 @@ function LoginPage() {
     const classes = useStyles();
 
   return (
-    <Container maxWidth="xs">
-      <div className="classes.root">
-          <img src={backgroundlogo} className="App-logo" alt="logo" />
-          <Paper className={classes.greypaper} elevation={10}>
-            <img src={logo} className="binus-logo" alt="logo" />
-            <Link to="/loginpage" className="nav-links">
-              <Button variant="contained" color="primary" className="button-login">
-                Login
-              </Button>
-            </Link>
-          </Paper>
-      </div>
-    </Container>
-
+    <ThemeProvider theme={theme}>
+        <Container maxWidth="xs">
+        <div className="classes.root">
+            <img src={backgroundlogo} className="App-logo" alt="logo" />
+            <Paper className={classes.greypaper} elevation={10}>
+                <img src={logo} className="binus-logo" alt="logo" />
+                <form noValidate autoComplete="off">
+                    <TextField id="username" variant="outlined" className="text-field-user" label='Username' placeholder='Username'/>
+                    <TextField id="password" variant="outlined" className="text-field-pass" type='password' label='Password' placeholder='Password'/>
+                </form>
+                <Link to="/" style={{ textDecoration: 'none' }}>
+                    <Button type='submit' variant="contained" color="primary" className="button-for-login">
+                        Login
+                    </Button>
+                </Link>
+                {/* <Typography className={classes.root}>
+                    <Link href='/registerpage'>
+                        Register
+                    </Link>
+                </Typography> */}
+            </Paper>
+        </div>
+        </Container>
+    </ThemeProvider>
   );
 }
 
