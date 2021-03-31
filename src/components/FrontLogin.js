@@ -17,7 +17,7 @@ import Box from "@material-ui/core/Box";
 const theme = createMuiTheme({
   palette:{
     primary: {
-      main: blue[600],
+      main: blue[700],
     }
   },
   typography:{
