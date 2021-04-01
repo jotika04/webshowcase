@@ -14,6 +14,7 @@ function App() {
     <div className="classes.root">
       <Router>
         <Switch>
+          <Route exact path='/' component={FrontLogin}/>
           <Route exact path='/frontlogin'  component={FrontLogin} />
           <Route exact path='/loginpage'  component={LoginPage} />
           <Route exact path='/registerpage'  component={RegisterPage} />

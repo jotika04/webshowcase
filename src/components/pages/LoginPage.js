@@ -55,32 +55,62 @@ const useStyles = makeStyles((theme) => ({
       },
       customBorder: {
         border : `3px solid ${grey [200]}`
-      }
+      },
+      paper:{
+        marginTop: theme.spacing(8),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      },
+      form: {
+        width:'100%',
+        marginTop: theme.spacing(3),
+      },
+      logo:{
+        margin: theme.spacing(1),
+        height:'73px',
+        width:'122px',
+        left:'200px'
+      },
+      submit:{
+        margin : theme.spacing(3,0,2),
+        left:'40px',
+        height:'38px',
+        width:'240px',
+      },
   }));
 function LoginPage() {
     const classes = useStyles();
 
   return (
     <ThemeProvider theme={theme}>
-        <Container maxWidth="xs">
-        <div className="classes.root">
+        <Container component="main" maxWidth="xs">
+        <div className={classes.paper}>
             <img src={backgroundlogo} className="App-logo" alt="logo" />
             <Paper className={classes.greypaper} elevation={10}>
-                <img src={logo} className="binus-logo" alt="logo" />
-                <form noValidate autoComplete="off">
-                    <TextField id="username" variant="outlined" className="text-field-user" label='Username' placeholder='Username'/>
-                    <TextField id="password" variant="outlined" className="text-field-pass" type='password' label='Password' placeholder='Password'/>
+                <form className={classes.form} noValidate autoComplete="off">
+                  <Grid justify="center" alignItem="center" container spacing={2}>
+                    <Grid item xs={6}>
+                      <img src={logo} className={classes.logo} alt="logo" />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField id="username" variant="outlined" className="text-field-user" label='Name' placeholder='Name' />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField id="password" variant="outlined" className="text-field-pass" type='password' label='Password' placeholder='Password'/>
+                    </Grid>
+                  </Grid>
                 </form>
                 <Link to="/" style={{ textDecoration: 'none' }}>
-                    <Button type='submit' variant="contained" color="primary" className="button-for-login">
-                        Login
-                    </Button>
+                  <Button type='submit' variant="contained" color="primary" className={classes.submit} >
+                      Login
+                  </Button>
                 </Link>
-                {/* <Typography className={classes.root}>
-                    <Link href='/registerpage'>
-                        Register
-                    </Link>
-                </Typography> */}
+                <Typography align="center">Don't have an account? 
+                  <a href='/registerpage'>
+                    Register
+                  </a>
+                </Typography>
             </Paper>
         </div>
         </Container>
