@@ -2,7 +2,7 @@ import React from 'react';
 import {CardActions, CardContent, CardMedia, CssBaseline, Grid, Toolbar, Typography, Container, Card, AppBar  } from '@material-ui/core';
 import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
 // import Link from '@material-ui/core/Link';
-import { red } from '@material-ui/core/colors';
+import {  white, lightBlue } from '@material-ui/core/colors';
 import clsx from 'clsx';
 import CardHeader from '@material-ui/core/CardHeader';
 import Avatar from '@material-ui/core/Avatar';
@@ -29,7 +29,15 @@ import CommentIcon from '@material-ui/icons/Comment';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import { BrowserRouter as Link,Router, Switch, Route } from 'react-router-dom';
+import {  Link } from 'react-router-dom';
+import logo from 'E:/React Projects/my-app/src/image/Binuslogo.png';
+import './Dashboard.css'
+import HomeIcon from '@material-ui/icons/Home';
+import SettingsIcon from '@material-ui/icons/Settings';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import ListSubheader from '@material-ui/core/ListSubheader';
 
 
 const drawerWidth = 240;
@@ -116,7 +124,7 @@ const useStyles = makeStyles((theme) => ({
     transform: 'rotate(180deg)',
   },
   avatar: {
-    backgroundColor: red[500],
+    backgroundColor: lightBlue[500],
   },
   icon: {
     marginRight: theme.spacing(2),
@@ -166,6 +174,7 @@ const useStyles = makeStyles((theme) => ({
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
+      
     }),
   },
   appBarShift: {
@@ -174,6 +183,7 @@ const useStyles = makeStyles((theme) => ({
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
+      
     }),
   },
   hide: {
@@ -210,11 +220,22 @@ const useStyles = makeStyles((theme) => ({
     }),
     marginLeft: 0,
   },
+  logobinus:{
+    margin: theme.spacing(1),
+    height:'73px',
+    width:'122px',
+    left:'200px'
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+
 }));
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-export default function App() {
+export default function Dashboard() {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -225,7 +246,6 @@ export default function App() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
-  const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const handleProfileMenuOpen = (event) => {
@@ -236,34 +256,14 @@ export default function App() {
     setMobileMoreAnchorEl(null);
   };
 
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
-  };
 
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
   const menuId = 'primary-search-account-menu';
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>
-      {/* <Link to ='/profilestudent'> */}
-          Profile
-      {/* </Link> */}
-      </MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-    </Menu>
-  );
+
+
 
   const mobileMenuId = 'primary-search-account-menu-mobile';
   const renderMobileMenu = (
@@ -323,8 +323,9 @@ export default function App() {
   return (
     <React.Fragment>
       <CssBaseline />
+      {/* ToolBar */}
       <div className={classes.grow}>
-      <AppBar position="static" className={clsx(classes.appBar, {
+      <AppBar  position="static" color='white' className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}
         >
@@ -338,10 +339,9 @@ export default function App() {
           >
             <MenuIcon />
           </IconButton>
-          
-          <Typography className={classes.title} variant="h6" noWrap>
-            BINUS International University
-          </Typography>
+
+          <img src={logo} className="App-logo" alt="logo" width= '100px'/>
+
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -357,27 +357,57 @@ export default function App() {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show 4 new mails" color="inherit">
+          <FormControl className={classes.formControl}>
+            <InputLabel htmlFor="grouped-select">Filtering</InputLabel>
+            <Select defaultValue="" id="grouped-select">
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              <ListSubheader>Sort 1</ListSubheader>
+              <MenuItem value='Filter 1.1'>Filter 1.1</MenuItem>
+              <MenuItem value='Filter 1.2'>Filter 1.2</MenuItem>
+              <ListSubheader>Sort 2</ListSubheader>
+              <MenuItem value='Filter 2.1'>Filter 2.1</MenuItem>
+              <MenuItem value='Filter 2.2'>Filter 2.2</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl className={classes.formControl}>
+            <InputLabel htmlFor="grouped-select">Sorting</InputLabel>
+            <Select defaultValue="" id="grouped-select">
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              <ListSubheader>Sort 1</ListSubheader>
+              <MenuItem value='Sort 1.1'>Sort 1.1</MenuItem>
+              <MenuItem value='Sort 1.2'>Sort 1.2</MenuItem>
+              <ListSubheader>Sort 2</ListSubheader>
+              <MenuItem value='Sort 2.1'>Sort 2.1</MenuItem>
+              <MenuItem value='Sort 2.2'>Sort 2.2</MenuItem>
+            </Select>
+          </FormControl>
+            {/* <IconButton aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <MailIcon />
               </Badge>
-            </IconButton>
+            </IconButton> */}
             <IconButton aria-label="show 17 new notifications" color="inherit">
               <Badge badgeContent={17} color="secondary">
                 <NotificationsIcon />
               </Badge>
             </IconButton>
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              
+
+              <IconButton
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="inherit"
+                >
+            <Link to ='/ProfileStudent' style={{ textDecoration: 'none' , color: '#000000'}}>
               <AccountCircle />
-            </IconButton>
+            </Link>
+              </IconButton>
           </div>
           <div className={classes.sectionMobile}>
             <IconButton
@@ -402,43 +432,67 @@ export default function App() {
         }}
       >
         <div className={classes.drawerHeader}>
+        <Grid justify="center" alignItem="center" container spacing={1}>
+            <Grid item >
+              <img src={logo} className={classes.logobinus} alt="logo" />
+          </Grid>
+        </Grid>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </div>
         <Divider />
-        <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
+        {/* Side Bar */}
+        <List component="nav" aria-label="main mailbox folders">
+         <Link to ='/ProfileStudent' style={{ textDecoration: 'none' , color: '#000000'}}>
+            <ListItem button>
+              <ListItemIcon>
+                <AccountCircle />
+              </ListItemIcon>
+              <ListItemText primary="MyProfile" />
             </ListItem>
-          ))}
-        </List>
+          </Link>
+
+            <Link to ='/' style={{ textDecoration: 'none' , color: '#000000'}} >
+              <ListItem button>
+                <ListItemIcon>
+                    <HomeIcon/>
+                </ListItemIcon>
+                <ListItemText primary="Dashboard" />
+              </ListItem>
+            </Link>
+
+            <ListItem button>
+              <ListItemIcon>
+                <Badge badgeContent={17} color="secondary"> 
+                  <NotificationsIcon />
+                </Badge>
+              </ListItemIcon>
+              <ListItemText primary="Notification" />
+            </ListItem>
+
+            <ListItem button>
+              <ListItemIcon>
+                <SettingsIcon />
+              </ListItemIcon>
+              <ListItemText primary="Settings" />
+            </ListItem>
+          </List>
+
         <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
       </Drawer>
       {renderMobileMenu}
-      {renderMenu}
     </div>
       <main>
-        {/* Hero unit */}
+        {/* The Projects */}
         <div className={classes.heroContent}>
           <Container maxWidth="sm">
             <Typography component="h1" variant="h4" align="center" color="intherit" gutterBottom>
-              Projects you may like
+              Recommendation
             </Typography>
           </Container>
         </div>
         <Container className={classes.cardGrid} maxWidth="md">
-          {/* End hero unit */}
           <Grid container spacing={4} justify="space-evenly">
             {cards.map((card) => (
               <Grid item key={card} xs={12} sm={10} md={4}>
@@ -446,7 +500,7 @@ export default function App() {
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
-            R
+            <AccountCircle/>
           </Avatar>
         }
         action={

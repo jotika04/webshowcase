@@ -231,7 +231,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function ProfileStudent() {
+export default function ProfileEditor() {
   const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -364,11 +364,11 @@ export default function ProfileStudent() {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            {/* <IconButton aria-label="show 4 new mails" color="inherit">
+            <IconButton aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <MailIcon />
               </Badge>
-            </IconButton> */}
+            </IconButton>
             <IconButton aria-label="show 17 new notifications" color="inherit">
               <Badge badgeContent={17} color="secondary">
                 <NotificationsIcon />
@@ -442,10 +442,8 @@ export default function ProfileStudent() {
             </Link>
 
             <ListItem button>
-              <ListItemIcon> 
-                <Badge badgeContent={17} color="secondary"> 
-                  <NotificationsIcon />
-                </Badge>
+              <ListItemIcon>
+                <NotificationsIcon />
               </ListItemIcon>
               <ListItemText primary="Notification" />
             </ListItem>
