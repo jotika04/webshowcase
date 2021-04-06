@@ -246,6 +246,7 @@ func logout(w http.ResponseWriter, r *http.Request) {
 
 func routes(){
 	r := mux.NewRouter()
+	// http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	r.HandleFunc("/", home)
 	r.HandleFunc("/login", login)
 	r.HandleFunc("/logout", logout)
@@ -253,6 +254,13 @@ func routes(){
 	http.Handle("/", r)
 }
 
+
+// func routes() {
+// 	http.HandleFunc("/", home)
+// 	http.HandleFunc("/register", register)
+// 	http.HandleFunc("/login", login)
+// 	http.HandleFunc("/logout", logout)
+// }
 
 func main (){
 
