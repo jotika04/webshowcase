@@ -21,15 +21,21 @@ import (
 	"showcase-backend/data"
 )
 
-// @title Showcase Swagger API
-// @version 1.0
-// @description Swagger API for Golang Project.
-// @termsOfService http://swagger.io/terms/
-
-// @host localhost:8080
-// @BasePath /api/v1
-
-// @schemes http
+// Package restapi Showcase
+//
+//  Schemes:
+//    http
+//  Host: showcase.com
+//  BasePath: /v1
+//  Version: 1.0.0
+//
+//  Consumes:
+//    - application/json
+//
+//  Produces:
+//    - application/json
+//
+// swagger:meta
 
 var db *sql.DB
 var err error
