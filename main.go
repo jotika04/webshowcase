@@ -13,24 +13,37 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"time"
 
+	"github.com/go-chi/chi"
+	"github.com/swaggo/http-swagger"
+	_ "github.com/swaggo/http-swagger/example/go-chi/docs"
+
 )
 
+// @title Showcase Swagger API
+// @version 1.0
+// @description Swagger API for Golang Project.
+// @termsOfService http://swagger.io/terms/
+
+// @host localhost:8080
+// @BasePath /api/v1
+
+// @schemes http
 
 var db *sql.DB
 var err error
 
 type users struct {
-	UserID int
-	Username string
-	UserFirstName string
-	UserLastName string
-	Password string
-	BatchYear int
-	Address string
-	BinusianID int
-	Email string
-	PhoneNum string
-	RoleID int
+	UserID int `json:"userID"`
+	Username string `json:"username"`
+	UserFirstName string `json:"userFirstName"`
+	UserLastName string `json:"userLastName"`
+	Password string `json:"password"`
+	BatchYear int `json:"batchYear"`
+	Address string `json:"address"`
+	BinusianID int `json:"binusianID"`
+	Email string `json:"email"`
+	PhoneNum string `json:"phoneNum"`
+	RoleID int `json:"roleID"`
 
 }
 
@@ -251,6 +264,10 @@ func routes(){
 	r.HandleFunc("/logout", logout)
 	r.HandleFunc("/register", register)
 	http.Handle("/", r)
+
+	r.Get("/swagger/*", httpSwagger.Handler(
+		httpSwagger.URL("http://localhost:1323/swagger/doc.json"), //The url pointing to API definition"
+	))
 }
 
 

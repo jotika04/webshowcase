@@ -1,0 +1,12 @@
+basePath: /api/v1
+host: localhost:8080
+info:
+  contact: {}
+  description: Swagger API for Golang Project.
+  termsOfService: http://swagger.io/terms/
+  title: Showcase Swagger API
+  version: "1.0"
+paths: {}
+schemes:
+- http
+swagger: "2.0"
