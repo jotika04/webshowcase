@@ -267,9 +267,9 @@ func routes(){
 	r.HandleFunc("/register", register)
 	http.Handle("/", r)
 
-	r.Get("/swagger/*", httpSwagger.Handler(
-		httpSwagger.URL("http://localhost:1323/swagger/doc.json"), //The url pointing to API definition"
-	))
+	// r.Get("/swagger/*", httpSwagger.Handler(
+	// 	httpSwagger.URL("http://localhost:1323/swagger/doc.json"), //The url pointing to API definition"
+	// ))
 }
 
 
