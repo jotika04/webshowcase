@@ -18,7 +18,7 @@ import (
 	_ "github.com/swaggo/http-swagger/example/go-chi/docs"
 
 	// "github.com/jotika04/webshowcase/"
-	"showcase-backend/data"
+	// "showcase-backend/data"
 )
 
 // Package restapi Showcase
@@ -40,20 +40,20 @@ import (
 var db *sql.DB
 var err error
 
-// type users struct {
-// 	UserID int `json:"userID"`
-// 	Username string `json:"username"`
-// 	UserFirstName string `json:"userFirstName"`
-// 	UserLastName string `json:"userLastName"`
-// 	Password string `json:"password"`
-// 	BatchYear int `json:"batchYear"`
-// 	Address string `json:"address"`
-// 	BinusianID int `json:"binusianID"`
-// 	Email string `json:"email"`
-// 	PhoneNum string `json:"phoneNum"`
-// 	RoleID int `json:"roleID"`
+type users struct {
+	UserID int `json:"userID"`
+	Username string `json:"username"`
+	UserFirstName string `json:"userFirstName"`
+	UserLastName string `json:"userLastName"`
+	Password string `json:"password"`
+	BatchYear int `json:"batchYear"`
+	Address string `json:"address"`
+	BinusianID int `json:"binusianID"`
+	Email string `json:"email"`
+	PhoneNum string `json:"phoneNum"`
+	RoleID int `json:"roleID"`
 
-// }
+}
 
 
 func connect_db() {
@@ -83,8 +83,8 @@ func checkErr(w http.ResponseWriter, r *http.Request, err error) bool {
 	return true
 }
 
-func QueryUser(username string) Users {
-    var user = Users{}
+func QueryUser(username string) users {
+    var user = users{}
     err = db.QueryRow(`
         SELECT userID, 
         username, 
@@ -188,7 +188,7 @@ func register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if password == checkPass{
-		if (Users {}) == user{
+		if (users {}) == user{
 			fmt.Println("Register Successful")
 			hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 
