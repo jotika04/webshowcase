@@ -66,3 +66,41 @@ paths:
           schema:
             type: string
           description: Server error
+definitions:
+  RegisterUser:
+    type: object
+    required: [userFirstName, userLastName, email,username,password]
+    properties:
+      userFirstName:
+        type: string
+      userLastName:
+        type: string
+      email:
+        type: string
+      username:
+        type: string
+      password:
+        type: string
+      
+  SuccessResponse:
+    type: object
+    properties:
+      success:
+        type: boolean
+      message:
+        type: string
+  LoginInfo:
+    type: object
+    required: [email,password]
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+  LoginSuccess:
+    type: object
+    properties:
+      success:
+        type: boolean
+      token:
+        type: string
