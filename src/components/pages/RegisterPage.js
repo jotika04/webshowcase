@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from 'react-dom'
+
 
 import backgroundlogo from 'C:/Users/Ryo/webshowcase/src/image/site-logo.png';
 import logo from 'C:/Users/Ryo/webshowcase/src/image/binus-logo.png'
@@ -11,10 +11,8 @@ import Button from '@material-ui/core/Button';
 import {Grid, Paper, TextField} from '@material-ui/core'
 import { makeStyles, ThemeProvider,createMuiTheme } from '@material-ui/core/styles'
 import { blue, grey } from '@material-ui/core/colors';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import Typography from "@material-ui/core/Typography";
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Checkbox from '@material-ui/core/Checkbox'
+
 
 
 

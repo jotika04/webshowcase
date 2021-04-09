@@ -1,12 +1,15 @@
 import React from "react";
-import ReactDOM from 'react-dom'
+
 import FrontLogin from './components/FrontLogin';
 import LoginPage from './components/pages/LoginPage';
 import RegisterPage from './components/pages/RegisterPage'
-import logo from 'C:/Users/Ryo/webshowcase/src/image/site-logo.png';
+
 import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Frontlogin from "./components/FrontLogin";
+import ConfirmPage from "./components/pages/ConfirmPage"
+import SubmissionPage from "./components/pages/Submission";
+import { SubmitProcess } from "./components/pages/SubmitProcess";
+
 
 function App() {
   return (
@@ -18,6 +21,9 @@ function App() {
           <Route exact path='/frontlogin'  component={FrontLogin} />
           <Route exact path='/loginpage'  component={LoginPage} />
           <Route exact path='/registerpage'  component={RegisterPage} />
+          <Route exact path='/submission' component={SubmissionPage} />
+          <Route exact path='/confirmsubmission' component={ConfirmPage}/>
+          <Route exact path='/submit' component={SubmitProcess}/>
         </Switch>
       </Router>
     </div>
