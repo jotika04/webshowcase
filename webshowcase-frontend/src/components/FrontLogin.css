@@ -1,0 +1,23 @@
+.binus-logo {
+    padding:25;
+    height:73px;
+    width:122px;
+    margin:auto 100px;
+    position:absolute;
+  }
+
+.button-login{
+    padding:25;
+    height:57px;
+    width:255px;
+    top: 40%;
+    left: 10%;
+}
+
+.button-register{
+    padding:25;
+    height:57px;
+    width:255px;
+    top: 50%;
+    left: 10%;
+}
