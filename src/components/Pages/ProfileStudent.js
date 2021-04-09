@@ -347,7 +347,9 @@ export default function ProfileStudent() {
             <MenuIcon />
           </IconButton>
 
+          <Link to ='/' style={{ textDecoration: 'none' , color: '#000000' }}>
           <img src={logo} className="App-logo" alt="logo" width= '100px'/>
+          </Link>
 
           <div className={classes.search}>
             <div className={classes.searchIcon}>
@@ -383,6 +385,7 @@ export default function ProfileStudent() {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
+                
                 <AccountCircle />
               
             </IconButton>
@@ -520,6 +523,7 @@ export default function ProfileStudent() {
         <div>
           <Container>
             <Grid >
+              <Link to ='/ProfileEdits' style={{ textDecoration: 'none' , color: '#000000'}}>
               <Button classes={{label: classes.label}} fullWidth textTransform='none' style={{justifyContent: "flex-start"}} >
                   <Typography align="left" variant="body1" color="inherit" textTransform="none">
                     Profile Settings
@@ -527,6 +531,7 @@ export default function ProfileStudent() {
                     Change Your Personal Information in Your Profile
                   </Typography>
               </Button>
+              </Link>
             </Grid>
           </Container>
         </div>
@@ -544,6 +549,7 @@ export default function ProfileStudent() {
             </Grid>
           </Container>
         </div>
+        <Divider variant="middle"/>
       </main>
     </React.Fragment>
     </ThemeProvider>

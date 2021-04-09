@@ -1,7 +1,6 @@
 import React from 'react';
 import { CssBaseline, Grid, Toolbar, Typography, Container, AppBar, Button  } from '@material-ui/core';
 import { fade, makeStyles, useTheme, createMuiTheme , ThemeProvider} from '@material-ui/core/styles';
-// import Link from '@material-ui/core/Link';
 import { red } from '@material-ui/core/colors';
 import clsx from 'clsx';
 import IconButton from '@material-ui/core/IconButton';
@@ -27,10 +26,12 @@ import {  Link } from 'react-router-dom';
 import logo from 'E:/React Projects/my-app/src/image/Binuslogo.png';
 import profile from 'E:/React Projects/my-app/src/image/profile.png';
 import './Dashboard.css'
-import Paper from '@material-ui/core/Paper';
 import HomeIcon from '@material-ui/icons/Home';
 import SettingsIcon from '@material-ui/icons/Settings';
-
+import TextField from '@material-ui/core/TextField';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 
 const drawerWidth = 240;
 
@@ -231,7 +232,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function ProfileEditor() {
+export default function ProfileEdits() {
   const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -347,7 +348,9 @@ export default function ProfileEditor() {
             <MenuIcon />
           </IconButton>
 
+          <Link to ='/' style={{ textDecoration: 'none' , color: '#000000' }}>
           <img src={logo} className="App-logo" alt="logo" width= '100px'/>
+          </Link>
 
           <div className={classes.search}>
             <div className={classes.searchIcon}>
@@ -364,17 +367,17 @@ export default function ProfileEditor() {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show 4 new mails" color="inherit">
+            {/* <IconButton aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <MailIcon />
               </Badge>
-            </IconButton>
+            </IconButton> */}
             <IconButton aria-label="show 17 new notifications" color="inherit">
               <Badge badgeContent={17} color="secondary">
                 <NotificationsIcon />
               </Badge>
             </IconButton>
-            <Link to ='/ProfileStudent' style={{ textDecoration: 'none' , color: '#000000'}}>
+            <Link to ='/ProfileStudent' style={{ textDecoration: 'none' , color: '#000000' }}>
             <IconButton
               edge="end"
               aria-label="account of current user"
@@ -383,7 +386,9 @@ export default function ProfileEditor() {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-                <AccountCircle />
+
+              
+              <AccountCircle />
               
             </IconButton>
               </Link>
@@ -442,8 +447,10 @@ export default function ProfileEditor() {
             </Link>
 
             <ListItem button>
-              <ListItemIcon>
-                <NotificationsIcon />
+              <ListItemIcon> 
+                <Badge badgeContent={17} color="secondary"> 
+                  <NotificationsIcon />
+                </Badge>
               </ListItemIcon>
               <ListItemText primary="Notification" />
             </ListItem>
@@ -467,81 +474,101 @@ export default function ProfileEditor() {
         <div className={classes.heroContent}>
           <Container maxWidth="sm">
             <Typography component="h1" variant="h4" align="center" color="inherit" gutterBottom>
-              Profile
+              Profile Editing
             </Typography>
             <Grid justify="center" alignItem="center" container spacing={2}>
                     <Grid item >
                       <img src={profile} className={classes.logo} alt="logo" />
                     </Grid>
             </Grid>
-            <Typography component="h1" variant="h4" align="center" color="inherit" gutterBottom>
-              Student A
-            </Typography>
-            <Typography component="h5" variant="h6" align="center" color="inherit" gutterBottom>
-              Computer Science
-            </Typography>
+   
             
           </Container>
         </div>
         <Divider variant="middle"/>
+        <Container>
+        <Typography component="h6" variant="h6" color="inherit" gutterBottom>
+           Change Profile
+        </Typography>
+
+          <Grid classes={{label: classes.label}} fullWidth textTransform='none' style={{justifyContent: "flex-start"}} >
+          
+            <TextField disabled id="standard-disabled" label="Name" defaultValue="Student A" fullWidth/>
+
+            
+
+            <TextField disabled id="standard-disabled" label="Major" defaultValue="Computer Science" fullWidth/>
+
+            
+            <div>
+              <TextField
+              id="standard-required"
+              label="Email"
+              fullWidth
+              // autoComplete="current-password"
+              />
+            </div>
+            
+            <div>
+            <TextField disabled id="standard-disabled" label="Binusian ID" defaultValue="2201XXXXX5" fullWidth/>
+            </div>
+            
+            <FormControl className={classes.formControl} fullWidth>
+            <InputLabel htmlFor="grouped-select">Course</InputLabel>
+            <Select defaultValue="" id="grouped-select">
+              <MenuItem value='All Course'>All Course</MenuItem>
+              <MenuItem value='Web Development'>Web Development</MenuItem>
+              <MenuItem value='Web Design'>Web Design</MenuItem>
+              <MenuItem value='App Development'>App Development</MenuItem>
+              <MenuItem value='AI'>AI</MenuItem>
+              <MenuItem value='Data Mining'>Data Mining</MenuItem>
+            </Select>
+          </FormControl>
+            <h6>
+              <br/>
+            </h6> 
+          </Grid>
+        
+        </Container>
+        <Divider variant="middle"/>
+        <Container>
+        <Typography component="h6" variant="h6" color="inherit" gutterBottom>
+           Change Password
+        </Typography>
+        <Grid classes={{label: classes.label}} fullWidth textTransform='none' style={{justifyContent: "flex-start"}}>
+
         <div>
-          <Container maxWidth="lg"> 
-            <Grid container spacing={2}>
-              <Grid item xs={4}>
-                <Paper className={classes.rootpaper} elevation={0} >
-                <Typography component="h1" variant="h6" align="center" color="inherit" >
-                      Binusian id: 22018XXXX5
-                  </Typography>
-                </Paper>
-              </Grid>
-                <Grid item xs={4}>
-                  <Paper  className={classes.rootpaper} elevation={0} >
-                    <Typography component="h1" variant="h6" align="center" color="inherit" >
-                      Course: Web Design
-                    </Typography>
-                  </Paper>
-                </Grid>
-                <Grid item xs={4}>
-                  <Paper className={classes.rootpaper} elevation={0} >
-                    <Typography component="h1" variant="h6" align="center" color="inherit" >
-                      Email: personalemail6666@yahoo.com
-                    </Typography>
-                  </Paper>
-              </Grid>
-            </Grid>
-          </Container>
+          <TextField
+          id="standard-password-input"
+          label="Change Password"
+          type="password"
+          fullWidth
+          autoComplete="current-password"
+          />
         </div>
+
+        <Grid >
+          <TextField
+          id="standard-password-input"
+          label="Confirm Password"
+          type="password"
+          fullWidth
+          autoComplete="current-password"
+          />
+        </Grid>
         <h6>
           <br/>
-        </h6>
+        </h6> 
+        </Grid>
+        </Container>
         <Divider variant="middle"/>
-        <div>
-          <Container>
-            <Grid >
-              <Button classes={{label: classes.label}} fullWidth textTransform='none' style={{justifyContent: "flex-start"}} >
-                  <Typography align="left" variant="body1" color="inherit" textTransform="none">
-                    Profile Settings
-                    <br />
-                    Change Your Personal Information in Your Profile
-                  </Typography>
-              </Button>
-            </Grid>
-          </Container>
-        </div>
-        <Divider variant="middle"/>
-        <div>
-          <Container>
-            <Grid >
-              <Button classes={{label: classes.label}} fullWidth textTransform='none' style={{justifyContent: "flex-start"}} >
-                  <Typography align="left" variant="body1" color="inherit" textTransform="none">
-                    Help Center
-                    <br />
-                    Help Regarding Your Profile
-                  </Typography>
-              </Button>
-            </Grid>
-          </Container>
-        </div>
+        <Container>
+        <Grid >
+        <Button variant="contained" color="primary">
+          Confirm
+        </Button>
+        </Grid>
+        </Container>
       </main>
     </React.Fragment>
     </ThemeProvider>

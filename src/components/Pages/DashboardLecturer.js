@@ -1,5 +1,5 @@
 import React from 'react';
-import {CardActions, CardContent, CardMedia, CssBaseline, Grid, Toolbar, Typography, Container, Card, AppBar  } from '@material-ui/core';
+import {CardActions, CardContent, CardMedia, CssBaseline, Grid, Toolbar, Typography, Container, Card, AppBar, Button  } from '@material-ui/core';
 import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
 // import Link from '@material-ui/core/Link';
 import {  white, lightBlue } from '@material-ui/core/colors';
@@ -235,7 +235,7 @@ const useStyles = makeStyles((theme) => ({
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-export default function Dashboard() {
+export default function DashboardLecturer() {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -339,10 +339,11 @@ export default function Dashboard() {
           >
             <MenuIcon />
           </IconButton>
-          <Link to ='/' style={{ textDecoration: 'none' , color: '#000000' }}>
+
+          <Link to ='/DashboardLecturer' style={{ textDecoration: 'none' , color: '#000000' }}>
           <img src={logo} className="App-logo" alt="logo" width= '100px'/>
           </Link>
-          
+
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -358,34 +359,38 @@ export default function Dashboard() {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-          <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="grouped-select">Filtering</InputLabel>
-            <Select defaultValue="" id="grouped-select">
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <ListSubheader>Sort 1</ListSubheader>
-              <MenuItem value='Filter 1.1'>Filter 1.1</MenuItem>
-              <MenuItem value='Filter 1.2'>Filter 1.2</MenuItem>
-              <ListSubheader>Sort 2</ListSubheader>
-              <MenuItem value='Filter 2.1'>Filter 2.1</MenuItem>
-              <MenuItem value='Filter 2.2'>Filter 2.2</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="grouped-select">Sorting</InputLabel>
-            <Select defaultValue="" id="grouped-select">
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <ListSubheader>Sort 1</ListSubheader>
-              <MenuItem value='Sort 1.1'>Sort 1.1</MenuItem>
-              <MenuItem value='Sort 1.2'>Sort 1.2</MenuItem>
-              <ListSubheader>Sort 2</ListSubheader>
-              <MenuItem value='Sort 2.1'>Sort 2.1</MenuItem>
-              <MenuItem value='Sort 2.2'>Sort 2.2</MenuItem>
-            </Select>
-          </FormControl>
+            
+            <Link to ='/Verification' style={{ textDecoration: 'none' , color: '#000000' }}> 
+                <Button variant="contained" color="secondary" >
+                Project Verification
+                </Button>
+            </Link>
+            <FormControl className={classes.formControl}>
+                <InputLabel htmlFor="grouped-select">Filtering</InputLabel>
+                <Select defaultValue="" id="grouped-select">
+                <MenuItem value="">
+                    <em>None</em>
+                </MenuItem>
+                <MenuItem value='Filter 1.1'>Filter 1.1</MenuItem>
+                <MenuItem value='Filter 1.2'>Filter 1.2</MenuItem>
+                <MenuItem value='Filter 2.1'>Filter 2.1</MenuItem>
+                <MenuItem value='Filter 2.2'>Filter 2.2</MenuItem>
+                </Select>
+            </FormControl>
+            <FormControl className={classes.formControl}>
+                <InputLabel htmlFor="grouped-select">Sorting</InputLabel>
+                <Select defaultValue="" id="grouped-select">
+                <MenuItem value="">
+                    <em>None</em>
+                </MenuItem>
+                <ListSubheader>Sort 1</ListSubheader>
+                <MenuItem value='Sort 1.1'>Sort 1.1</MenuItem>
+                <MenuItem value='Sort 1.2'>Sort 1.2</MenuItem>
+                <ListSubheader>Sort 2</ListSubheader>
+                <MenuItem value='Sort 2.1'>Sort 2.1</MenuItem>
+                <MenuItem value='Sort 2.2'>Sort 2.2</MenuItem>
+                </Select>
+            </FormControl>
             {/* <IconButton aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <MailIcon />
@@ -408,7 +413,7 @@ export default function Dashboard() {
             >
 
               <Typography component="h6" variant="BUTTON TEXT" align="center" color="inherit" >
-              Login
+              Lecturer A
               </Typography>
               <span/>
               <AccountCircle />
@@ -460,7 +465,7 @@ export default function Dashboard() {
             </ListItem>
           </Link>
 
-            <Link to ='/' style={{ textDecoration: 'none' , color: '#000000'}} >
+            <Link to ='/DashboardLecturer' style={{ textDecoration: 'none' , color: '#000000'}} >
               <ListItem button>
                 <ListItemIcon>
                     <HomeIcon/>
