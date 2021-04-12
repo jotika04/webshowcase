@@ -6,36 +6,18 @@ import (
 
 	"html/template"
 	"golang.org/x/crypto/bcrypt"
-	"github.com/kataras/go-sessions"
+	// "github.com/kataras/go-sessions/v3"
 	"fmt"
 	"database/sql"
 	"log"
 	_ "github.com/go-sql-driver/mysql"
 	"time"
 
-	"github.com/go-chi/chi"
-	"github.com/swaggo/http-swagger"
-	_ "github.com/swaggo/http-swagger/example/go-chi/docs"
-
-	// "github.com/jotika04/webshowcase/"
-	// "showcase-backend/data"
+	"github.com/go-openapi/runtime/middleware"
+	"github.com/jotika04/webshowcase/showcase-backend/docs/restapi/operations/user"
+	"github.com/jotika04/webshowcase/showcase-backend/docs/models"
 )
 
-// Package restapi Showcase
-//
-//  Schemes:
-//    http
-//  Host: showcase.com
-//  BasePath: /v1
-//  Version: 1.0.0
-//
-//  Consumes:
-//    - application/json
-//
-//  Produces:
-//    - application/json
-//
-// swagger:meta
 
 var db *sql.DB
 var err error
@@ -83,8 +65,8 @@ func checkErr(w http.ResponseWriter, r *http.Request, err error) bool {
 	return true
 }
 
-func QueryUser(username string) users {
-    var user = users{}
+func QueryUser(username string) (*models.RegisterUser) {
+    userInfo := models.RegisterUser{}
     err = db.QueryRow(`
         SELECT userID, 
         username, 
@@ -100,23 +82,26 @@ func QueryUser(username string) users {
         FROM user WHERE username=?
         `, username).
         Scan(
-            &user.UserID,
-            &user.Username,
-            &user.UserFirstName, 
-            &user.UserLastName,
-            &user.Password,
-            &user.BatchYear,
-            &user.Address,
-            &user.BinusianID,
-            &user.Email,
-            &user.PhoneNum,
-            &user.RoleID,
+            &userInfo.UserID,
+            &userInfo.Username,
+            &userInfo.UserFirstName, 
+            &userInfo.UserLastName,
+            &userInfo.Password,
+            &userInfo.BatchYear,
+            &userInfo.Address,
+            &userInfo.BinusianID,
+            &userInfo.Email,
+            &userInfo.PhoneNum,
+            &userInfo.RoleID,
         )
-    return user
+        if err != nil {
+			return nil, err
+		}
+    return &userInfo, nil
 }
 
 func home(w http.ResponseWriter, r *http.Request) {
-	session := sessions.Start(w, r)
+	// session := sessions.Start(w, r)
 
 	if len(session.GetString("username")) == 0 {
 		var data = map[string]string{
@@ -149,82 +134,44 @@ func home(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func register(w http.ResponseWriter, r *http.Request) {
-	if r.Method != "POST" {
-		// http.ServeFile(w, r, "views/accountcontroller/register.html")
-		// return
-		var data = map[string]string{
-			"warning": "",
-		}
-		var t, err = template.ParseFiles("views/accountcontroller/register.html")
-		if err != nil {
-			fmt.Println(err.Error())
-			return
-		}
-		t.Execute(w, data)
-		return
-	}
+func register() (userInfo *models.RegisterUser) {
 
-	username := r.FormValue("username")
-	email := r.FormValue("email")
-	userFirstName := r.FormValue("userFirstName")
-	userLastName := r.FormValue("userLastName")
-	password := r.FormValue("password")
-	checkPass := r.FormValue("checkPass")
+	password := []byte(*userInfo.Password)
 
 
 	user := QueryUser(username)
-	if len(password) < 8{
-		fmt.Println("Password needs to be at least 8 characters")
-		var data = map[string]string{
-			"warning": "Password needs to be at least 8 characters",
-		}
-		var t, err = template.ParseFiles("views/accountcontroller/register.html")
-		if err != nil {
-			fmt.Println(err.Error())
-			return
-		}
-		t.Execute(w, data)
-		return
+
+	hashedPassword, err := bcrypt.GenerateFromPassword(password, bcrypt.DefaultCost)
+	if err != nil {
+		return err
 	}
-	if password == checkPass{
-		if (users {}) == user{
-			fmt.Println("Register Successful")
-			hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
-
-			if len(hashedPassword) != 0 && checkErr(w, r, err) {
-				stmt, err := db.Prepare("INSERT INTO user SET username=?, password=?, userFirstName=?, userLastName=?, email=?")
-				if err == nil {
-					_, err := stmt.Exec(&username, &hashedPassword, &userFirstName, &userLastName, &email)
-					if err != nil {
-						http.Error(w, err.Error(), http.StatusInternalServerError)
-						return
-					}
-
-					http.Redirect(w, r, "/login", http.StatusSeeOther)
-					return
-				}
-			}
-		} else {
-			http.Redirect(w, r, "/register", 302)
-		}
-	} else {
-		var data = map[string]string{
-			"warning": "Password and Confirm Password does not match",
-		}
-		fmt.Println("Password and Confirm Password does not match")
-		var t, err = template.ParseFiles("views/accountcontroller/register.html")
-		if err != nil {
-			fmt.Println(err.Error())
-			return
-		}
-		t.Execute(w, data)
-		return
-
-		// http.Redirect(w, r, "/register", 302, warning)
+	row, err := db.Exec("INSERT into customer (email, userFirstName, userLastName, username, password) values (?,?,?,?,?)", userInfo.Email, userInfo.UserFirstName, userInfo.UserLastName, userInfo.Username, hashedPassword)
+	if err != nil {
+		return err
 	}
-
+	if count, _ := row.RowsAffected(); count != 1 {
+		return errors.New("Error inserting row value")
+	}
+	return nil
 	
+}
+
+func (impl *registerImpl) Handle(params user.RegisterParams) middleware.Responder {
+	err := impl.customerInfoHandler.RegisterNewUser(impl.dbClient, params.Signup)
+	if err != nil {
+		fmt.Println(err.Error())
+		if strings.Contains(err.Error(), "Duplicate entry") {
+			// if strings.Contains(err.Error(), "phoneNo_UNIQUE") {
+			// 	return user.NewRegisterOK().WithPayload(&models.SuccessResponse{Success: false, Message: "Mobile already registered"})
+			// }
+			if strings.Contains(err.Error(), "email_UNIQUE") {
+				return user.NewRegisterOK().WithPayload(&models.SuccessResponse{Success: false, Message: "Email already registered"})
+			}
+		}
+		return user.NewRegisterInternalServerError().WithPayload("Error registering user")
+	}
+	return user.NewRegisterOK().WithPayload(&models.SuccessResponse{Success: true, Message: "User Registered successfully"})
+
 }
 
 func login(w http.ResponseWriter, r *http.Request) {
@@ -273,16 +220,13 @@ func routes(){
 	r.HandleFunc("/register", register)
 	http.Handle("/", r)
 
-	// r.Get("/swagger/*", httpSwagger.Handler(
-	// 	httpSwagger.URL("http://localhost:1323/swagger/doc.json"), //The url pointing to API definition"
-	// ))
 }
 
 
 func main (){
 
 	connect_db()
-	routes()
+	// routes()
 	
 
 	defer db.Close()

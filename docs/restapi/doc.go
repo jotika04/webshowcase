@@ -5,7 +5,7 @@
 //  Schemes:
 //    http
 //  Host: showcase.com
-//  BasePath: /v1
+//  BasePath: /
 //  Version: 1.0.0
 //
 //  Consumes:

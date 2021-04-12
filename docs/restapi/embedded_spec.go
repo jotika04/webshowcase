@@ -33,7 +33,7 @@ func init() {
     "version": "1.0.0"
   },
   "host": "showcase.com",
-  "basePath": "/v1",
+  "basePath": "/",
   "paths": {
     "/login": {
       "post": {
@@ -50,7 +50,6 @@ func init() {
             "description": "Login Payload",
             "name": "login",
             "in": "body",
-            "required": true,
             "schema": {
               "$ref": "#/definitions/LoginInfo"
             }
@@ -96,7 +95,6 @@ func init() {
             "description": "Registeration Payload",
             "name": "signup",
             "in": "body",
-            "required": true,
             "schema": {
               "$ref": "#/definitions/RegisterUser"
             }
@@ -165,14 +163,32 @@ func init() {
         "password"
       ],
       "properties": {
+        "address": {
+          "type": "string"
+        },
+        "batchYear": {
+          "type": "integer"
+        },
+        "binusianID": {
+          "type": "integer"
+        },
         "email": {
           "type": "string"
         },
         "password": {
           "type": "string"
         },
+        "phoneNum": {
+          "type": "string"
+        },
+        "roleID": {
+          "type": "integer"
+        },
         "userFirstName": {
           "type": "string"
+        },
+        "userID": {
+          "type": "integer"
         },
         "userLastName": {
           "type": "string"
@@ -211,7 +227,7 @@ func init() {
     "version": "1.0.0"
   },
   "host": "showcase.com",
-  "basePath": "/v1",
+  "basePath": "/",
   "paths": {
     "/login": {
       "post": {
@@ -228,7 +244,6 @@ func init() {
             "description": "Login Payload",
             "name": "login",
             "in": "body",
-            "required": true,
             "schema": {
               "$ref": "#/definitions/LoginInfo"
             }
@@ -274,7 +289,6 @@ func init() {
             "description": "Registeration Payload",
             "name": "signup",
             "in": "body",
-            "required": true,
             "schema": {
               "$ref": "#/definitions/RegisterUser"
             }
@@ -343,14 +357,32 @@ func init() {
         "password"
       ],
       "properties": {
+        "address": {
+          "type": "string"
+        },
+        "batchYear": {
+          "type": "integer"
+        },
+        "binusianID": {
+          "type": "integer"
+        },
         "email": {
           "type": "string"
         },
         "password": {
           "type": "string"
         },
+        "phoneNum": {
+          "type": "string"
+        },
+        "roleID": {
+          "type": "integer"
+        },
         "userFirstName": {
           "type": "string"
+        },
+        "userID": {
+          "type": "integer"
         },
         "userLastName": {
           "type": "string"

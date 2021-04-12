@@ -4,7 +4,7 @@ info:
   title: Showcase
 schemes: [http]
 host: showcase.com
-basePath: /v1
+basePath: /
 consumes: [application/json]
 produces: [application/json]
 paths: 
@@ -16,9 +16,8 @@ paths:
       consumes:
         - "application/json"
       parameters:
-        - name: 'login'
-          in: 'body'
-          required: true
+        - name: login
+          in: body
           description: 'Login Payload'
           schema:
             $ref: '#/definitions/LoginInfo'
@@ -47,7 +46,6 @@ paths:
       parameters:
         - name: 'signup'
           in: 'body'
-          required: true
           description: 'Registeration Payload'
           schema:
             $ref: '#/definitions/RegisterUser'
@@ -80,6 +78,18 @@ definitions:
       username:
         type: string
       password:
+        type: string
+      batchYear:
+        type: integer
+      address:
+        type: string
+      userID:
+        type: integer
+      roleID:
+        type: integer
+      binusianID:
+        type: integer
+      phoneNum:
         type: string
       
   SuccessResponse:

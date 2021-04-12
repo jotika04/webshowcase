@@ -19,6 +19,15 @@ import (
 // swagger:model RegisterUser
 type RegisterUser struct {
 
+	// address
+	Address string `json:"address,omitempty"`
+
+	// batch year
+	BatchYear int64 `json:"batchYear,omitempty"`
+
+	// binusian ID
+	BinusianID int64 `json:"binusianID,omitempty"`
+
 	// email
 	// Required: true
 	Email *string `json:"email"`
@@ -27,9 +36,18 @@ type RegisterUser struct {
 	// Required: true
 	Password *string `json:"password"`
 
+	// phone num
+	PhoneNum string `json:"phoneNum,omitempty"`
+
+	// role ID
+	RoleID int64 `json:"roleID,omitempty"`
+
 	// user first name
 	// Required: true
 	UserFirstName *string `json:"userFirstName"`
+
+	// user ID
+	UserID int64 `json:"userID,omitempty"`
 
 	// user last name
 	// Required: true
