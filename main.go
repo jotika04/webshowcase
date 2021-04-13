@@ -7,8 +7,8 @@ import (
 	"github.com/gofiber/fiber/v2"
 	// Side Effect import for auto-generated swagger documentation
 	_ "boilerplate_go_rest/docs"
-	"src/webshowcase-boilerplate_go_rest/auth"
-	"src/webshowcase-boilerplate_go_rest/database"
+	"github.com/jotika04/webshowcase/webshowcase-boilerplate_go_rest/auth"
+	"github.com/jotika04/webshowcase/webshowcase-boilerplate_go_rest/database"
 	"log"
 )
 
