@@ -46,7 +46,7 @@ type HTTPError struct {
 // @Failure 404 {object} HTTPError
 // @Failure 500 {object} HTTPError
 // @Router /api/user/ [post]
-func RegisterUser(c *fiber.Ctx){
+func RegisterUser(c *fiber.Ctx)error{
 	// return c.JSON(User{
 	// 	UserID: c.Params("userID"),
 	// 	Username: c.Params("username"),
@@ -82,7 +82,7 @@ func RegisterUser(c *fiber.Ctx){
 	// }
 	if err != nil {
 			fmt.Println(err.Error())
-			return
+			return err
 	}
 	db.Exec("INSERT into user (email, userFirstName, userLastName, username, password) values (?,?,?,?,?)", user.Email, user.UserFirstName, user.UserLastName, user.Username, hashedPassword)
 	// if err != nil {
@@ -93,10 +93,10 @@ func RegisterUser(c *fiber.Ctx){
 	// }
 	// return nil
 
-	c.JSON(user)
+	return c.JSON(user)
 }
 
-func GetUser(c *fiber.Ctx){
+func GetUser(c *fiber.Ctx)error{
 	// var err error
 	userID := c.Params("userID")
 	db := database.DBConn
@@ -136,10 +136,10 @@ func GetUser(c *fiber.Ctx){
 		// }
 		if err != nil {
 			fmt.Println(err.Error())
-			return
+			return err
 		}
 
-	c.JSON(user)
+	return c.JSON(user)
 
 	
     // return &userInfo, nil
