@@ -1,0 +1,124 @@
+basePath: /
+definitions:
+  auth.HTTPError:
+    properties:
+      message:
+        type: string
+      status:
+        type: string
+    type: object
+  auth.User:
+    properties:
+      address:
+        type: string
+      batchYear:
+        type: integer
+      binusianID:
+        type: integer
+      email:
+        type: string
+      password:
+        type: string
+      phoneNum:
+        type: string
+      roleID:
+        type: integer
+      userFirstName:
+        type: string
+      userID:
+        type: integer
+      userLastName:
+        type: string
+      username:
+        type: string
+    type: object
+  main.HTTPError:
+    properties:
+      message:
+        type: string
+      status:
+        type: string
+    type: object
+  main.Item:
+    properties:
+      id:
+        type: string
+    type: object
+host: localhost:3000
+info:
+  contact:
+    email: youremail@provider.com
+    name: API Support
+  description: This is a sample swagger for Fiber
+  title: Fiber Example API
+  version: "1.0"
+paths:
+  /api/item/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get an item by its ID
+      operationId: get-item-by-int
+      parameters:
+      - description: Item ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Item'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/main.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/main.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/main.HTTPError'
+      summary: Get an item
+      tags:
+      - Item
+  /api/user/{userID}:
+    post:
+      consumes:
+      - application/json
+      description: Add user to database
+      operationId: Register
+      parameters:
+      - description: User ID
+        in: path
+        name: userID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/auth.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/auth.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/auth.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/auth.HTTPError'
+      summary: Register a new user
+      tags:
+      - User
+swagger: "2.0"
