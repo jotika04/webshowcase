@@ -7,9 +7,13 @@ import (
 	"github.com/gofiber/fiber/v2"
 	// Side Effect import for auto-generated swagger documentation
 	_ "boilerplate_go_rest/docs"
-	"github.com/jotika04/webshowcase-boilerplate_go_rest/auth"
-	"github.com/jotika04/webshowcase-boilerplate_go_rest/database"
+	"boilerplate_go_rest/auth"
+	"boilerplate_go_rest/database"
 	"log"
+	"fmt"
+	"database/sql"
+	_ "github.com/go-sql-driver/mysql"
+	"time"
 )
 
 func connect_db() {
@@ -39,7 +43,7 @@ func setupRoutes(app *fiber.App) {
 	app.Get("/api/item/:id", GetItem)
 
 	app.Post("/api/user/", auth.RegisterUser)
-	app.Get("/api//user/:userID", book.GetUser)
+	app.Get("/api//user/:userID", auth.GetUser)
 }
 
 // @title Fiber Example API

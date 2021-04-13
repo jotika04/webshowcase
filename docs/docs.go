@@ -78,7 +78,7 @@ var doc = `{
                 }
             }
         },
-        "/api/user/{userID}": {
+        "/api/user/": {
             "post": {
                 "description": "Add user to database",
                 "consumes": [

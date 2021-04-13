@@ -87,7 +87,7 @@ paths:
       summary: Get an item
       tags:
       - Item
-  /api/user/{userID}:
+  /api/user/:
     post:
       consumes:
       - application/json
