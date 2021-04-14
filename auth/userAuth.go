@@ -154,5 +154,26 @@ func GetUser(c *fiber.Ctx)error{
 	
     // return &userInfo, nil
 }
+func Login(c *fiber.Ctx)error{
+	var user User
+	email := c.Params("email")
+	password := c.Params("password")
+	db := database.DBConn
+	err := db. QueryRow(`
+		Select password From user Where email=?
+		`, email).
+		Scan(
+			&user.Password,
+		)
+		if err != nil {
+			fmt.Println(err.Error())
+			// return err, nil
+		}
+	password_compare := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
+	if password_compare == nil {
+		return c.JSON(user)
+	} else {
+		return c.JSON("Login failed")
+	}
 
-
+}
