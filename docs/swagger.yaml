@@ -121,4 +121,38 @@ paths:
       summary: Register a new user
       tags:
       - User
+  /api/user/:userID:
+    post:
+      consumes:
+      - application/json
+      description: Get info of user from database
+      operationId: Getuser
+      parameters:
+      - description: User ID
+        in: path
+        name: userID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/auth.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/auth.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/auth.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/auth.HTTPError'
+      summary: Query user
+      tags:
+      - User
 swagger: "2.0"

@@ -42,8 +42,9 @@ func setupRoutes(app *fiber.App) {
 	// Add endpoint to get an item by it's ID
 	app.Get("/api/item/:id", GetItem)
 
+	app.Get("/api/user/:userID", auth.GetUser)
 	app.Post("/api/user/", auth.RegisterUser)
-	app.Get("/api//user/:userID", auth.GetUser)
+	
 }
 
 // @title Fiber Example API
@@ -81,6 +82,7 @@ func main() {
 // @Failure 500 {object} HTTPError
 // @Router /api/item/{id} [get]
 func GetItem(c *fiber.Ctx) error {
+	fmt.Println("function getitem")
 	// Create new Item and returns it
 	return c.JSON(Item{
 		Id: c.Params("id"),

@@ -96,11 +96,25 @@ func RegisterUser(c *fiber.Ctx)error{
 	return c.JSON(user)
 }
 
+// GetUser godoc
+// @Summary Query user
+// @Description Get info of user from database
+// @ID Getuser
+// @Accept  json
+// @Produce  json
+// @Tags User
+// @Param userID path int true "User ID"
+// @Success 200 {object} User
+// @Failure 400 {object} HTTPError
+// @Failure 404 {object} HTTPError
+// @Failure 500 {object} HTTPError
+// @Router /api/user/:userID [post]
 func GetUser(c *fiber.Ctx)error{
 	// var err error
 	userID := c.Params("userID")
 	db := database.DBConn
 	var user User
+	// var err error
 	// db.Find(&user, userID)
 
 	// userInfo := User{}
@@ -131,14 +145,10 @@ func GetUser(c *fiber.Ctx)error{
             &user.PhoneNum,
             &user.RoleID,
         )
-  //       if err != nil {
-		// 	return nil, err
-		// }
 		if err != nil {
 			fmt.Println(err.Error())
-			return err
+			// return err, nil
 		}
-
 	return c.JSON(user)
 
 	
