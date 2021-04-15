@@ -47,34 +47,18 @@ type HTTPError struct {
 // @Failure 500 {object} HTTPError
 // @Router /api/user/ [post]
 func RegisterUser(c *fiber.Ctx)error{
-	// return c.JSON(User{
-	// 	UserID: c.Params("userID"),
-	// 	Username: c.Params("username"),
-	// 	UserFirstName: c.Params("userFirstName"),
-	// 	UserLastName: c.Params("userLastName"),
-	// 	Password: c.Params("password"),
-	// 	BatchYear: c.Params("batchYear"),
-	// 	Address: c.Params("address"),
-	// 	BinusianID: c.Params("binusianID"),
-	// 	Email: c.Params("email"),
-	// 	PhoneNum: c.Params("phoneNum"),
-	// 	RoleID: c.Params("roleID"),
-	// })
-	// var err error
 	db := database.DBConn
 
 	user := new(User)
-	// if err := c.BodyParser(user); err != nil {
-		// c.Status(503).Send(err)
-	// 	return
-	// }
 
-	// db.Create(&user)
+
+	if err := c.BodyParser(user); err != nil {
+            return err
+    }
+
 
 	// password := []byte(*user.Password)
 	password := &user.Password
-
-	// user := QueryUser(username)
 
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(*password), bcrypt.DefaultCost)
 	// if err != nil {
@@ -93,7 +77,7 @@ func RegisterUser(c *fiber.Ctx)error{
 	// }
 	// return nil
 
-	return c.JSON(user)
+	return c.JSON("Register Success")
 }
 
 // GetUser godoc

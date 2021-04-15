@@ -3,6 +3,7 @@ package project
 import(
 	"github.com/gofiber/fiber/v2"
 	"boilerplate_go_rest/database"
+	"fmt"
 )
 
 type Project struct {
@@ -11,7 +12,7 @@ type Project struct {
 	CourseID int `json:"courseID"`
 	ProjectName string `json:"projectName"`
 	Description string `json:"description"`
-	Verified boolean `json:"verified"`
+	Verified bool `json:"verified"`
 	ProjectImagePath string `json:"projectImagePath"`
 
 }
