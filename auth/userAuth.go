@@ -139,9 +139,14 @@ func GetUser(c *fiber.Ctx)error{
     // return &userInfo, nil
 }
 func Login(c *fiber.Ctx)error{
-	var user User
-	email := c.Params("email")
-	password := c.Params("password")
+	user := new(User)
+
+	if err := c.BodyParser(user); err != nil {
+            return err
+    }
+    email := user.Email
+    password := user.Password
+
 	db := database.DBConn
 	err := db. QueryRow(`
 		Select password From user Where email=?
@@ -155,8 +160,11 @@ func Login(c *fiber.Ctx)error{
 		}
 	password_compare := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
 	if password_compare == nil {
-		return c.JSON(user)
+		// fmt.Println(email, password)
+		return c.JSON("Login Success")
+
 	} else {
+		// fmt.Println(email, password)
 		return c.JSON("Login failed")
 	}
 
