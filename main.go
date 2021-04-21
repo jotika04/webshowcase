@@ -9,7 +9,7 @@ import (
 	_ "boilerplate_go_rest/docs"
 	"boilerplate_go_rest/auth"
 	"boilerplate_go_rest/database"
-	// "boilerplate_go_rest/project"
+	"boilerplate_go_rest/project"
 	"log"
 	"fmt"
 	"database/sql"
@@ -46,7 +46,8 @@ func setupRoutes(app *fiber.App) {
 	app.Get("/api/user/:userID", auth.GetUser)
 	app.Post("/api/user/", auth.RegisterUser)
 	app.Post("api/user/login", auth.Login)
-	// app.Get("api/project/:projectID", project.GetProject)
+	app.Get("api/project/:projectID", project.GetProject)
+	app.Post("api/project/submit", project.SubmitProject)
 	
 }
 

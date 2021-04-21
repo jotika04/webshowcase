@@ -17,14 +17,16 @@ type Project struct {
 
 }
 
+type HTTPError struct {
+	Status  string
+	Message string
+}
+
 func GetProject(c *fiber.Ctx)error{
 	projectID := c.Params("projectID")
 	db := database.DBConn
 	var project Project
-	// var err error
-	// db.Find(&user, userID)
 
-	// userInfo := User{}
     err := db.QueryRow(`
         SELECT projectID, 
         projectName, 
@@ -45,4 +47,20 @@ func GetProject(c *fiber.Ctx)error{
 		}
 	return c.JSON(project)
 
+}
+
+func SubmitProject(c *fiber.Ctx)error{
+	db := database.DBConn
+
+	project := new(Project)
+
+
+	if err := c.BodyParser(project); err != nil {
+            return err
+    }
+    projectStatus := false
+
+	db.Exec("INSERT into project (projectName, description, verified) values (?,?,?)", project.ProjectName, project.Description, projectStatus)
+
+	return c.JSON("Project Submission Success")
 }
