@@ -7,7 +7,7 @@ import(
 	"github.com/gofiber/fiber/v2"
 	// Side Effect import for auto-generated swagger documentation
 	// _ "boilerplate_go_rest/docs"
-	"boilerplate_go_rest/database"
+	"backend_rest/database"
 	"golang.org/x/crypto/bcrypt"
 	"fmt"
 

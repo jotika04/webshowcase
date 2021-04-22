@@ -2,7 +2,7 @@ FROM golang:1.16-alpine
 
 WORKDIR /build
 
-RUN go mod init boilerplate_go_rest
+RUN go mod init backend_rest
 RUN go get -u github.com/swaggo/swag/cmd/swag
 COPY go.mod go.sum /build/
 RUN go mod download

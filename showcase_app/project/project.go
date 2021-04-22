@@ -2,7 +2,7 @@ package project
 
 import(
 	"github.com/gofiber/fiber/v2"
-	"boilerplate_go_rest/database"
+	"backend_rest/database"
 	"fmt"
 )
 

@@ -1,4 +1,4 @@
-module boilerplate_go_rest
+module backend_rest
 
 go 1.16
 

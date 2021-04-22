@@ -6,10 +6,10 @@ import (
 	// Import Go Fiber
 	"github.com/gofiber/fiber/v2"
 	// Side Effect import for auto-generated swagger documentation
-	_ "boilerplate_go_rest/docs"
-	"boilerplate_go_rest/auth"
-	"boilerplate_go_rest/database"
-	"boilerplate_go_rest/project"
+	_ "backend_rest/docs"
+	"backend_rest/auth"
+	"backend_rest/database"
+	"backend_rest/project"
 	"log"
 	"fmt"
 	"database/sql"
