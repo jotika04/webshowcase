@@ -34,8 +34,8 @@ type HTTPError struct {
 }
 
 type RegisterResponse struct {
+	Status  int
 	Message string
-	Success bool
 }
 
 // Register godoc
@@ -82,7 +82,10 @@ func RegisterUser(c *fiber.Ctx)error{
 	// }
 	// return nil
 
-	return c.JSON(RegisterResponse)
+	return c.JSON(RegisterResponse{
+		Status: 201,
+		Message: "Register Success",
+	})
 }
 
 // GetUser godoc
