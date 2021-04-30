@@ -1,5 +1,12 @@
 FROM golang:1.16-alpine
 
+# Add hello scripts
+ADD initscript /initscript
+RUN chmod +x /initscript
+
+ADD wait /wait
+RUN chmod +x /wait
+
 WORKDIR /build
 
 RUN go mod init backend_rest
@@ -12,6 +19,4 @@ COPY . /build
 RUN swag init
 
 RUN go build -o apiserver .
-
-ENTRYPOINT ["/build/apiserver"]
 

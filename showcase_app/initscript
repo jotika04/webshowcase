@@ -1,0 +1,7 @@
+#!/bin/sh
+echo "MySQL server is ready"
+
+echo --------------------------
+echo "RUN apiserver"
+/build/apiserver
+echo --------------------------

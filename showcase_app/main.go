@@ -2,35 +2,43 @@ package main
 
 import (
 	// Import Fiber Swagger
-	"github.com/arsmn/fiber-swagger/v2"
+	swagger "github.com/arsmn/fiber-swagger/v2"
 	// Import Go Fiber
 	"github.com/gofiber/fiber/v2"
 	// Side Effect import for auto-generated swagger documentation
-	_ "backend_rest/docs"
 	"backend_rest/auth"
 	"backend_rest/database"
+	_ "backend_rest/docs"
 	"backend_rest/project"
-	"log"
-	"fmt"
 	"database/sql"
-	_ "github.com/go-sql-driver/mysql"
+	"fmt"
+	"log"
 	"time"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
 func connect_db() {
 	var err error
-    database.DBConn, err = sql.Open("mysql", "root:my-secret-pw@tcp(127.0.0.1:3306)/showcasedb?parseTime=true")
-    database.DBConn.SetMaxIdleConns(0) //No Idle connection
-	database.DBConn.SetMaxOpenConns(400) //Max connection to 400
+	// database.DBConn, err = sql.Open("mysql", "root:my-secret-pw@tcp(mysql:3306)/showcasedb?parseTime=true")
+	database.DBConn, err = sql.Open("mysql", "root:my-secret-pw@tcp(mysql:3306)/")
+	database.DBConn.SetMaxIdleConns(0)                  //No Idle connection
+	database.DBConn.SetMaxOpenConns(400)                //Max connection to 400
 	database.DBConn.SetConnMaxLifetime(time.Second * 5) //Connection dies after 5 seconds
 
-    if err != nil {
-        log.Fatal(err)
-    }
-    if err := database.DBConn.Ping(); err != nil {
-        log.Fatal(err)
-    }
-    fmt.Println("Database connection successfully opened")
+	if err != nil {
+		log.Fatal(err)
+	}
+	if err := database.DBConn.Ping(); err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("Database connection successfully opened")
+
+	_, err = database.DBConn.Exec("CREATE DATABASE IF NOT EXISTS showcasedb")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("showcasedb is successfully created")
 }
 
 func setupRoutes(app *fiber.App) {
@@ -48,7 +56,7 @@ func setupRoutes(app *fiber.App) {
 	app.Post("api/user/login", auth.Login)
 	app.Get("api/project/:projectID", project.GetProject)
 	app.Post("api/project/submit", project.SubmitProject)
-	
+
 }
 
 // @title Fiber Example API
