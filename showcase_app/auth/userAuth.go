@@ -33,7 +33,7 @@ type HTTPError struct {
 	Message string
 }
 
-type RegisterResponse struct {
+type RequestResponse struct {
 	Status  int
 	Message string
 }
@@ -58,8 +58,24 @@ func RegisterUser(c *fiber.Ctx)error{
 
 
 	if err := c.BodyParser(user); err != nil {
-            return err
+        return err
     }
+
+    email := user.Email
+
+	err := db.QueryRow(`
+		Select email From user Where email=?
+		`, email).
+		Scan(
+			&user.Email,
+		)
+
+	if err == nil {
+		return c.JSON(RequestResponse{
+			Status: 201,
+			Message: "Email is already Registered",
+		})
+	}
 
 
 	// password := []byte(*user.Password)
@@ -69,10 +85,13 @@ func RegisterUser(c *fiber.Ctx)error{
 	// if err != nil {
 	// 	return err
 	// }
+
 	if err != nil {
-			fmt.Println(err.Error())
-			return err
+		fmt.Println(err.Error())
+		return err
 	}
+
+	
 	db.Exec("INSERT into user (email, userFirstName, userLastName, username, password) values (?,?,?,?,?)", user.Email, user.UserFirstName, user.UserLastName, user.Username, hashedPassword)
 	// if err != nil {
 	// 	return err
@@ -82,7 +101,7 @@ func RegisterUser(c *fiber.Ctx)error{
 	// }
 	// return nil
 
-	return c.JSON(RegisterResponse{
+	return c.JSON(RequestResponse{
 		Status: 201,
 		Message: "Register Success",
 	})
@@ -102,14 +121,10 @@ func RegisterUser(c *fiber.Ctx)error{
 // @Failure 500 {object} HTTPError
 // @Router /api/user/:userID [post]
 func GetUser(c *fiber.Ctx)error{
-	// var err error
 	userID := c.Params("userID")
 	db := database.DBConn
 	var user User
-	// var err error
-	// db.Find(&user, userID)
-
-	// userInfo := User{}
+	
     err := db.QueryRow(`
         SELECT userID, 
         username, 
@@ -139,12 +154,11 @@ func GetUser(c *fiber.Ctx)error{
         )
 		if err != nil {
 			fmt.Println(err.Error())
-			// return err, nil
+			// return err
 		}
 	return c.JSON(user)
 
 	
-    // return &userInfo, nil
 }
 func Login(c *fiber.Ctx)error{
 	user := new(User)
@@ -156,7 +170,7 @@ func Login(c *fiber.Ctx)error{
     password := user.Password
 
 	db := database.DBConn
-	err := db. QueryRow(`
+	err := db.QueryRow(`
 		Select password From user Where email=?
 		`, email).
 		Scan(
@@ -168,12 +182,16 @@ func Login(c *fiber.Ctx)error{
 		}
 	password_compare := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
 	if password_compare == nil {
-		// fmt.Println(email, password)
-		return c.JSON("Login Success")
+		return c.JSON(RequestResponse{
+			Status: 200,
+			Message: "Login Success",
+		})
 
 	} else {
-		// fmt.Println(email, password)
-		return c.JSON("Login failed")
+		return c.JSON(RequestResponse{
+			Status: 401,
+			Message: "Unauthorized Login",
+		})
 	}
 
 }
