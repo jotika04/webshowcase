@@ -76,7 +76,7 @@ const useStyles = makeStyles((theme) => ({
         width:'240px',
       },
   }));
-function LoginPage() {
+  function LoginPage() {
     const classes = useStyles();
 
   return (

@@ -91,29 +91,7 @@ function SubmissionPage(props) {
     setData(val.target.value)
     console.warn(val.target.value)
     }
-    // function getProjectName(val)
-    // {
-    // setData(val.target.value)
-    // console.warn(val.target.value)
-    // }
-
-    // function getMajor(val)
-    // {
-    // setData(val.target.value)
-    // console.warn(val.target.value)
-    // }
-
-    // function getClassCode(val)
-    // {
-    // setData(val.target.value)
-    // console.warn(val.target.value)
-    // }
-
-    // function getDescription(val)
-    // {
-    // setData(val.target.value)
-    // console.warn(val.target.value)
-    // }
+    
     const handleSubmit = (e) => {
         e.preventDefault();
 
