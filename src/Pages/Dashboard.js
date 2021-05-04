@@ -370,7 +370,7 @@ export default function Dashboard() {
               </Badge>
             </IconButton>
 
-            <Link to ='/ProfileStudent' style={{ textDecoration: 'none' , color: '#000000' }}>
+            <Link to ='/frontlogin' style={{ textDecoration: 'none' , color: '#000000' }}>
             <IconButton
               edge="end"
               aria-label="account of current user"

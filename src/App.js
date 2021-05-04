@@ -7,6 +7,12 @@ import Verification from './Pages/Verification';
 import Sidebar from './Pages/components/Sidebar';
 import History from './Pages/History';
 import Notification from './Pages/Notification';
+import FrontLogin from './Pages/FrontLogin';
+import LoginPage from './Pages/LoginPage';
+import RegisterPage from './Pages/RegisterPage'
+import ConfirmPage from "./Pages/ConfirmPage"
+import SubmissionPage from "./Pages/Submission";
+import { SubmitProcess } from "./Pages/SubmitProcess";
 
 
 // import logo from 'C:/Users/Ryo/webshowcase/src/image/site-logo.png';
@@ -21,6 +27,12 @@ function App() {
       <Router>
         <Switch>
           <Route exact path='/' component={Dashboard}/>
+          <Route exact path='/frontlogin'  component={FrontLogin} />
+          <Route exact path='/loginpage'  component={LoginPage} />
+          <Route exact path='/registerpage'  component={RegisterPage} />
+          <Route exact path='/submission' component={SubmissionPage} />
+          <Route exact path='/confirmsubmission' component={ConfirmPage}/>
+          <Route exact path='/submit' component={SubmitProcess}/>
           <Route exact path='/DashboardLecturer' component={DashboardLecturer}/>
           <Route exact path='/ProfileStudent'  component={ProfileStudent} />
           <Route exact path='/ProfileEdits'  component={ProfileEdits} /> 

@@ -488,7 +488,7 @@ export default function ProfileStudent() {
             </Typography>
             <Grid justify="center" alignItem="center" container spacing={2}>
                     <Grid item >
-                      <img src={profile} className={classes.logo} alt="logo" />
+                      <img src={profile} style={{borderRadius:400}}className={classes.logo} alt="logo" />
                     </Grid>
             </Grid>
             <Typography component="h1" variant="h4" align="center" color="inherit" gutterBottom>
