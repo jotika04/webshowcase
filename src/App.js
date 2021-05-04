@@ -1,10 +1,13 @@
 import React from "react";
-import ReactDOM from 'react-dom'
-import Dashboard from './components/Pages/Dashboard';
-import DashboardLecturer from './components/Pages/DashboardLecturer';
-import ProfileStudent from './components/Pages/ProfileStudent';
-import ProfileEdits from './components/Pages/ProfileEdits';
-import Verification from './components/Pages/Verification';
+import Dashboard from './Pages/Dashboard';
+import DashboardLecturer from './Pages/DashboardLecturer';
+import ProfileStudent from './Pages/ProfileStudent';
+import ProfileEdits from './Pages/ProfileEdits';
+import Verification from './Pages/Verification';
+import Sidebar from './Pages/components/Sidebar';
+import History from './Pages/History';
+import Notification from './Pages/Notification';
+
 
 // import logo from 'C:/Users/Ryo/webshowcase/src/image/site-logo.png';
 import './App.css';
@@ -22,6 +25,9 @@ function App() {
           <Route exact path='/ProfileStudent'  component={ProfileStudent} />
           <Route exact path='/ProfileEdits'  component={ProfileEdits} /> 
           <Route exact path='/Verification'  component={Verification} /> 
+          <Route exact path='/Sidebar'  component={Sidebar} /> 
+          <Route exact path='/History'  component={History} /> 
+          <Route exact path='/Notification'  component={Notification} />
         </Switch>
       </Router>
     </div>

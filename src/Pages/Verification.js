@@ -1,44 +1,28 @@
 import React from 'react';
-import {CardActions, CardContent, CardMedia, CssBaseline, Grid, Toolbar, Typography, Container, Card, AppBar  } from '@material-ui/core';
-import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
-// import Link from '@material-ui/core/Link';
-import {  white, lightBlue } from '@material-ui/core/colors';
 import clsx from 'clsx';
-import CardHeader from '@material-ui/core/CardHeader';
-import Avatar from '@material-ui/core/Avatar';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import IconButton from '@material-ui/core/IconButton';
-import InputBase from '@material-ui/core/InputBase';
-import Badge from '@material-ui/core/Badge';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
+import {CardActions, CardContent, CardMedia, CssBaseline, Grid, Toolbar, Typography, Container, Card, 
+  AppBar, CardHeader, Avatar, IconButton, InputBase, Badge, Menu, MenuItem, Drawer, List, Divider, 
+  ListItem, ListItemIcon, ListItemText, InputLabel, FormControl, Select, Icon } 
+  from '@material-ui/core';
+import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
+import {  green, lightBlue, red } from '@material-ui/core/colors';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import Drawer from '@material-ui/core/Drawer';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import CommentIcon from '@material-ui/icons/Comment';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import {  Link } from 'react-router-dom';
 import logo from 'E:/React Projects/my-app/src/image/Binuslogo.png';
-import './Dashboard.css'
 import HomeIcon from '@material-ui/icons/Home';
 import SettingsIcon from '@material-ui/icons/Settings';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import ListSubheader from '@material-ui/core/ListSubheader';
-
+import CancelIcon from '@material-ui/icons/Cancel';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import LibraryAddCheckIcon from '@material-ui/icons/LibraryAddCheck';
+import HistoryIcon from '@material-ui/icons/History';
 
 const drawerWidth = 240;
 
@@ -125,6 +109,12 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     backgroundColor: lightBlue[500],
+  },
+  avatarverified: {
+    backgroundColor: green[500],
+  },
+  avatarreject: {
+    backgroundColor: red[500],
   },
   icon: {
     marginRight: theme.spacing(2),
@@ -233,15 +223,12 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+const cards = [1, 2, 3, 4, 5, 6 ];
 
-export default function Dashboard() {
+export default function Verification() {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -339,10 +326,11 @@ export default function Dashboard() {
           >
             <MenuIcon />
           </IconButton>
-          <Link to ='/' style={{ textDecoration: 'none' , color: '#000000' }}>
+
+          <Link to ='/DashboardLecturer' style={{ textDecoration: 'none' , color: '#000000' }}>
           <img src={logo} className="App-logo" alt="logo" width= '100px'/>
           </Link>
-          
+
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -359,31 +347,27 @@ export default function Dashboard() {
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
           <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="grouped-select">Filtering</InputLabel>
+            <InputLabel htmlFor="grouped-select">Categories</InputLabel>
             <Select defaultValue="" id="grouped-select">
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
-              <ListSubheader>Sort 1</ListSubheader>
-              <MenuItem value='Filter 1.1'>Filter 1.1</MenuItem>
-              <MenuItem value='Filter 1.2'>Filter 1.2</MenuItem>
-              <ListSubheader>Sort 2</ListSubheader>
-              <MenuItem value='Filter 2.1'>Filter 2.1</MenuItem>
-              <MenuItem value='Filter 2.2'>Filter 2.2</MenuItem>
+              <MenuItem value='Pending'>Pending</MenuItem>
+                <MenuItem value='Verified'>Verified</MenuItem>
+                <MenuItem value='Rejected'>Rejected</MenuItem>
             </Select>
           </FormControl>
           <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="grouped-select">Sorting</InputLabel>
+            <InputLabel htmlFor="grouped-select">Course</InputLabel>
             <Select defaultValue="" id="grouped-select">
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
-              <ListSubheader>Sort 1</ListSubheader>
-              <MenuItem value='Sort 1.1'>Sort 1.1</MenuItem>
-              <MenuItem value='Sort 1.2'>Sort 1.2</MenuItem>
-              <ListSubheader>Sort 2</ListSubheader>
-              <MenuItem value='Sort 2.1'>Sort 2.1</MenuItem>
-              <MenuItem value='Sort 2.2'>Sort 2.2</MenuItem>
+              <MenuItem value='Web Development'>Web Development</MenuItem>
+              <MenuItem value='Web Design'>Web Design</MenuItem>
+              <MenuItem value='App Development'>App Development</MenuItem>
+              <MenuItem value='AI'>AI</MenuItem>
+              <MenuItem value='Data Mining'>Data Mining</MenuItem>
             </Select>
           </FormControl>
             {/* <IconButton aria-label="show 4 new mails" color="inherit">
@@ -408,7 +392,7 @@ export default function Dashboard() {
             >
 
               <Typography component="h6" variant="BUTTON TEXT" align="center" color="inherit" >
-              Login
+              Lecturer A
               </Typography>
               <span/>
               <AccountCircle />
@@ -460,7 +444,7 @@ export default function Dashboard() {
             </ListItem>
           </Link>
 
-            <Link to ='/' style={{ textDecoration: 'none' , color: '#000000'}} >
+            <Link to ='/DashboardLecturer' style={{ textDecoration: 'none' , color: '#000000'}} >
               <ListItem button>
                 <ListItemIcon>
                     <HomeIcon/>
@@ -469,6 +453,7 @@ export default function Dashboard() {
               </ListItem>
             </Link>
 
+            <Link to ='/Notification' style={{ textDecoration: 'none' , color: '#000000'}}>
             <ListItem button>
               <ListItemIcon>
                 <Badge badgeContent={17} color="secondary"> 
@@ -477,6 +462,25 @@ export default function Dashboard() {
               </ListItemIcon>
               <ListItemText primary="Notification" />
             </ListItem>
+            </Link>
+
+            <Link to ='/History' style={{ textDecoration: 'none' , color: '#000000'}}>
+            <ListItem button>
+              <ListItemIcon>
+                  <HistoryIcon />
+              </ListItemIcon>
+              <ListItemText primary="History" />
+            </ListItem>
+            </Link>
+
+            <Link to ='/Verification' style={{ textDecoration: 'none' , color: '#000000' }}> 
+              <ListItem button>
+                <ListItemIcon>
+                  <LibraryAddCheckIcon />
+                </ListItemIcon>
+                <ListItemText primary="Project Verification" />
+              </ListItem>
+            </Link>
 
             <ListItem button>
               <ListItemIcon>
@@ -495,7 +499,7 @@ export default function Dashboard() {
         <div className={classes.heroContent}>
           <Container maxWidth="sm">
             <Typography component="h1" variant="h4" align="center" color="intherit" gutterBottom>
-              Recommendation
+              Verification
             </Typography>
           </Container>
         </div>
@@ -506,17 +510,17 @@ export default function Dashboard() {
                 <Card className={classes.root}>
       <CardHeader
         avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
+          <Avatar  className={classes.avatar}>
             <AccountCircle/>
           </Avatar>
         }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
+        // action={
+        //   <IconButton aria-label="settings">
+        //     <MoreVertIcon />
+        //   </IconButton>
+        // }
         title="Students"
-        subheader="September 14, 2016"
+        subheader="September 14, 2020"
       />
       <CardMedia
         className={classes.cardMedia}
@@ -525,23 +529,18 @@ export default function Dashboard() {
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          This impressive paella is a perfect party dish and a fun meal to cook together with your
-          guests. Add 1 cup of frozen peas along with the mussels, if you like.
+          Verified at: pending
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
+        
         <IconButton
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,
           })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
+
         >
-          <CommentIcon />
+          <CheckCircleOutlineIcon />
         </IconButton>
       </CardActions>
     </Card>
@@ -549,6 +548,104 @@ export default function Dashboard() {
             ))}
           </Grid>
         </Container>
+
+        <Divider variant="middle"/>
+
+        <Container className={classes.cardGrid} maxWidth="md">
+          <Grid container spacing={4} justify="space-evenly">
+            {cards.map((card) => (
+              <Grid item key={card} xs={12} sm={10} md={4}>
+                <Card className={classes.root}>
+      <CardHeader
+        avatar={
+          <Avatar  className={classes.avatarverified}>
+            <AccountCircle/>
+          </Avatar>
+        }
+        // action={
+        //   <IconButton aria-label="settings">
+        //     <MoreVertIcon />
+        //   </IconButton>
+        // }
+        title="Students"
+        subheader="September 14, 2020"
+      />
+      <CardMedia
+        className={classes.cardMedia}
+        image="https://source.unsplash.com/random"
+        title="Image title"
+      />
+      <CardContent>
+        <Typography variant="body2" color="textSecondary" component="p">
+          Verified at: September 16. 2020
+        </Typography>
+      </CardContent>
+      <CardActions disableSpacing>
+        
+        <Icon
+          className={clsx(classes.expand, {
+            [classes.expandOpen]: expanded,
+          })}
+
+        >
+          <CheckCircleIcon />
+        </Icon>
+      </CardActions>
+    </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
+
+        <Divider variant="middle"/>
+
+        <Container className={classes.cardGrid} maxWidth="md">
+          <Grid container spacing={4} justify="space-evenly">
+            {cards.map((card) => (
+              <Grid item key={card} xs={12} sm={10} md={4}>
+                <Card className={classes.root}>
+      <CardHeader
+        avatar={
+          <Avatar  className={classes.avatarreject}>
+            <AccountCircle/>
+          </Avatar>
+        }
+        // action={
+        //   <IconButton aria-label="settings">
+        //     <MoreVertIcon />
+        //   </IconButton>
+        // }
+        title="Students"
+        subheader="September 14, 2020"
+      />
+      <CardMedia
+        className={classes.cardMedia}
+        image="https://source.unsplash.com/random"
+        title="Image title"
+      />
+      <CardContent>
+        <Typography variant="body2" color="textSecondary" component="p">
+          Rejected at: September 16, 2020
+        </Typography>
+      </CardContent>
+      <CardActions disableSpacing>
+        
+        <Icon
+          className={clsx(classes.expand, {
+            [classes.expandOpen]: expanded,
+          })}
+
+        >
+          <CancelIcon />
+        </Icon>
+      </CardActions>
+    </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
+        <Divider variant="middle"/>
+
       </main>
     </React.Fragment>
   );

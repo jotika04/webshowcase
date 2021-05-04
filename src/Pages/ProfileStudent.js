@@ -1,13 +1,9 @@
 import React from 'react';
-import {CardActions, CardContent, CardMedia, CssBaseline, Grid, Toolbar, Typography, Container, Card, AppBar, Button  } from '@material-ui/core';
-import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
+import { CssBaseline, Grid, Toolbar, Typography, Container, AppBar, Button  } from '@material-ui/core';
+import { fade, makeStyles, useTheme, createMuiTheme , ThemeProvider} from '@material-ui/core/styles';
 // import Link from '@material-ui/core/Link';
-import {  white, lightBlue } from '@material-ui/core/colors';
+import { red } from '@material-ui/core/colors';
 import clsx from 'clsx';
-import CardHeader from '@material-ui/core/CardHeader';
-import Avatar from '@material-ui/core/Avatar';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import IconButton from '@material-ui/core/IconButton';
 import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
@@ -24,27 +20,33 @@ import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import CommentIcon from '@material-ui/icons/Comment';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import {  Link } from 'react-router-dom';
 import logo from 'E:/React Projects/my-app/src/image/Binuslogo.png';
+import profile from 'E:/React Projects/my-app/src/image/profile.png';
 import './Dashboard.css'
+import Paper from '@material-ui/core/Paper';
 import HomeIcon from '@material-ui/icons/Home';
 import SettingsIcon from '@material-ui/icons/Settings';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import ListSubheader from '@material-ui/core/ListSubheader';
+import HistoryIcon from '@material-ui/icons/History';
 
 
 const drawerWidth = 240;
 
-
+const theme = createMuiTheme({
+  typography: {
+    button: {
+      textTransform: 'none'
+    }
+  }
+});
 
 const useStyles = makeStyles((theme) => ({
+  label: {
+    textTransform: 'capitalize',
+  },
   grow: {
     flexGrow: 1,
   },
@@ -109,6 +111,15 @@ const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 350,
   },
+  rootpaper: {
+    display: 'flex',
+    '& > *': {
+      height: theme.spacing(5),
+      width: '500px',
+
+      
+    },
+  },
   media: {
     height: 0,
     paddingTop: '56.25%', // 16:9
@@ -124,7 +135,7 @@ const useStyles = makeStyles((theme) => ({
     transform: 'rotate(180deg)',
   },
   avatar: {
-    backgroundColor: lightBlue[500],
+    backgroundColor: red[500],
   },
   icon: {
     marginRight: theme.spacing(2),
@@ -135,21 +146,6 @@ const useStyles = makeStyles((theme) => ({
   },
   heroButtons: {
     marginTop: theme.spacing(4),
-  },
-  cardGrid: {
-    paddingTop: theme.spacing(8),
-    paddingBottom: theme.spacing(8),
-  },
-  card: {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  cardMedia: {
-    paddingTop: '56.25%', // 16:9
-  },
-  cardContent: {
-    flexGrow: 1,
   },
   footer: {
     backgroundColor: theme.palette.background.paper,
@@ -220,32 +216,29 @@ const useStyles = makeStyles((theme) => ({
     }),
     marginLeft: 0,
   },
+  logo:{
+    margin: theme.spacing(1),
+    height:'100px',
+    width:'100px',
+    left:'200px'
+  },
   logobinus:{
     margin: theme.spacing(1),
     height:'73px',
     width:'122px',
     left:'200px'
   },
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-  },
 
 }));
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-export default function DashboardLecturer() {
+export default function ProfileStudent() {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
+  const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const handleProfileMenuOpen = (event) => {
@@ -256,14 +249,29 @@ export default function DashboardLecturer() {
     setMobileMoreAnchorEl(null);
   };
 
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+  };
 
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
   const menuId = 'primary-search-account-menu';
-
-
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      
+    </Menu>
+  );
 
   const mobileMenuId = 'primary-search-account-menu-mobile';
   const renderMobileMenu = (
@@ -321,11 +329,11 @@ export default function DashboardLecturer() {
   
 
   return (
+    <ThemeProvider theme={theme}>
     <React.Fragment>
       <CssBaseline />
-      {/* ToolBar */}
       <div className={classes.grow}>
-      <AppBar  position="static" color='white' className={clsx(classes.appBar, {
+      <AppBar color= 'white' position="static" className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}
         >
@@ -340,7 +348,7 @@ export default function DashboardLecturer() {
             <MenuIcon />
           </IconButton>
 
-          <Link to ='/DashboardLecturer' style={{ textDecoration: 'none' , color: '#000000' }}>
+          <Link to ='/' style={{ textDecoration: 'none' , color: '#000000' }}>
           <img src={logo} className="App-logo" alt="logo" width= '100px'/>
           </Link>
 
@@ -359,38 +367,6 @@ export default function DashboardLecturer() {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            
-            <Link to ='/Verification' style={{ textDecoration: 'none' , color: '#000000' }}> 
-                <Button variant="contained" color="secondary" >
-                Project Verification
-                </Button>
-            </Link>
-            <FormControl className={classes.formControl}>
-                <InputLabel htmlFor="grouped-select">Filtering</InputLabel>
-                <Select defaultValue="" id="grouped-select">
-                <MenuItem value="">
-                    <em>None</em>
-                </MenuItem>
-                <MenuItem value='Filter 1.1'>Filter 1.1</MenuItem>
-                <MenuItem value='Filter 1.2'>Filter 1.2</MenuItem>
-                <MenuItem value='Filter 2.1'>Filter 2.1</MenuItem>
-                <MenuItem value='Filter 2.2'>Filter 2.2</MenuItem>
-                </Select>
-            </FormControl>
-            <FormControl className={classes.formControl}>
-                <InputLabel htmlFor="grouped-select">Sorting</InputLabel>
-                <Select defaultValue="" id="grouped-select">
-                <MenuItem value="">
-                    <em>None</em>
-                </MenuItem>
-                <ListSubheader>Sort 1</ListSubheader>
-                <MenuItem value='Sort 1.1'>Sort 1.1</MenuItem>
-                <MenuItem value='Sort 1.2'>Sort 1.2</MenuItem>
-                <ListSubheader>Sort 2</ListSubheader>
-                <MenuItem value='Sort 2.1'>Sort 2.1</MenuItem>
-                <MenuItem value='Sort 2.2'>Sort 2.2</MenuItem>
-                </Select>
-            </FormControl>
             {/* <IconButton aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <MailIcon />
@@ -401,8 +377,7 @@ export default function DashboardLecturer() {
                 <NotificationsIcon />
               </Badge>
             </IconButton>
-
-            <Link to ='/ProfileStudent' style={{ textDecoration: 'none' , color: '#000000' }}>
+            <Link to ='/ProfileStudent' style={{ textDecoration: 'none' , color: '#000000'}}>
             <IconButton
               edge="end"
               aria-label="account of current user"
@@ -411,12 +386,8 @@ export default function DashboardLecturer() {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-
-              <Typography component="h6" variant="BUTTON TEXT" align="center" color="inherit" >
-              Lecturer A
-              </Typography>
-              <span/>
-              <AccountCircle />
+                
+                <AccountCircle />
               
             </IconButton>
               </Link>
@@ -444,7 +415,7 @@ export default function DashboardLecturer() {
         }}
       >
         <div className={classes.drawerHeader}>
-        <Grid justify="center" alignItem="center" container spacing={1}>
+          <Grid justify="center" alignItem="center" container spacing={1}>
             <Grid item >
               <img src={logo} className={classes.logobinus} alt="logo" />
           </Grid>
@@ -454,18 +425,18 @@ export default function DashboardLecturer() {
           </IconButton>
         </div>
         <Divider />
-        {/* Side Bar */}
-        <List component="nav" aria-label="main mailbox folders">
-         <Link to ='/ProfileStudent' style={{ textDecoration: 'none' , color: '#000000'}}>
+        <List>
+          {/* {['MyProfile', 'Dashboard', 'Notification', 'Settings'].map((text) => ( */}
+            <List component="nav" aria-label="main mailbox folders">
+
             <ListItem button>
               <ListItemIcon>
                 <AccountCircle />
               </ListItemIcon>
               <ListItemText primary="MyProfile" />
             </ListItem>
-          </Link>
 
-            <Link to ='/DashboardLecturer' style={{ textDecoration: 'none' , color: '#000000'}} >
+            <Link to ='/' style={{ textDecoration: 'none' , color: '#000000'}} >
               <ListItem button>
                 <ListItemIcon>
                     <HomeIcon/>
@@ -474,6 +445,7 @@ export default function DashboardLecturer() {
               </ListItem>
             </Link>
 
+            <Link to ='/Notification' style={{ textDecoration: 'none' , color: '#000000'}}>
             <ListItem button>
               <ListItemIcon>
                 <Badge badgeContent={17} color="secondary"> 
@@ -482,6 +454,16 @@ export default function DashboardLecturer() {
               </ListItemIcon>
               <ListItemText primary="Notification" />
             </ListItem>
+            </Link>
+
+            <Link to ='/History' style={{ textDecoration: 'none' , color: '#000000'}}>
+            <ListItem button>
+              <ListItemIcon>
+                  <HistoryIcon />
+              </ListItemIcon>
+              <ListItemText primary="History" />
+            </ListItem>
+            </Link>
 
             <ListItem button>
               <ListItemIcon>
@@ -490,71 +472,98 @@ export default function DashboardLecturer() {
               <ListItemText primary="Settings" />
             </ListItem>
           </List>
-
+          {/* ))} */}
+        </List>
         <Divider />
+        
       </Drawer>
       {renderMobileMenu}
+      {renderMenu}
     </div>
       <main>
-        {/* The Projects */}
         <div className={classes.heroContent}>
           <Container maxWidth="sm">
-            <Typography component="h1" variant="h4" align="center" color="intherit" gutterBottom>
-              Recommendation
+            <Typography component="h1" variant="h4" align="center" color="inherit" gutterBottom>
+              Profile
             </Typography>
+            <Grid justify="center" alignItem="center" container spacing={2}>
+                    <Grid item >
+                      <img src={profile} className={classes.logo} alt="logo" />
+                    </Grid>
+            </Grid>
+            <Typography component="h1" variant="h4" align="center" color="inherit" gutterBottom>
+              Student A
+            </Typography>
+            <Typography component="h5" variant="h6" align="center" color="inherit" gutterBottom>
+              Computer Science
+            </Typography>
+            
           </Container>
         </div>
-        <Container className={classes.cardGrid} maxWidth="md">
-          <Grid container spacing={4} justify="space-evenly">
-            {cards.map((card) => (
-              <Grid item key={card} xs={12} sm={10} md={4}>
-                <Card className={classes.root}>
-      <CardHeader
-        avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            <AccountCircle/>
-          </Avatar>
-        }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title="Students"
-        subheader="September 14, 2016"
-      />
-      <CardMedia
-        className={classes.cardMedia}
-        image="https://source.unsplash.com/random"
-        title="Image title"
-      />
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          This impressive paella is a perfect party dish and a fun meal to cook together with your
-          guests. Add 1 cup of frozen peas along with the mussels, if you like.
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <CommentIcon />
-        </IconButton>
-      </CardActions>
-    </Card>
+        <Divider variant="middle"/>
+        <div>
+          <Container maxWidth="lg"> 
+            <Grid container spacing={2}>
+              <Grid item xs={4}>
+                <Paper className={classes.rootpaper} elevation={0} >
+                <Typography component="h1" variant="h6" align="center" color="inherit" >
+                      Binusian id: 22018XXXX5
+                  </Typography>
+                </Paper>
               </Grid>
-            ))}
-          </Grid>
-        </Container>
+                <Grid item xs={4}>
+                  <Paper  className={classes.rootpaper} elevation={0} >
+                    <Typography component="h1" variant="h6" align="center" color="inherit" >
+                      Course: Web Design
+                    </Typography>
+                  </Paper>
+                </Grid>
+                <Grid item xs={4}>
+                  <Paper className={classes.rootpaper} elevation={0} >
+                    <Typography component="h1" variant="h6" align="center" color="inherit" >
+                      Email: personalemail6666@yahoo.com
+                    </Typography>
+                  </Paper>
+              </Grid>
+            </Grid>
+          </Container>
+        </div>
+        <h6>
+          <br/>
+        </h6>
+        <Divider variant="middle"/>
+        <div>
+          <Container>
+            <Grid >
+              <Link to ='/ProfileEdits' style={{ textDecoration: 'none' , color: '#000000'}}>
+              <Button classes={{label: classes.label}} fullWidth textTransform='none' style={{justifyContent: "flex-start"}} >
+                  <Typography align="left" variant="body1" color="inherit" textTransform="none">
+                    Profile Settings
+                    <br />
+                    Change Your Personal Information in Your Profile
+                  </Typography>
+              </Button>
+              </Link>
+            </Grid>
+          </Container>
+        </div>
+        <Divider variant="middle"/>
+        <div>
+          <Container>
+            <Grid >
+              <Button classes={{label: classes.label}} fullWidth textTransform='none' style={{justifyContent: "flex-start"}} >
+                  <Typography align="left" variant="body1" color="inherit" textTransform="none">
+                    Help Center
+                    <br />
+                    Help Regarding Your Profile
+                  </Typography>
+              </Button>
+            </Grid>
+          </Container>
+        </div>
+        <Divider variant="middle"/>
       </main>
     </React.Fragment>
+    </ThemeProvider>
   );
 }

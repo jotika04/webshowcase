@@ -1,52 +1,32 @@
 import React from 'react';
-import { CssBaseline, Grid, Toolbar, Typography, Container, AppBar, Button  } from '@material-ui/core';
-import { fade, makeStyles, useTheme, createMuiTheme , ThemeProvider} from '@material-ui/core/styles';
-import { red } from '@material-ui/core/colors';
 import clsx from 'clsx';
-import IconButton from '@material-ui/core/IconButton';
-import InputBase from '@material-ui/core/InputBase';
-import Badge from '@material-ui/core/Badge';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
+import { CssBaseline, Grid, Toolbar, Typography, Container, Card, 
+  AppBar,  Avatar, IconButton, InputBase, Badge, Menu, MenuItem, Drawer, List, Divider, 
+  ListItem, ListItemIcon, ListItemText, InputLabel, FormControl, Select, ListSubheader } 
+  from '@material-ui/core';
+import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
+import { lightBlue } from '@material-ui/core/colors';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import Drawer from '@material-ui/core/Drawer';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import {  Link } from 'react-router-dom';
 import logo from 'E:/React Projects/my-app/src/image/Binuslogo.png';
-import profile from 'E:/React Projects/my-app/src/image/profile.png';
-import './Dashboard.css'
+import PH from 'E:/React Projects/my-app/src/image/placeholder.jpg';
+import orng from 'E:/React Projects/my-app/src/image/orng.jpeg';
 import HomeIcon from '@material-ui/icons/Home';
 import SettingsIcon from '@material-ui/icons/Settings';
-import TextField from '@material-ui/core/TextField';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import HistoryIcon from '@material-ui/icons/History';
+import Sidebar from './components/Sidebar';
 
 const drawerWidth = 240;
 
-const theme = createMuiTheme({
-  typography: {
-    button: {
-      textTransform: 'none'
-    }
-  }
-});
-
 const useStyles = makeStyles((theme) => ({
-  label: {
-    textTransform: 'capitalize',
-  },
   grow: {
     flexGrow: 1,
   },
@@ -88,7 +68,6 @@ const useStyles = makeStyles((theme) => ({
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create('width'),
     width: '100%',
@@ -109,20 +88,15 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   root: {
-    maxWidth: 350,
+    width: '100%',
+    backgroundColor: theme.palette.background.paper,
   },
-  rootpaper: {
-    display: 'flex',
-    '& > *': {
-      height: theme.spacing(5),
-      width: '500px',
-
-      
-    },
+  inline: {
+    display: 'inline',
   },
   media: {
     height: 0,
-    paddingTop: '56.25%', // 16:9
+    paddingTop: '56.25%', 
   },
   expand: {
     transform: 'rotate(0deg)',
@@ -135,7 +109,7 @@ const useStyles = makeStyles((theme) => ({
     transform: 'rotate(180deg)',
   },
   avatar: {
-    backgroundColor: red[500],
+    backgroundColor: lightBlue[500],
   },
   icon: {
     marginRight: theme.spacing(2),
@@ -146,6 +120,21 @@ const useStyles = makeStyles((theme) => ({
   },
   heroButtons: {
     marginTop: theme.spacing(4),
+  },
+  cardGrid: {
+    paddingTop: theme.spacing(8),
+    paddingBottom: theme.spacing(8),
+  },
+  card: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  cardMedia: {
+    paddingTop: '56.25%', 
+  },
+  cardContent: {
+    flexGrow: 1,
   },
   footer: {
     backgroundColor: theme.palette.background.paper,
@@ -216,29 +205,38 @@ const useStyles = makeStyles((theme) => ({
     }),
     marginLeft: 0,
   },
-  logo:{
-    margin: theme.spacing(1),
-    height:'100px',
-    width:'100px',
-    left:'200px'
-  },
   logobinus:{
     margin: theme.spacing(1),
     height:'73px',
     width:'122px',
     left:'200px'
   },
+  logoPH:{
+    margin: theme.spacing(1),
+    height:'146px',
+    width:'244px',
+    left:'200px'
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
 
 }));
 
+const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-export default function ProfileEdits() {
+export default function Notification() {
   const classes = useStyles();
+  const [expanded, setExpanded] = React.useState(false);
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
-  const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const handleProfileMenuOpen = (event) => {
@@ -249,29 +247,11 @@ export default function ProfileEdits() {
     setMobileMoreAnchorEl(null);
   };
 
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
-  };
-
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
   const menuId = 'primary-search-account-menu';
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      
-    </Menu>
-  );
 
   const mobileMenuId = 'primary-search-account-menu-mobile';
   const renderMobileMenu = (
@@ -329,11 +309,11 @@ export default function ProfileEdits() {
   
 
   return (
-    <ThemeProvider theme={theme}>
     <React.Fragment>
       <CssBaseline />
+      {/* ToolBar */}
       <div className={classes.grow}>
-      <AppBar color= 'white' position="static" className={clsx(classes.appBar, {
+      <AppBar  position="static" color='white' className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}
         >
@@ -347,11 +327,10 @@ export default function ProfileEdits() {
           >
             <MenuIcon />
           </IconButton>
-
           <Link to ='/' style={{ textDecoration: 'none' , color: '#000000' }}>
           <img src={logo} className="App-logo" alt="logo" width= '100px'/>
           </Link>
-
+          
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -367,16 +346,40 @@ export default function ProfileEdits() {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            {/* <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <MailIcon />
-              </Badge>
-            </IconButton> */}
+          <FormControl className={classes.formControl}>
+            <InputLabel htmlFor="grouped-select">Filtering</InputLabel>
+            <Select defaultValue="" id="grouped-select">
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              <ListSubheader>Sort 1</ListSubheader>
+              <MenuItem value='Filter 1.1'>Filter 1.1</MenuItem>
+              <MenuItem value='Filter 1.2'>Filter 1.2</MenuItem>
+              <ListSubheader>Sort 2</ListSubheader>
+              <MenuItem value='Filter 2.1'>Filter 2.1</MenuItem>
+              <MenuItem value='Filter 2.2'>Filter 2.2</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl className={classes.formControl}>
+            <InputLabel htmlFor="grouped-select">Sorting</InputLabel>
+            <Select defaultValue="" id="grouped-select">
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              <ListSubheader>Sort 1</ListSubheader>
+              <MenuItem value='Sort 1.1'>Sort 1.1</MenuItem>
+              <MenuItem value='Sort 1.2'>Sort 1.2</MenuItem>
+              <ListSubheader>Sort 2</ListSubheader>
+              <MenuItem value='Sort 2.1'>Sort 2.1</MenuItem>
+              <MenuItem value='Sort 2.2'>Sort 2.2</MenuItem>
+            </Select>
+          </FormControl>
             <IconButton aria-label="show 17 new notifications" color="inherit">
               <Badge badgeContent={17} color="secondary">
                 <NotificationsIcon />
               </Badge>
             </IconButton>
+
             <Link to ='/ProfileStudent' style={{ textDecoration: 'none' , color: '#000000' }}>
             <IconButton
               edge="end"
@@ -387,7 +390,10 @@ export default function ProfileEdits() {
               color="inherit"
             >
 
-              
+              <Typography component="h6" variant="BUTTON TEXT" align="center" color="inherit" >
+              Login
+              </Typography>
+              <span/>
               <AccountCircle />
               
             </IconButton>
@@ -416,7 +422,7 @@ export default function ProfileEdits() {
         }}
       >
         <div className={classes.drawerHeader}>
-          <Grid justify="center" alignItem="center" container spacing={1}>
+        <Grid justify="center" alignItem="center" container spacing={1}>
             <Grid item >
               <img src={logo} className={classes.logobinus} alt="logo" />
           </Grid>
@@ -426,16 +432,16 @@ export default function ProfileEdits() {
           </IconButton>
         </div>
         <Divider />
-        <List>
-          {/* {['MyProfile', 'Dashboard', 'Notification', 'Settings'].map((text) => ( */}
-            <List component="nav" aria-label="main mailbox folders">
-
+        {/* Side Bar */}
+        <List component="nav" aria-label="main mailbox folders">
+         <Link to ='/ProfileStudent' style={{ textDecoration: 'none' , color: '#000000'}}>
             <ListItem button>
               <ListItemIcon>
                 <AccountCircle />
               </ListItemIcon>
               <ListItemText primary="MyProfile" />
             </ListItem>
+          </Link>
 
             <Link to ='/' style={{ textDecoration: 'none' , color: '#000000'}} >
               <ListItem button>
@@ -446,14 +452,25 @@ export default function ProfileEdits() {
               </ListItem>
             </Link>
 
+            <Link to ='/Notification' style={{ textDecoration: 'none' , color: '#000000'}}>
             <ListItem button>
-              <ListItemIcon> 
+              <ListItemIcon>
                 <Badge badgeContent={17} color="secondary"> 
                   <NotificationsIcon />
                 </Badge>
               </ListItemIcon>
               <ListItemText primary="Notification" />
             </ListItem>
+            </Link>
+
+            <Link to ='/History' style={{ textDecoration: 'none' , color: '#000000'}}>
+            <ListItem button>
+              <ListItemIcon>
+                  <HistoryIcon />
+              </ListItemIcon>
+              <ListItemText primary="History" />
+            </ListItem>
+            </Link>
 
             <ListItem button>
               <ListItemIcon>
@@ -462,115 +479,52 @@ export default function ProfileEdits() {
               <ListItemText primary="Settings" />
             </ListItem>
           </List>
-          {/* ))} */}
-        </List>
+
         <Divider />
-        
       </Drawer>
       {renderMobileMenu}
-      {renderMenu}
     </div>
       <main>
+        {/* The Projects */}
         <div className={classes.heroContent}>
           <Container maxWidth="sm">
-            <Typography component="h1" variant="h4" align="center" color="inherit" gutterBottom>
-              Profile Editing
+            <Typography component="h1" variant="h4" align="center" color="intherit" gutterBottom>
+              Notification
             </Typography>
-            <Grid justify="center" alignItem="center" container spacing={2}>
-                    <Grid item >
-                      <img src={profile} className={classes.logo} alt="logo" />
-                    </Grid>
-            </Grid>
-   
-            
           </Container>
         </div>
-        <Divider variant="middle"/>
-        <Container>
-        <Typography component="h6" variant="h6" color="inherit" gutterBottom>
-           Change Profile
-        </Typography>
-
-          <Grid classes={{label: classes.label}} fullWidth textTransform='none' style={{justifyContent: "flex-start"}} >
-          
-            <TextField disabled id="standard-disabled" label="Name" defaultValue="Student A" fullWidth/>
-
+        <List className={classes.root}>
+            <ListItem alignItems="flex-start">
+                <ListItemAvatar>
+                <Avatar alt="Remy Sharp" src={orng} />
+                </ListItemAvatar>
+                <img src={PH} className={classes.logoPH} alt="logo" />
+                <ListItemText
+                primary="Dog date app"
+                secondary={
+                    <React.Fragment>
+                    <Typography
+                        component="span"
+                        variant="body2"
+                        className={classes.inline}
+                        color="textPrimary"
+                    >
+                        Remy Sharp
+                    </Typography>
+                    {" — Do you feel your dog is lonely, you can just…"}
+                    <Typography variant="body2" color="textSecondary" component="p">
+                      Submited at: September 14, 2020
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                      Verified by: Lecturer A
+                    </Typography>
+                    </React.Fragment>
+                }
+                />
+            </ListItem>
             
-
-            <TextField disabled id="standard-disabled" label="Major" defaultValue="Computer Science" fullWidth/>
-
-            
-            <div>
-              <TextField
-              id="standard-required"
-              label="Email"
-              fullWidth
-              // autoComplete="current-password"
-              />
-            </div>
-            
-            <div>
-            <TextField disabled id="standard-disabled" label="Binusian ID" defaultValue="2201XXXXX5" fullWidth/>
-            </div>
-            
-            <FormControl className={classes.formControl} fullWidth>
-            <InputLabel htmlFor="grouped-select">Course</InputLabel>
-            <Select defaultValue="" id="grouped-select">
-              <MenuItem value='All Course'>All Course</MenuItem>
-              <MenuItem value='Web Development'>Web Development</MenuItem>
-              <MenuItem value='Web Design'>Web Design</MenuItem>
-              <MenuItem value='App Development'>App Development</MenuItem>
-              <MenuItem value='AI'>AI</MenuItem>
-              <MenuItem value='Data Mining'>Data Mining</MenuItem>
-            </Select>
-          </FormControl>
-            <h6>
-              <br/>
-            </h6> 
-          </Grid>
-        
-        </Container>
-        <Divider variant="middle"/>
-        <Container>
-        <Typography component="h6" variant="h6" color="inherit" gutterBottom>
-           Change Password
-        </Typography>
-        <Grid classes={{label: classes.label}} fullWidth textTransform='none' style={{justifyContent: "flex-start"}}>
-
-        <div>
-          <TextField
-          id="standard-password-input"
-          label="Change Password"
-          type="password"
-          fullWidth
-          autoComplete="current-password"
-          />
-        </div>
-
-        <Grid >
-          <TextField
-          id="standard-password-input"
-          label="Confirm Password"
-          type="password"
-          fullWidth
-          autoComplete="current-password"
-          />
-        </Grid>
-        <h6>
-          <br/>
-        </h6> 
-        </Grid>
-        </Container>
-        <Divider variant="middle"/>
-        <Container>
-        <Grid >
-        <Button variant="contained" color="primary">
-          Confirm
-        </Button>
-        </Grid>
-        </Container>
+            </List>
       </main>
     </React.Fragment>
-    </ThemeProvider>
   );
 }
