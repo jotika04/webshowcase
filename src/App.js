@@ -9,6 +9,9 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import ConfirmPage from "./components/pages/ConfirmPage"
 import SubmissionPage from "./components/pages/Submission";
 import { SubmitProcess } from "./components/pages/SubmitProcess";
+import PersonList from "./components/testing/PersonList";
+import Getdatatest from "./components/testing/Getdatatest";
+import Test from "./components/testing/Test";
 
 
 function App() {
@@ -24,6 +27,9 @@ function App() {
           <Route exact path='/submission' component={SubmissionPage} />
           <Route exact path='/confirmsubmission' component={ConfirmPage}/>
           <Route exact path='/submit' component={SubmitProcess}/>
+          <Route exact path='/testing' component={PersonList}/>
+          <Route exact path='/test' component={Getdatatest}/>
+          <Route exact path='/test2' component={Test}/>
         </Switch>
       </Router>
     </div>
