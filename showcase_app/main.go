@@ -21,7 +21,7 @@ import (
 func connect_db() {
 	var err error
 	// database.DBConn, err = sql.Open("mysql", "root:my-secret-pw@tcp(127.0.0.1:3306)/showcasedb?parseTime=true")
-	database.DBConn, err = sql.Open("mysql", "root:my-secret-pw@tcp(mysql:3306)/")
+	database.DBConn, err = sql.Open("mysql", "root:my-secret-pw@tcp(mysql:3306)/showcasedb")
 	database.DBConn.SetMaxIdleConns(0)                  //No Idle connection
 	database.DBConn.SetMaxOpenConns(400)                //Max connection to 400
 	database.DBConn.SetConnMaxLifetime(time.Second * 5) //Connection dies after 5 seconds
@@ -39,6 +39,7 @@ func connect_db() {
 		panic(err)
 	}
 	fmt.Println("showcasedb is successfully created")
+
 }
 
 func setupRoutes(app *fiber.App) {

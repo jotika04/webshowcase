@@ -9,16 +9,23 @@ import(
 type Project struct {
 	ProjectID int `json:"projectID"`
 	UserID int `json:"userID"`
-	CourseID int `json:"courseID"`
+	Course string `json:"course"`
 	ProjectName string `json:"projectName"`
 	Description string `json:"description"`
 	Verified bool `json:"verified"`
-	ProjectImagePath string `json:"projectImagePath"`
+	ProjectImage string `json:"projectImage"`
+	ProjectVideo string `json:"projectVideo"`
+	ProjectThumbnail string `json:"projectThumbnail"`
 
 }
 
 type HTTPError struct {
 	Status  string
+	Message string
+}
+
+type RequestResponse struct {
+	Status  int
 	Message string
 }
 
@@ -28,17 +35,27 @@ func GetProject(c *fiber.Ctx)error{
 	var project Project
 
     err := db.QueryRow(`
-        SELECT projectID, 
+        SELECT projectID,
+        userID,
+        course, 
         projectName, 
         description, 
-        verified 
+        verified,
+        projectImage,
+        projectVideo,
+        projectThumbnail 
         FROM project WHERE projectID=?
         `, projectID).
         Scan(
             &project.ProjectID,
+            &project.UserID,
+            &project.Course,
             &project.ProjectName,
             &project.Description, 
             &project.Verified,
+            &project.ProjectImage,
+            &project.ProjectVideo,
+            &project.ProjectThumbnail,
             
         )
 		if err != nil {
@@ -58,9 +75,15 @@ func SubmitProject(c *fiber.Ctx)error{
 	if err := c.BodyParser(project); err != nil {
             return err
     }
+
+    // convert image and video to base64
+    
     projectStatus := false
 
-	db.Exec("INSERT into project (projectName, description, verified) values (?,?,?)", project.ProjectName, project.Description, projectStatus)
+	db.Exec("INSERT into project (course, projectName, description, verified, projectImage, projectVideo, projectThumbnail) values (?,?,?,?,?,?,?)", project.Course, project.ProjectName, project.Description, projectStatus, project.ProjectImage, project.ProjectVideo, project.ProjectThumbnail)
 
-	return c.JSON("Project Submission Success")
+	return c.JSON(RequestResponse{
+		Status: 201,
+		Message: "Project Submission Success",
+	})
 }

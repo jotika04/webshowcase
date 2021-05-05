@@ -6,8 +6,9 @@ services:
       - "3306:3306"
     environment: 
       - MYSQL_ROOT_PASSWORD=my-secret-pw
+      - MYSQL_DATABASE=showcasedb
     volumes:
-      - ./mysqlvol:/var/lib/mysql
+      - ./dump.sql:/docker-entrypoint-initdb.d/
   showcaseapi: 
     build: ./showcase_app/
     volumes:
@@ -26,5 +27,3 @@ services:
         - WAIT_HOSTS_TIMEOUT=300
         - WAIT_SLEEP_INTERVAL=30
         - WAIT_HOST_CONNECT_TIMEOUT=30
-volumes:
-  mysqlvol:
