@@ -1,0 +1,30 @@
+version: "3.9"
+services:
+  elasticsearch:
+    image: "elasticsearch:7.12.0"
+    container_name: elasticsearch
+    ports: 
+      - "9200:9200"
+      - "9300:9300"
+    environment: 
+      - cluster.name=web_showcase
+      - discovery.type=single-node
+      - node.name=node-1
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://elasticsearch:9200"]
+      interval: 3s
+      timeout: 1s
+  fastapi: 
+    build: ./search_app/
+    volumes:
+      - ./search_app/app:/app
+    ports:
+      - "8000:80"
+    depends_on:
+      - elasticsearch
+    links:
+      - elasticsearch
+    environment:
+      - ELASTIC_URL=http://elasticsearch:9200
+    entrypoint: /start-reload.sh
+   
