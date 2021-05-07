@@ -1,19 +1,14 @@
 import React from 'react';
 import clsx from 'clsx';
-import {CardActions, CardContent, CardMedia, CssBaseline, Grid, Toolbar, Typography, Container, Card, 
-  AppBar, CardHeader, Avatar, IconButton, InputBase, Badge, Menu, MenuItem, Drawer, List, Divider, 
-  ListItem, ListItemIcon, ListItemText, InputLabel, FormControl, Select, ListSubheader } 
-  from '@material-ui/core';
+import { Grid, Toolbar, Typography, AppBar,  IconButton, InputBase, Badge, Menu, MenuItem, Drawer, List, Divider, 
+  ListItem, ListItemIcon, ListItemText, InputLabel, FormControl, Select, ListSubheader } from '@material-ui/core';
 import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
 import { lightBlue } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import CommentIcon from '@material-ui/icons/Comment';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -22,6 +17,8 @@ import logo from 'E:/React Projects/my-app/src/image/Binuslogo.png';
 import HomeIcon from '@material-ui/icons/Home';
 import SettingsIcon from '@material-ui/icons/Settings';
 import HistoryIcon from '@material-ui/icons/History';
+import LibraryAddCheckIcon from '@material-ui/icons/LibraryAddCheck';
+
 
 
 const drawerWidth = 240;
@@ -200,7 +197,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function Sidebar() {
+export default function SidebarLecturer() {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -303,10 +300,11 @@ export default function Sidebar() {
           >
             <MenuIcon />
           </IconButton>
-          <Link to ='/' style={{ textDecoration: 'none' , color: '#000000' }}>
+
+          <Link to ='/DashboardLecturer' style={{ textDecoration: 'none' , color: '#000000' }}>
           <img src={logo} className="App-logo" alt="logo" width= '100px'/>
           </Link>
-          
+
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -322,41 +320,41 @@ export default function Sidebar() {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-          <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="grouped-select">Filtering</InputLabel>
-            <Select defaultValue="" id="grouped-select">
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <ListSubheader>Sort 1</ListSubheader>
-              <MenuItem value='Filter 1.1'>Filter 1.1</MenuItem>
-              <MenuItem value='Filter 1.2'>Filter 1.2</MenuItem>
-              <ListSubheader>Sort 2</ListSubheader>
-              <MenuItem value='Filter 2.1'>Filter 2.1</MenuItem>
-              <MenuItem value='Filter 2.2'>Filter 2.2</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="grouped-select">Sorting</InputLabel>
-            <Select defaultValue="" id="grouped-select">
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <ListSubheader>Sort 1</ListSubheader>
-              <MenuItem value='Sort 1.1'>Sort 1.1</MenuItem>
-              <MenuItem value='Sort 1.2'>Sort 1.2</MenuItem>
-              <ListSubheader>Sort 2</ListSubheader>
-              <MenuItem value='Sort 2.1'>Sort 2.1</MenuItem>
-              <MenuItem value='Sort 2.2'>Sort 2.2</MenuItem>
-            </Select>
-          </FormControl>
+            
+            
+            <FormControl className={classes.formControl}>
+                <InputLabel htmlFor="grouped-select">Filtering</InputLabel>
+                <Select defaultValue="" id="grouped-select">
+                <MenuItem value="">
+                    <em>None</em>
+                </MenuItem>
+                <MenuItem value='Filter 1.1'>Filter 1.1</MenuItem>
+                <MenuItem value='Filter 1.2'>Filter 1.2</MenuItem>
+                <MenuItem value='Filter 2.1'>Filter 2.1</MenuItem>
+                <MenuItem value='Filter 2.2'>Filter 2.2</MenuItem>
+                </Select>
+            </FormControl>
+            <FormControl className={classes.formControl}>
+                <InputLabel htmlFor="grouped-select">Sorting</InputLabel>
+                <Select defaultValue="" id="grouped-select">
+                <MenuItem value="">
+                    <em>None</em>
+                </MenuItem>
+                <ListSubheader>Sort 1</ListSubheader>
+                <MenuItem value='Sort 1.1'>Sort 1.1</MenuItem>
+                <MenuItem value='Sort 1.2'>Sort 1.2</MenuItem>
+                <ListSubheader>Sort 2</ListSubheader>
+                <MenuItem value='Sort 2.1'>Sort 2.1</MenuItem>
+                <MenuItem value='Sort 2.2'>Sort 2.2</MenuItem>
+                </Select>
+            </FormControl>
             <IconButton aria-label="show 17 new notifications" color="inherit">
               <Badge badgeContent={17} color="secondary">
                 <NotificationsIcon />
               </Badge>
             </IconButton>
 
-            <Link to ='/frontlogin' style={{ textDecoration: 'none' , color: '#000000' }}>
+            <Link to ='/ProfileStudent' style={{ textDecoration: 'none' , color: '#000000' }}>
             <IconButton
               edge="end"
               aria-label="account of current user"
@@ -367,7 +365,7 @@ export default function Sidebar() {
             >
 
               <Typography component="h6" variant="BUTTON TEXT" align="center" color="inherit" >
-              Login
+              Lecturer A
               </Typography>
               <span/>
               <AccountCircle />
@@ -419,7 +417,7 @@ export default function Sidebar() {
             </ListItem>
           </Link>
 
-            <Link to ='/' style={{ textDecoration: 'none' , color: '#000000'}} >
+            <Link to ='/DashboardLecturer' style={{ textDecoration: 'none' , color: '#000000'}} >
               <ListItem button>
                 <ListItemIcon>
                     <HomeIcon/>
@@ -448,12 +446,22 @@ export default function Sidebar() {
             </ListItem>
             </Link>
 
+            <Link to ='/Verification' style={{ textDecoration: 'none' , color: '#000000' }}> 
+              <ListItem button>
+                <ListItemIcon>
+                  <LibraryAddCheckIcon />
+                </ListItemIcon>
+                <ListItemText primary="Project Verification" />
+              </ListItem>
+            </Link>
+
             <ListItem button>
               <ListItemIcon>
                 <SettingsIcon />
               </ListItemIcon>
               <ListItemText primary="Settings" />
             </ListItem>
+
           </List>
 
         <Divider />

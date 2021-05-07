@@ -13,24 +13,17 @@ import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import MoreIcon from '@material-ui/icons/MoreVert';
-import Drawer from '@material-ui/core/Drawer';
-import List from '@material-ui/core/List';
+
 import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+
 import {  Link } from 'react-router-dom';
-import logo from 'E:/React Projects/my-app/src/image/Binuslogo.png';
+
 import profile from 'E:/React Projects/my-app/src/image/profile.png';
 import './Dashboard.css'
 import Paper from '@material-ui/core/Paper';
-import HomeIcon from '@material-ui/icons/Home';
-import SettingsIcon from '@material-ui/icons/Settings';
-import HistoryIcon from '@material-ui/icons/History';
+
+import Sidebar from './components/Sidebar';
+
 
 
 const drawerWidth = 240;
@@ -332,154 +325,9 @@ export default function ProfileStudent() {
     <ThemeProvider theme={theme}>
     <React.Fragment>
       <CssBaseline />
-      <div className={classes.grow}>
-      <AppBar color= 'white' position="static" className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
-        >
-        <Toolbar>
-        <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            className={clsx(classes.menuButton, open && classes.hide)}
-          >
-            <MenuIcon />
-          </IconButton>
-
-          <Link to ='/' style={{ textDecoration: 'none' , color: '#000000' }}>
-          <img src={logo} className="App-logo" alt="logo" width= '100px'/>
-          </Link>
-
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </div>
-          <div className={classes.grow} />
-          <div className={classes.sectionDesktop}>
-            {/* <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <MailIcon />
-              </Badge>
-            </IconButton> */}
-            <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={17} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <Link to ='/ProfileStudent' style={{ textDecoration: 'none' , color: '#000000'}}>
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-                
-                <AccountCircle />
-              
-            </IconButton>
-              </Link>
-          </div>
-          <div className={classes.sectionMobile}>
-            <IconButton
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
-          </div>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        className={classes.drawer}
-        variant="persistent"
-        anchor="left"
-        open={open}
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
-        <div className={classes.drawerHeader}>
-          <Grid justify="center" alignItem="center" container spacing={1}>
-            <Grid item >
-              <img src={logo} className={classes.logobinus} alt="logo" />
-          </Grid>
-        </Grid>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          </IconButton>
-        </div>
-        <Divider />
-        <List>
-          {/* {['MyProfile', 'Dashboard', 'Notification', 'Settings'].map((text) => ( */}
-            <List component="nav" aria-label="main mailbox folders">
-
-            <ListItem button>
-              <ListItemIcon>
-                <AccountCircle />
-              </ListItemIcon>
-              <ListItemText primary="MyProfile" />
-            </ListItem>
-
-            <Link to ='/' style={{ textDecoration: 'none' , color: '#000000'}} >
-              <ListItem button>
-                <ListItemIcon>
-                    <HomeIcon/>
-                </ListItemIcon>
-                <ListItemText primary="Dashboard" />
-              </ListItem>
-            </Link>
-
-            <Link to ='/Notification' style={{ textDecoration: 'none' , color: '#000000'}}>
-            <ListItem button>
-              <ListItemIcon>
-                <Badge badgeContent={17} color="secondary"> 
-                  <NotificationsIcon />
-                </Badge>
-              </ListItemIcon>
-              <ListItemText primary="Notification" />
-            </ListItem>
-            </Link>
-
-            <Link to ='/History' style={{ textDecoration: 'none' , color: '#000000'}}>
-            <ListItem button>
-              <ListItemIcon>
-                  <HistoryIcon />
-              </ListItemIcon>
-              <ListItemText primary="History" />
-            </ListItem>
-            </Link>
-
-            <ListItem button>
-              <ListItemIcon>
-                <SettingsIcon />
-              </ListItemIcon>
-              <ListItemText primary="Settings" />
-            </ListItem>
-          </List>
-          {/* ))} */}
-        </List>
-        <Divider />
-        
-      </Drawer>
-      {renderMobileMenu}
+      <Sidebar/>
       {renderMenu}
-    </div>
+    
       <main>
         <div className={classes.heroContent}>
           <Container maxWidth="sm">

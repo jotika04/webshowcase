@@ -1,29 +1,16 @@
 import React from 'react';
 import clsx from 'clsx';
-import {CardActions, CardContent, CardMedia, CssBaseline, Grid, Toolbar, Typography, Container, Card, 
-  AppBar, CardHeader, Avatar, IconButton, InputBase, Badge, Menu, MenuItem, Drawer, List, Divider, 
-  ListItem, ListItemIcon, ListItemText, InputLabel, FormControl, Select, ListSubheader, Button } 
+import {CardActions, CardContent, CardMedia, CssBaseline, Grid, Typography, Container, Card, 
+   CardHeader, Avatar, IconButton,  Badge, Menu, MenuItem,  } 
   from '@material-ui/core';
 import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
 import { lightBlue } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
-import NotificationsIcon from '@material-ui/icons/Notifications';
+
 import CommentIcon from '@material-ui/icons/Comment';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import {  Link } from 'react-router-dom';
-import logo from 'E:/React Projects/my-app/src/image/Binuslogo.png';
-import HomeIcon from '@material-ui/icons/Home';
-import SettingsIcon from '@material-ui/icons/Settings';
-import MoreIcon from '@material-ui/icons/MoreVert';
-import LibraryAddCheckIcon from '@material-ui/icons/LibraryAddCheck';
-import HistoryIcon from '@material-ui/icons/History';
-import './Dashboard.css'
+import SidebarLecturer from './components/SidebarLecturer';
 
 
 
@@ -230,271 +217,21 @@ export default function DashboardLecturer() {
     setExpanded(!expanded);
   };
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
-
-
-  const handleMobileMenuOpen = (event) => {
-    setMobileMoreAnchorEl(event.currentTarget);
-  };
-
-  const menuId = 'primary-search-account-menu';
 
 
 
-  const mobileMenuId = 'primary-search-account-menu-mobile';
-  const renderMobileMenu = (
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      id={mobileMenuId}
-      keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
-    >
-      <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton aria-label="show 11 new notifications" color="inherit">
-          <Badge badgeContent={11} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>
-          Profile
-        </p>
-        
-      </MenuItem>
-    </Menu>
-  );
-  const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
 
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+
+
   
 
   return (
     <React.Fragment>
       <CssBaseline />
-      {/* ToolBar */}
-      <div className={classes.grow}>
-      <AppBar  position="static" color='white' className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
-        >
-        <Toolbar>
-        <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            className={clsx(classes.menuButton, open && classes.hide)}
-          >
-            <MenuIcon />
-          </IconButton>
-
-          <Link to ='/DashboardLecturer' style={{ textDecoration: 'none' , color: '#000000' }}>
-          <img src={logo} className="App-logo" alt="logo" width= '100px'/>
-          </Link>
-
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </div>
-          <div className={classes.grow} />
-          <div className={classes.sectionDesktop}>
-            
-            
-            <FormControl className={classes.formControl}>
-                <InputLabel htmlFor="grouped-select">Filtering</InputLabel>
-                <Select defaultValue="" id="grouped-select">
-                <MenuItem value="">
-                    <em>None</em>
-                </MenuItem>
-                <MenuItem value='Filter 1.1'>Filter 1.1</MenuItem>
-                <MenuItem value='Filter 1.2'>Filter 1.2</MenuItem>
-                <MenuItem value='Filter 2.1'>Filter 2.1</MenuItem>
-                <MenuItem value='Filter 2.2'>Filter 2.2</MenuItem>
-                </Select>
-            </FormControl>
-            <FormControl className={classes.formControl}>
-                <InputLabel htmlFor="grouped-select">Sorting</InputLabel>
-                <Select defaultValue="" id="grouped-select">
-                <MenuItem value="">
-                    <em>None</em>
-                </MenuItem>
-                <ListSubheader>Sort 1</ListSubheader>
-                <MenuItem value='Sort 1.1'>Sort 1.1</MenuItem>
-                <MenuItem value='Sort 1.2'>Sort 1.2</MenuItem>
-                <ListSubheader>Sort 2</ListSubheader>
-                <MenuItem value='Sort 2.1'>Sort 2.1</MenuItem>
-                <MenuItem value='Sort 2.2'>Sort 2.2</MenuItem>
-                </Select>
-            </FormControl>
-            <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={17} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-
-            <Link to ='/ProfileStudent' style={{ textDecoration: 'none' , color: '#000000' }}>
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-
-              <Typography component="h6" variant="BUTTON TEXT" align="center" color="inherit" >
-              Lecturer A
-              </Typography>
-              <span/>
-              <AccountCircle />
-              
-            </IconButton>
-              </Link>
-          </div>
-          <div className={classes.sectionMobile}>
-            <IconButton
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
-          </div>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        className={classes.drawer}
-        variant="persistent"
-        anchor="left"
-        open={open}
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
-        <div className={classes.drawerHeader}>
-        <Grid justify="center" alignItem="center" container spacing={1}>
-            <Grid item >
-              <img src={logo} className={classes.logobinus} alt="logo" />
-          </Grid>
-        </Grid>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          </IconButton>
-        </div>
-        <Divider />
-        {/* Side Bar */}
-        <List component="nav" aria-label="main mailbox folders">
-         <Link to ='/ProfileStudent' style={{ textDecoration: 'none' , color: '#000000'}}>
-            <ListItem button>
-              <ListItemIcon>
-                <AccountCircle />
-              </ListItemIcon>
-              <ListItemText primary="MyProfile" />
-            </ListItem>
-          </Link>
-
-            <Link to ='/DashboardLecturer' style={{ textDecoration: 'none' , color: '#000000'}} >
-              <ListItem button>
-                <ListItemIcon>
-                    <HomeIcon/>
-                </ListItemIcon>
-                <ListItemText primary="Dashboard" />
-              </ListItem>
-            </Link>
-
-            <Link to ='/Notification' style={{ textDecoration: 'none' , color: '#000000'}}>
-            <ListItem button>
-              <ListItemIcon>
-                <Badge badgeContent={17} color="secondary"> 
-                  <NotificationsIcon />
-                </Badge>
-              </ListItemIcon>
-              <ListItemText primary="Notification" />
-            </ListItem>
-            </Link>
-
-            <Link to ='/History' style={{ textDecoration: 'none' , color: '#000000'}}>
-            <ListItem button>
-              <ListItemIcon>
-                  <HistoryIcon />
-              </ListItemIcon>
-              <ListItemText primary="History" />
-            </ListItem>
-            </Link>
-
-            <Link to ='/Verification' style={{ textDecoration: 'none' , color: '#000000' }}> 
-              <ListItem button>
-                <ListItemIcon>
-                  <LibraryAddCheckIcon />
-                </ListItemIcon>
-                <ListItemText primary="Project Verification" />
-              </ListItem>
-            </Link>
-
-            <ListItem button>
-              <ListItemIcon>
-                <SettingsIcon />
-              </ListItemIcon>
-              <ListItemText primary="Settings" />
-            </ListItem>
-          
-
-          </List>
-
-        <Divider />
-      </Drawer>
-      {renderMobileMenu}
-    </div>
+      <SidebarLecturer/>
+    
       <main>
         {/* The Projects */}
         <div className={classes.heroContent}>

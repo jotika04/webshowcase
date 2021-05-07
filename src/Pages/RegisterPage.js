@@ -112,7 +112,7 @@ function RegisterPage() {
                     </Grid> */}
                   </Grid>
                 </form>
-                <Link to="/" style={{ textDecoration: 'none' }}>
+                <Link to="/frontlogin" style={{ textDecoration: 'none' }}>
                     <Button type='submit' variant="contained" color="primary" className={classes.submit} fullWidth>
                         Register
                     </Button>

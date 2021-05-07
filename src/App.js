@@ -13,6 +13,7 @@ import RegisterPage from './Pages/RegisterPage'
 import ConfirmPage from "./Pages/ConfirmPage"
 import SubmissionPage from "./Pages/Submission";
 import { SubmitProcess } from "./Pages/SubmitProcess";
+import Test from "./Pages/components/Test";
 
 
 // import logo from 'C:/Users/Ryo/webshowcase/src/image/site-logo.png';
@@ -40,6 +41,7 @@ function App() {
           <Route exact path='/Sidebar'  component={Sidebar} /> 
           <Route exact path='/History'  component={History} /> 
           <Route exact path='/Notification'  component={Notification} />
+          <Route exact path='/Test' component={Test}/>
         </Switch>
       </Router>
     </div>
