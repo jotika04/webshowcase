@@ -53,7 +53,7 @@ func setupRoutes(app *fiber.App) {
 	app.Get("/api/item/:id", GetItem)
 
 	app.Get("/api/user/:userID", auth.GetUser)
-	app.Post("/api/user/", auth.RegisterUser)
+	app.Post("/api/user/register", auth.RegisterUser)
 	app.Post("api/user/login", auth.Login)
 	app.Get("api/project/:projectID", project.GetProject)
 	app.Post("api/project/submit", project.SubmitProject)

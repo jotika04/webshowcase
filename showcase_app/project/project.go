@@ -71,19 +71,33 @@ func SubmitProject(c *fiber.Ctx)error{
 
 	project := new(Project)
 
-
 	if err := c.BodyParser(project); err != nil {
-            return err
+        return err
     }
 
-    // convert image and video to base64
-    
     projectStatus := false
 
-	db.Exec("INSERT into project (course, projectName, description, verified, projectImage, projectVideo, projectThumbnail) values (?,?,?,?,?,?,?)", project.Course, project.ProjectName, project.Description, projectStatus, project.ProjectImage, project.ProjectVideo, project.ProjectThumbnail)
+    userID := project.UserID
 
-	return c.JSON(RequestResponse{
-		Status: 201,
-		Message: "Project Submission Success",
-	})
+	err := db.QueryRow(`
+		Select userID From user Where userID=?
+		`, userID).
+		Scan(
+			&project.UserID,
+		)
+
+	if err == nil{
+		db.Exec("INSERT into project (userID, course, projectName, description, verified, projectImage, projectVideo, projectThumbnail) values (?,?,?,?,?,?,?,?)", project.UserID, project.Course, project.ProjectName, project.Description, projectStatus, project.ProjectImage, project.ProjectVideo, project.ProjectThumbnail)
+
+		return c.JSON(RequestResponse{
+			Status: 201,
+			Message: "Project Submission Success",
+		})
+	} else{
+		return c.JSON(RequestResponse{
+			Status: 201,
+			Message: "User does not exist",
+		})
+	}
+	
 }
