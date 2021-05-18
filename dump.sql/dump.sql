@@ -39,6 +39,36 @@ LOCK TABLES `course` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `notification`
+--
+
+DROP TABLE IF EXISTS `notification`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `notification` (
+  `notificationID` int NOT NULL AUTO_INCREMENT,
+  `userID` int NOT NULL,
+  `projectID` int NOT NULL,
+  `notif_text` varchar(255) DEFAULT '',
+  PRIMARY KEY (`notificationID`),
+  KEY `fk_userID` (`userID`),
+  KEY `fk_projectID` (`projectID`),
+  CONSTRAINT `fk_projectID_notif` FOREIGN KEY (`projectID`) REFERENCES `project` (`projectID`),
+  CONSTRAINT `fk_userID_notif` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `notification`
+--
+
+LOCK TABLES `notification` WRITE;
+/*!40000 ALTER TABLE `notification` DISABLE KEYS */;
+INSERT INTO `notification` VALUES (1,33,6,'testing'),(2,33,6,'testingagain');
+/*!40000 ALTER TABLE `notification` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `project`
 --
 
@@ -58,7 +88,7 @@ CREATE TABLE `project` (
   PRIMARY KEY (`projectID`),
   KEY `fk_userID` (`userID`),
   CONSTRAINT `fk_userID` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -67,6 +97,7 @@ CREATE TABLE `project` (
 
 LOCK TABLES `project` WRITE;
 /*!40000 ALTER TABLE `project` DISABLE KEYS */;
+INSERT INTO `project` VALUES (6,'newproject','this is my project',0,'test','path','path','path',33);
 /*!40000 ALTER TABLE `project` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -138,4 +169,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-05-11 11:36:57
+-- Dump completed on 2021-05-18 15:11:37

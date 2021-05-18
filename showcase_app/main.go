@@ -10,6 +10,7 @@ import (
 	"backend_rest/database"
 	_ "backend_rest/docs"
 	"backend_rest/project"
+	"backend_rest/notification"
 	"database/sql"
 	"fmt"
 	"log"
@@ -57,6 +58,7 @@ func setupRoutes(app *fiber.App) {
 	app.Post("api/user/login", auth.Login)
 	app.Get("api/project/:projectID", project.GetProject)
 	app.Post("api/project/submit", project.SubmitProject)
+	app.Get("api/user/notification/:userID", notification.GetNotification)
 
 }
 
