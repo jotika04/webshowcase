@@ -18,6 +18,7 @@ http://127.0.0.1:3000/api/user/register		: register
 http://127.0.0.1:3000/api/user/login		: login
 http://127.0.0.1:3000/api/project/:projectID	: return project info
 http://127.0.0.1:3000/api/project/submit	: submit project
+http://127.0.0.1:3000/api/user/notification/:userID	: return notifications
 ```
 
 # Reference
