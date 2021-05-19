@@ -88,6 +88,22 @@ func SubmitProject(c *fiber.Ctx)error{
 
 	if err == nil{
 		db.Exec("INSERT into project (userID, course, projectName, description, verified, projectImage, projectVideo, projectThumbnail) values (?,?,?,?,?,?,?,?)", project.UserID, project.Course, project.ProjectName, project.Description, projectStatus, project.ProjectImage, project.ProjectVideo, project.ProjectThumbnail)
+		
+		submit_notif := project.ProjectName + " Successfully Submitted"
+
+		var newproject Project
+		err := db.QueryRow(`
+		Select projectID From project Where projectName=? AND userID=?
+		`, project.ProjectName, project.UserID).
+		Scan(
+			&newproject.ProjectID,
+		)
+		if err != nil{
+			fmt.Println(err.Error())
+		}
+		// fmt.Println("Project ID is ...", newproject.ProjectID)
+
+		db.Exec("INSERT into notification (userID, projectID, notif_text) values (?,?,?)", project.UserID, newproject.ProjectID, submit_notif)
 
 		return c.JSON(RequestResponse{
 			Status: 201,
