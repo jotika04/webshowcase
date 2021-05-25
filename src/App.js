@@ -9,11 +9,13 @@ import History from './Pages/History';
 import Notification from './Pages/Notification';
 import FrontLogin from './Pages/FrontLogin';
 import LoginPage from './Pages/LoginPage';
-import RegisterPage from './Pages/RegisterPage'
-import ConfirmPage from "./Pages/ConfirmPage"
+import RegisterPage from './Pages/RegisterPage';
+import ConfirmPage from "./Pages/ConfirmPage";
 import SubmissionPage from "./Pages/Submission";
 import { SubmitProcess } from "./Pages/SubmitProcess";
 import Test from "./Pages/components/Test";
+import Projectdetails from './Pages/Projectdetails';
+import Projectinfo from './Pages/Projectinfo';
 
 
 // import logo from 'C:/Users/Ryo/webshowcase/src/image/site-logo.png';
@@ -42,6 +44,8 @@ function App() {
           <Route exact path='/History'  component={History} /> 
           <Route exact path='/Notification'  component={Notification} />
           <Route exact path='/Test' component={Test}/>
+          <Route exact path='/Projectdetails' component={Projectdetails}/>
+          <Route exact path='/Projectinfo' component={Projectinfo}/>
         </Switch>
       </Router>
     </div>

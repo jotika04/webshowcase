@@ -6,14 +6,11 @@ import {CardActions, CardContent, CardMedia, CssBaseline, Grid, Toolbar, Typogra
   from '@material-ui/core';
 import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
 import { lightBlue } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import CommentIcon from '@material-ui/icons/Comment';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';

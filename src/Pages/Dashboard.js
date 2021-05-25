@@ -12,6 +12,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import CommentIcon from '@material-ui/icons/Comment';
 import Sidebar from './components/Sidebar';
+import {  Link } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -295,7 +296,7 @@ export default function Dashboard() {
       <main>
         {/* The Projects */}
         <div className={classes.heroContent}>
-          <Container maxWidth="sm">
+          <Container maxWidth="sm" >
             <Typography component="h1" variant="h4" align="center" color="intherit" gutterBottom>
               Recommendation
             </Typography>
@@ -320,13 +321,15 @@ export default function Dashboard() {
         title="Students"
         subheader="September 14, 2016"
       />
+      <Link to ='/Projectdetails' style={{ textDecoration: 'none' , color: '#000000' }}>
       <CardMedia
         className={classes.cardMedia}
         image="https://source.unsplash.com/random"
         title="Image title"
       />
+      </Link>
       <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
+        <Typography variant="body2" color="textSecondary" component="p" >
           This impressive paella is a perfect party dish and a fun meal to cook together with your
           guests. Add 1 cup of frozen peas along with the mussels, if you like.
         </Typography>
