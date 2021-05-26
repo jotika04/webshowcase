@@ -7,7 +7,7 @@ import Container from '@material-ui/core/Container';
 import MainFeaturedPost from './Projectcomp/MainFeaturedPost';
 import FeaturedPost from './Projectcomp/FeaturedPost';
 import Main from './Projectcomp/ProjectDescription';
-import post1 from 'E:/React Projects/my-app/src/Text//blog-post.1.md';
+import post1 from 'E:/React Projects/my-app/src/Text/blog-post.1.md';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import TwitterIcon from '@material-ui/icons/Twitter';
@@ -32,9 +32,9 @@ const useStyles = makeStyles((theme) => ({
 // };
 
 const Contactinfos = {
-    title: 'Contact',
+    title: 'Info',
     description:
-      'Etiam porta sem malesuada magna mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.',
+      'Info from the creator.',
     social: [
       { name: 'GitHub', icon: GitHubIcon },
       { name: 'Twitter', icon: TwitterIcon },
@@ -46,18 +46,18 @@ const posts = [post1];
 
 const featuredPosts = [
   {
-    title: 'Featured post',
+    title: 'Post??',
     date: 'Nov 12',
     description:
-      'This is a wider card with supporting text below as a natural lead-in to additional content.',
+      'Could be used for suggestions or just more pictures from the project.',
     image: 'https://source.unsplash.com/random',
     imageText: 'Image Text',
   },
   {
-    title: 'Post title',
+    title: 'Post 2',
     date: 'Nov 11',
     description:
-      'This is a wider card with supporting text below as a natural lead-in to additional content.',
+      'Could be used for suggestions or just more pictures from the project.',
     image: 'https://source.unsplash.com/random',
     imageText: 'Image Text',
   },

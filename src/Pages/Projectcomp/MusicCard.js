@@ -15,36 +15,32 @@ const styles = theme => ({
   
   mainFeaturedPostContent: {
     position: 'relative',
-    padding: theme.spacing(3),
+    // padding: theme.spacing(4),
+    width: '1050px',
+    height: '550px',
+    paddingRight: '0px',
     [theme.breakpoints.up('md')]: {
-      padding: theme.spacing(6),
-      paddingRight: 0,}
+      // padding: theme.spacing(12),
+      }
     },
-
 });
 
 function MusicCard(props) {
   const { classes } = props;
 
   return (
-
-      
-        
           <iframe
             id="video"
-            // className={classes.mainFeaturedPostContent}
+            className={classes.mainFeaturedPostContent}
             
             src={"https://www.youtube.com/embed/" + props.data.videoId}
             frameBorder="0"
             allow="accelerometer, autoplay; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
+            // style={{padding-left= 20px,padding-top=20px","padding-bottom:20px","width: 520px",height:340px,}}
           />
-        
- 
-      
-
-  );
-}
+        );
+      }
 
 MusicCard.propTypes = {
   classes: PropTypes.object.isRequired,
