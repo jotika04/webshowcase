@@ -1,15 +1,13 @@
 package auth
 
 import(
-	// Import Fiber Swagger
-	// "github.com/arsmn/fiber-swagger/v2"
-	// Import Go Fiber
 	"github.com/gofiber/fiber/v2"
-	// Side Effect import for auto-generated swagger documentation
-	// _ "boilerplate_go_rest/docs"
 	"backend_rest/database"
 	"golang.org/x/crypto/bcrypt"
 	"fmt"
+	"time"
+	jwt "github.com/form3tech-oss/jwt-go"
+	
 
 )
 
@@ -182,10 +180,26 @@ func Login(c *fiber.Ctx)error{
 		}
 	password_compare := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
 	if password_compare == nil {
-		return c.JSON(RequestResponse{
-			Status: 200,
-			Message: "Login Success",
-		})
+		// Create token
+		token := jwt.New(jwt.SigningMethodHS256)
+
+		// Set claims
+		claims := token.Claims.(jwt.MapClaims)
+		// claims["name"] = "John Doe"
+		// claims["admin"] = true
+		claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
+		// Generate encoded token and send it as response.
+		t, err := token.SignedString([]byte("secret"))
+		if err != nil {
+			return c.SendStatus(fiber.StatusInternalServerError)
+		}
+
+		return c.JSON(fiber.Map{"token": t})
+
+		// return c.JSON(RequestResponse{
+		// 	Status: 200,
+		// 	Message: "Login Success",
+		// })
 
 	} else {
 		return c.JSON(RequestResponse{

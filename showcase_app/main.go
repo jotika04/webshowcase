@@ -17,6 +17,8 @@ import (
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
+
+	jwtware "github.com/gofiber/jwt/v2"
 )
 
 func connect_db() {
@@ -78,6 +80,10 @@ func main() {
 	defer database.DBConn.Close()
 
 	setupRoutes(app)
+
+	app.Use(jwtware.New(jwtware.Config{
+		SigningKey: []byte("secret"),
+	}))
 
 	// Listen on the port '3000'
 	app.Listen(":3000")
