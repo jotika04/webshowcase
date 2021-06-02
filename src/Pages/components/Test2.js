@@ -12,8 +12,9 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import CommentIcon from '@material-ui/icons/Comment';
-import Sidebar from './components/Sidebar';
+import Sidebar from './Sidebar';
 import {  Link } from 'react-router-dom';
+import { SettingsSystemDaydreamTwoTone } from '@material-ui/icons';
 
 const drawerWidth = 240;
 
@@ -205,7 +206,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+const cards = [1, 2, 3];
 
 export default function Dashboard() {
   const classes = useStyles();
@@ -291,11 +292,19 @@ export default function Dashboard() {
   const url = 'https://ghibliapi.herokuapp.com/films'
   
   const [data, setData] = useState([])
-      
+
   useEffect(() => {
     axios.get(url).then(json => setData(json.data))
   }, [])
   
+//   useEffect(() => {
+//       axios.get(url)
+//         .then(json => setData(json.data))
+//         .then(res => res.json())
+//         .then(data => setFilms(data))
+//   }, [])
+  
+
   const renderTable = () => {
     return data.map(user => {
       return (
@@ -308,6 +317,15 @@ export default function Dashboard() {
       )
     })
   }
+//   const renderProducer = () => {
+//       return data.map (user => {
+//           return (
+//               <tr>
+//                   {user.title}
+//               </tr>
+//           )
+//       })
+//   }
       
 
   return (
@@ -328,8 +346,8 @@ export default function Dashboard() {
         </div>
         <Container className={classes.cardGrid} maxWidth="md">
           <Grid container spacing={4} justify="space-evenly">
-            {cards.map((card) => (
-              <Grid item key={card} xs={12} sm={10} md={4}>
+            {data.map((data) => (
+              <Grid item key={data.title} xs={12} sm={10} md={4}>
                 <Card className={classes.root}>
       <CardHeader
         avatar={
@@ -342,8 +360,8 @@ export default function Dashboard() {
             <MoreVertIcon />
           </IconButton>
         }
-        title="Students"
-        subheader="September 14, 2016"
+        title={data.title}
+        subheader={data.release_date}
       />
       <Link to ='/Projectdetails' style={{ textDecoration: 'none' , color: '#000000' }}>
       <CardMedia
@@ -354,8 +372,7 @@ export default function Dashboard() {
       </Link>
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p" >
-          This impressive paella is a perfect party dish and a fun meal to cook together with your
-          guests. Add 1 cup of frozen peas along with the mussels, if you like.
+          {/* {renderTable()} */}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>

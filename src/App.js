@@ -14,6 +14,7 @@ import ConfirmPage from "./Pages/ConfirmPage";
 import SubmissionPage from "./Pages/Submission";
 import { SubmitProcess } from "./Pages/SubmitProcess";
 import Test from "./Pages/components/Test";
+import Test2 from "./Pages/components/Test2";
 import Projectdetails from './Pages/Projectdetails';
 import Projectinfo from './Pages/Projectinfo';
 import ToDo from './Pages/ToDo';
@@ -44,6 +45,7 @@ function App() {
           <Route exact path='/History'  component={History} /> 
           <Route exact path='/Notification'  component={Notification} />
           <Route exact path='/Test' component={Test}/>
+          <Route exact path='/Test2' component={Test2}/>
           <Route exact path='/Projectdetails' component={Projectdetails}/>
           <Route exact path='/Projectinfo' component={Projectinfo}/>
           <Route exact path='/testing' component={ToDo}/>
