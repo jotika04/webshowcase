@@ -27,23 +27,25 @@ export default function ToDo() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleToggle = () => {
+    setOpen(!open);
+  };
   return (
     <div>
       <button
         type="button"
-        onClick={() => {
-          setOpen(!open);
-        }}
+        onClick={handleToggle}
       >
         Overlay testing
       </button>
       <Backdrop
-        className={classes.backdrop}
-        open={open}
-        onClick={() => {
-          setOpen(false);
-        }}
-      >
+          className={classes.backdrop}
+          open={open}
+          onClick={handleClose}
+        >
         {/* <CircularProgress color="inherit" /> */}
         {/* <Paper>
             <Projectinfo/>
