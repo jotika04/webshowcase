@@ -119,6 +119,10 @@ const useStyles = makeStyles((theme) => ({
   cardGrid: {
     paddingTop: theme.spacing(8),
     paddingBottom: theme.spacing(8),
+    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(1),
+    // marginLeft: "100px",
+    // marginRight: "100px"
   },
   card: {
     height: '100%',
@@ -126,7 +130,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
   },
   cardMedia: {
-    paddingTop: '56.25%', 
+    paddingTop: '65%', 
     overflow: "auto"
   },
   cardContent: {
@@ -219,7 +223,7 @@ const useStyles = makeStyles((theme) => ({
     height: "auto",
   },
   testroot: {
-      height: "1000px",
+      height: "900px",
       position: "relative",
       overflow: "auto",
     
@@ -367,10 +371,10 @@ export default function Dashboard() {
 
 
         </div>
-        <Container className={classes.cardGrid} maxWidth="md">
+        <Container className={classes.cardGrid} maxWidth="lg">
           <Grid container spacing={4} justify="space-evenly">
-            {data.map((data) => (
-              <Grid item key={data.title} xs={12} sm={10} md={4}>
+            {data.slice(0,8).map((data) => (
+              <Grid item key={data.title} xs={8} sm={6} md={4} lg={3} alignContent="center">
                 <Card className={classes.root}>
       <CardHeader
         avatar={
