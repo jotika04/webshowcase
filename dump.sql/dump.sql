@@ -16,6 +16,32 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `claim`
+--
+
+DROP TABLE IF EXISTS `claim`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `claim` (
+  `claimID` int NOT NULL AUTO_INCREMENT,
+  `issuer` varchar(255) DEFAULT NULL,
+  `expiresAt` int DEFAULT NULL,
+  `subject` varchar(255) DEFAULT NULL,
+  `issuedAt` int DEFAULT NULL,
+  PRIMARY KEY (`claimID`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `claim`
+--
+
+LOCK TABLES `claim` WRITE;
+/*!40000 ALTER TABLE `claim` DISABLE KEYS */;
+/*!40000 ALTER TABLE `claim` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `course`
 --
 
@@ -55,7 +81,7 @@ CREATE TABLE `notification` (
   KEY `fk_projectID` (`projectID`),
   CONSTRAINT `fk_projectID_notif` FOREIGN KEY (`projectID`) REFERENCES `project` (`projectID`),
   CONSTRAINT `fk_userID_notif` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -64,7 +90,7 @@ CREATE TABLE `notification` (
 
 LOCK TABLES `notification` WRITE;
 /*!40000 ALTER TABLE `notification` DISABLE KEYS */;
-INSERT INTO `notification` VALUES (1,33,6,'testing'),(2,33,6,'testingagain');
+INSERT INTO `notification` VALUES (1,33,6,'testing'),(2,33,6,'testingagain'),(9,34,22,'Project Successfully Submitted'),(10,33,23,'webdeb project Successfully Submitted');
 /*!40000 ALTER TABLE `notification` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -88,7 +114,7 @@ CREATE TABLE `project` (
   PRIMARY KEY (`projectID`),
   KEY `fk_userID` (`userID`),
   CONSTRAINT `fk_userID` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -97,7 +123,7 @@ CREATE TABLE `project` (
 
 LOCK TABLES `project` WRITE;
 /*!40000 ALTER TABLE `project` DISABLE KEYS */;
-INSERT INTO `project` VALUES (6,'newproject','this is my project',0,'test','path','path','path',33);
+INSERT INTO `project` VALUES (6,'newproject','this is my project',0,'test','path','path','path',33),(22,'newproject2','this is my project',0,'test','path','path','path',34),(23,'webdeb project','this is my project',0,'test','path','path','path',33);
 /*!40000 ALTER TABLE `project` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -147,7 +173,7 @@ CREATE TABLE `user` (
   PRIMARY KEY (`userID`),
   KEY `fk_roleID` (`roleID`),
   CONSTRAINT `fk_roleID` FOREIGN KEY (`roleID`) REFERENCES `role` (`roleID`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -156,7 +182,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (33,'bbb','ccc','$2a$10$vUIU0.LAFs6s2HoFT1CsyuWyc5Wmbprv2oFg9mKDY5O85iF9uh8n.',0,'',0,'abc@mail.com','aaa','',4),(34,'userfn','userln','$2a$10$QJ60Y/KKjimcC8nhaEvL.u.AJk8.m8f8j8iVr54NXykKg.Z2wqyEC',0,'',0,'testing@mail.com','testuser','',4);
+INSERT INTO `user` VALUES (33,'bbb','ccc','$2a$10$vUIU0.LAFs6s2HoFT1CsyuWyc5Wmbprv2oFg9mKDY5O85iF9uh8n.',0,'',0,'abc@mail.com','aaa','',4),(34,'userfn','userln','$2a$10$QJ60Y/KKjimcC8nhaEvL.u.AJk8.m8f8j8iVr54NXykKg.Z2wqyEC',0,'',0,'testing@mail.com','testuser','',4),(35,'test','user','$2a$10$HJd3/XB25rAtgBluGGkNvONKT1Y8aSXLZqMaDRnbm0koWb.xgd.fe',0,'',0,'testuser@mail.com','testuser','',4);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -169,4 +195,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-05-18 15:11:37
+-- Dump completed on 2021-06-03  6:37:42

@@ -52,15 +52,13 @@ func setupRoutes(app *fiber.App) {
 		DeepLinking: false,
 	}))
 
-	// Add endpoint to get an item by it's ID
-	app.Get("/api/item/:id", GetItem)
-
-	app.Get("/api/user/:userID", auth.GetUser)
-	app.Post("/api/user/register", auth.RegisterUser)
-	app.Post("api/user/login", auth.Login)
-	app.Get("api/project/:projectID", project.GetProject)
-	app.Post("api/project/submit", project.SubmitProject)
-	app.Get("api/user/notification/:userID", notification.GetNotification)
+	app.Get("/api/v1/user/:userID", auth.GetUser)
+	app.Post("/api/v1/user/register", auth.RegisterUser)
+	app.Post("api/v1/user/login", auth.Login)
+	app.Get("api/v1/get-access-token", auth. GetAccessToken)
+	app.Get("api/v1/project/:projectID", project.GetProject)
+	app.Post("api/v1/project/submit", project.SubmitProject)
+	app.Get("api/v1/user/notification/:userID", notification.GetNotification)
 
 }
 
@@ -89,32 +87,3 @@ func main() {
 	app.Listen(":3000")
 }
 
-// GetItem godoc
-// @Summary Get an item
-// @Description Get an item by its ID
-// @ID get-item-by-int
-// @Accept  json
-// @Produce  json
-// @Tags Item
-// @Param id path int true "Item ID"
-// @Success 200 {object} Item
-// @Failure 400 {object} HTTPError
-// @Failure 404 {object} HTTPError
-// @Failure 500 {object} HTTPError
-// @Router /api/item/{id} [get]
-func GetItem(c *fiber.Ctx) error {
-	fmt.Println("function getitem")
-	// Create new Item and returns it
-	return c.JSON(Item{
-		Id: c.Params("id"),
-	})
-}
-
-type Item struct {
-	Id string
-}
-
-type HTTPError struct {
-	Status  string
-	Message string
-}

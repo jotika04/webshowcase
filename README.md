@@ -13,12 +13,13 @@ and login using the username 'root' and the password 'my-secret-pw'
 
 ```
 Available Endpoints:
-http://127.0.0.1:3000/api/user/:userID			: return user info
-http://127.0.0.1:3000/api/user/register			: register
-http://127.0.0.1:3000/api/user/login			: login
-http://127.0.0.1:3000/api/project/:projectID		: return project info
-http://127.0.0.1:3000/api/project/submit		: submit project
-http://127.0.0.1:3000/api/user/notification/:userID	: return notifications
+http://127.0.0.1:3000/api/v1/user/:userID			: return user info
+http://127.0.0.1:3000/api/v1/user/register			: register
+http://127.0.0.1:3000/api/v1/user/login			: login
+http://127.0.0.1:3000/api/v1/user/get-access-token  : get new access token
+http://127.0.0.1:3000/api/v1/project/:projectID		: return project info
+http://127.0.0.1:3000/api/v1/project/submit		: submit project
+http://127.0.0.1:3000/api/v1/user/notification/:userID	: return notifications
 ```
 
 # Reference

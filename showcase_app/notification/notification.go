@@ -4,6 +4,8 @@ import(
 	"github.com/gofiber/fiber/v2"
 	"backend_rest/database"
 	"fmt"
+	"time"
+	util "backend_rest/util"
 )
 	
 
@@ -20,7 +22,37 @@ type HTTPError struct {
 }
 
 func GetNotification(c *fiber.Ctx)error{
+	now := time.Now().Unix()
+	claims, err := util.ExtractTokenMetadata(c)
+	if err != nil {
+        // Return status 500 and JWT parse error.
+        return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+            "error": true,
+            "msg":   err.Error(),
+        })
+    }
+    expires := claims.Expires
+
+    // Checking, if now time greather than expiration from JWT.
+    if now > expires {
+        // Return status 401 and unauthorized error message.
+        return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+            "error": true,
+            "msg":   "unauthorized, check expiration time of your token",
+        })
+    }
+
+
 	userID := c.Params("userID")
+
+	issuer := claims.Issuer
+    if issuer != userID{
+    	return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+            "error": true,
+            "msg":   "userID mismatch",
+        })
+    }
+
 	db := database.DBConn
 	var notifs []Notification
 
