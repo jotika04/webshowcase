@@ -7,12 +7,17 @@ import Container from '@material-ui/core/Container';
 import MainFeaturedPost from './Projectcomp/MainFeaturedPost';
 import FeaturedPost from './Projectcomp/FeaturedPost';
 import Main from './Projectcomp/ProjectDescription';
-import post1 from 'E:/React Projects/my-app/src/Text//blog-post.1.md';
+import post1 from 'E:/React Projects/my-app/src/Text/blog-post.1.md';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import Contact from './Projectcomp/Contactinfo';
 import Contactinfo from "./Projectcomp/Contactinfo";
+import Slider from "./Projectcomp/Slider";
+import MusicCard from "./Projectcomp/MusicCard";
+import {db} from "./Projectcomp/db";
+
+
 // import Footer from './Footer';
 
 
@@ -32,9 +37,10 @@ const useStyles = makeStyles((theme) => ({
 // };
 
 const Contactinfos = {
-    title: 'Contact',
+    title: 'The Creator',
     description:
-      'Etiam porta sem malesuada magna mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.',
+      'Name: Chelsea',
+      
     social: [
       { name: 'GitHub', icon: GitHubIcon },
       { name: 'Twitter', icon: TwitterIcon },
@@ -46,18 +52,18 @@ const posts = [post1];
 
 const featuredPosts = [
   {
-    title: 'Featured post',
+    title: 'Another Project 1',
     date: 'Nov 12',
     description:
-      'This is a wider card with supporting text below as a natural lead-in to additional content.',
+      'Could be used for suggestions or just more pictures from the project.',
     image: 'https://source.unsplash.com/random',
     imageText: 'Image Text',
   },
   {
-    title: 'Post title',
+    title: 'Another Project 2',
     date: 'Nov 11',
     description:
-      'This is a wider card with supporting text below as a natural lead-in to additional content.',
+      'Could be used for suggestions or just more pictures from the project.',
     image: 'https://source.unsplash.com/random',
     imageText: 'Image Text',
   },
@@ -76,20 +82,26 @@ export default function Projectinfo() {
         {/* <Header title="Blog" sections={sections} /> */}
     <main>
         <Container maxWidth="lg" >
-          <MainFeaturedPost >
-          </MainFeaturedPost>
+          
+          <Slider/>
           <Grid container spacing={4}>
             {featuredPosts.map((post) => (
               <FeaturedPost key={post.title} post={post} />
             ))}
           </Grid>
-          <Grid container spacing={5} className={classes.mainGrid}>
+          <Grid container spacing={6} className={classes.mainGrid}>
             <Main title="Description" posts={posts} />
             <Contactinfo
               title={Contactinfos.title}
               description={Contactinfos.description}
               social={Contactinfos.social}
             />
+            <MusicCard
+            align="center"
+            data={db.alternative[1]}
+            />
+            {/* <MainFeaturedPost >
+          </MainFeaturedPost> */}
           </Grid>
         </Container>
     </main>

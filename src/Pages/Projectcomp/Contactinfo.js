@@ -23,13 +23,13 @@ export default function Contactinfo(props) {
   return (
     <Grid item xs={12} md={4}>
       <Paper elevation={0} className={classes.sidebarAboutBox}>
-        <Typography variant="h6" gutterBottom>
+        <Typography variant="h5" gutterBottom>
           {title}
         </Typography>
         <Typography>{description}</Typography>
       </Paper>
-      <Typography variant="h6" gutterBottom className={classes.sidebarSection}>
-        Social
+      <Typography variant="h5" gutterBottom className={classes.sidebarSection}>
+        Social Link
       </Typography>
       {social.map((network) => (
         <Link display="block" variant="body1" href="#" key={network}>

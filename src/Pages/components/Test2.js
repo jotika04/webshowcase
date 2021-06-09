@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import clsx from 'clsx';
 import {CardActions, CardContent, CardMedia, CssBaseline, Grid, Typography, Container, Card, 
-   CardHeader, Avatar, IconButton, Badge, Menu, MenuItem, } 
+   CardHeader, Avatar, IconButton, Badge, Menu, MenuItem, ButtonBase, } 
   from '@material-ui/core';
 import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
 import { lightBlue } from '@material-ui/core/colors';
@@ -12,10 +12,22 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import CommentIcon from '@material-ui/icons/Comment';
-import Sidebar from './components/Sidebar';
+import Sidebar from './Sidebar';
+import Button from '@material-ui/core/Button'
+import Backdrop from "@material-ui/core/Backdrop";
+import Projectinfo from "../Projectinfo";
 import {  Link } from 'react-router-dom';
+import { SettingsSystemDaydreamTwoTone } from '@material-ui/icons';
 
 const drawerWidth = 240;
+
+function Copyright() {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center" >
+      Copyright © Computer Science Program, Faculty of Computing and Media,<br/> Binus University International 2021
+    </Typography>
+  );
+}
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -80,6 +92,9 @@ const useStyles = makeStyles((theme) => ({
   },
   root: {
     maxWidth: 350,
+    height: 400,
+    overflow:"auto",
+    // textOverflow:"ellipsis"
   },
   media: {
     height: 0,
@@ -104,6 +119,7 @@ const useStyles = makeStyles((theme) => ({
   heroContent: {
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(8, 0, 6),
+    whiteSpace: "nowrap"
   },
   heroButtons: {
     marginTop: theme.spacing(4),
@@ -111,6 +127,10 @@ const useStyles = makeStyles((theme) => ({
   cardGrid: {
     paddingTop: theme.spacing(8),
     paddingBottom: theme.spacing(8),
+    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(1),
+    // marginLeft: "100px",
+    // marginRight: "100px"
   },
   card: {
     height: '100%',
@@ -118,7 +138,8 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
   },
   cardMedia: {
-    paddingTop: '56.25%', 
+    paddingTop: '65%', 
+    overflow: "auto"
   },
   cardContent: {
     flexGrow: 1,
@@ -202,10 +223,24 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
     minWidth: 120,
   },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    // color: "#fff",
+    backgroundColor: 'transparent',
+    width: "auto",
+    height: "auto",
+  },
+  testroot: {
+      height: "900px",
+      position: "relative",
+      overflow: "auto",
+    
+    //   display: "inline-block",
+  }
 
 }));
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+const cards = [1, 2, 3];
 
 export default function Dashboard() {
   const classes = useStyles();
@@ -279,6 +314,7 @@ export default function Dashboard() {
   );
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [openOverlay, setOpenOverlay] = React.useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -288,14 +324,31 @@ export default function Dashboard() {
     setOpen(false);
   };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleToggle = () => {
+    setOpen(!open);
+  };
+
   const url = 'https://ghibliapi.herokuapp.com/films'
   
   const [data, setData] = useState([])
-      
+
   useEffect(() => {
     axios.get(url).then(json => setData(json.data))
   }, [])
+
   
+
+//   useEffect(() => {
+//       axios.get(url)
+//         .then(json => setData(json.data))
+//         .then(res => res.json())
+//         .then(data => setFilms(data))
+//   }, [])
+  
+
   const renderTable = () => {
     return data.map(user => {
       return (
@@ -317,19 +370,18 @@ export default function Dashboard() {
     
       <main>
         {/* The Projects */}
-        <div className={classes.heroContent}>
+        <div className={classes.heroContent} >
           <Container maxWidth="sm" >
             <Typography component="h1" variant="h4" align="center" color="inherit" gutterBottom>
               Recommendation
             </Typography>
           </Container>
 
-
         </div>
-        <Container className={classes.cardGrid} maxWidth="md">
+        <Container className={classes.cardGrid} maxWidth="lg">
           <Grid container spacing={4} justify="space-evenly">
-            {cards.map((card) => (
-              <Grid item key={card} xs={12} sm={10} md={4}>
+            {data.slice(0,12).map((data) => (
+              <Grid item key={data.title} xs={8} sm={6} md={4} lg={3} alignContent="center">
                 <Card className={classes.root}>
       <CardHeader
         avatar={
@@ -342,42 +394,64 @@ export default function Dashboard() {
             <MoreVertIcon />
           </IconButton>
         }
-        title="Students"
-        subheader="September 14, 2016"
+        title={data.title}
+        subheader={data.release_date}
       />
-      <Link to ='/Projectdetails' style={{ textDecoration: 'none' , color: '#000000' }}>
+
+
+
+      {/* <Link to ='/Projectdetails' style={{ textDecoration: 'none' , color: '#000000' }}> */}
+      {/* <ButtonBase> */}
       <CardMedia
         className={classes.cardMedia}
         image="https://source.unsplash.com/random"
         title="Image title"
       />
-      </Link>
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p" >
-          This impressive paella is a perfect party dish and a fun meal to cook together with your
-          guests. Add 1 cup of frozen peas along with the mussels, if you like.
+      {/* </ButtonBase> */}
+      {/* </Link> */}
+
+
+
+      <CardContent className={classes.cardControl} overflow="auto">
+        <Typography variant="body2" color="textSecondary" component="p">
+          {data.description}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
+          
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
         </IconButton>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
+         
+        <Button onClick={handleToggle}>
+            <IconButton
+            className={clsx(classes.expand, {
+                [classes.expandOpen]: expanded,
+            })}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="show more"
+            >
+                <CommentIcon /> 
+            </IconButton>
+        </Button>
+        <Backdrop
+            className={classes.backdrop}
+            open={open}
+            onClick={handleClose}
         >
-          <CommentIcon />
-        </IconButton>
+            <Card className={classes.testroot}>
+                <Projectinfo/>
+            </Card>
+      </Backdrop>
+
       </CardActions>
     </Card>
               </Grid>
             ))}
           </Grid>
         </Container>
+          <Copyright/>
       </main>
     </React.Fragment>
   );
