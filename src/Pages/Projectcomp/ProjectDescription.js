@@ -20,12 +20,12 @@ export default function ProjectDescription(props) {
 
   return (
     <Grid item xs={12} md={8}>
-      <Typography variant="h6" gutterBottom>
+      <Typography variant="h4" gutterBottom>
         {title}
       </Typography>
       <Divider />
       {/* {posts} */}
-      <Typography variant="p" gutterBottom>
+      <Typography variant="h5" gutterBottom>
         Definition and synonyms of of any description from the online English dictionary from Macmillan Education.
 
         This is the British English definition of of any description.View American English definition of of any description.

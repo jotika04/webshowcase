@@ -13,6 +13,11 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import Contact from './Projectcomp/Contactinfo';
 import Contactinfo from "./Projectcomp/Contactinfo";
+import Slider from "./Projectcomp/Slider";
+import MusicCard from "./Projectcomp/MusicCard";
+import {db} from "./Projectcomp/db";
+
+
 // import Footer from './Footer';
 
 
@@ -95,13 +100,19 @@ export default function Projectinfo() {
               <FeaturedPost key={post.title} post={post} />
             ))}
           </Grid>
-          <Grid container spacing={5} className={classes.mainGrid}>
+          <Grid container spacing={6} className={classes.mainGrid}>
             <Main title="Description" posts={posts} />
             <Contactinfo
               title={Contactinfos.title}
               description={Contactinfos.description}
               social={Contactinfos.social}
             />
+            <MusicCard
+            align="center"
+            data={db.alternative[1]}
+            />
+            {/* <MainFeaturedPost >
+          </MainFeaturedPost> */}
           </Grid>
         </Container>
     </div>

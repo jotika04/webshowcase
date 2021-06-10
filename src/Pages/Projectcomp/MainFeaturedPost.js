@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
   mainFeaturedPostContent: {
     position: 'relative',
-    padding: theme.spacing(3),
+    // padding: theme.spacing(3),
     [theme.breakpoints.up('md')]: {
       padding: theme.spacing(12),
       // paddingRight: 0,

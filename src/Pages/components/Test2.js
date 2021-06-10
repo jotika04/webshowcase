@@ -353,15 +353,7 @@ export default function Dashboard() {
     axios.get(url).then(json => setData(json.data))
   }, [])
 
-  
 
-//   useEffect(() => {
-//       axios.get(url)
-//         .then(json => setData(json.data))
-//         .then(res => res.json())
-//         .then(data => setFilms(data))
-//   }, [])
-  
 
   const renderTable = () => {
     return data.map(user => {
