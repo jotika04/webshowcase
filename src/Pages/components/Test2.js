@@ -15,6 +15,7 @@ import {CardActions, CardContent, CardMedia, CssBaseline, Grid, Typography, Cont
   import Sidebar from './Sidebar';
   import Button from '@material-ui/core/Button'
   import Modal from "@material-ui/core/Modal";
+  import Dialog from "@material-ui/core/Dialog"
   import Projectinfo from "../Projectinfo";
   import {  Link } from 'react-router-dom';
   import { SettingsSystemDaydreamTwoTone } from '@material-ui/icons';
@@ -219,19 +220,14 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 120,
   },
   backdrop: {
-    zIndex: theme.zIndex.drawer + 1,
-    color: "#fff",
-    backgroundColor: 'transparent',
-    maxWidth: "auto",
-    height: "auto",
-    paddingLeft: "450px",
-    paddingRight: "450px",
-    paddingTop: "30px",
+    fullWidth: "true",
+    maxWidth: "xs",
   },
   testroot: {
-      height: "1000px",
       position: "relative",
-      overflow: "auto",
+      padding: theme.spacing(4, 4, 8),
+      justify: "center",
+      minHeight: "300px"
     
     //   display: "inline-block",
   },
@@ -399,15 +395,13 @@ export default function Dashboard() {
 
 
 
-      {/* <Link to ='/Projectdetails' style={{ textDecoration: 'none' , color: '#000000' }}> */}
-      {/* <ButtonBase> */}
+      
       <CardMedia
         className={classes.cardMedia}
         image="https://source.unsplash.com/random"
         title="Image title"
       />
-      {/* </ButtonBase> */}
-      {/* </Link> */}
+     
 
 
 
@@ -436,36 +430,28 @@ export default function Dashboard() {
                 <CommentIcon /> 
             </IconButton>
         </Button>
-        
-
     </Card>
-              </Grid>
+  </Grid>
             ))}
           </Grid>
         </Container>
-        <Modal
-            className={classes.backdrop}
-            open={open}
-            onClick={handleClose}
-        >
-            <Card className={classes.testroot}>
-                <Projectinfo/>
-            </Card>
-      </Modal>
-          <Copyright >
-
-          </Copyright>
+          <Copyright/>
       </main>
-      <Modal
+      <Dialog
+            fullWidth={true}
+            maxWidth="md"
             className={classes.backdrop}
             open={open}
             onClose={handleClose}
       >
-
+        
+          <Grid>
             <Card className={classes.testroot}>
                 <Projectinfo/>
             </Card>
-      </Modal> 
+          </Grid>
+        
+      </Dialog> 
     </React.Fragment>
   );
 }

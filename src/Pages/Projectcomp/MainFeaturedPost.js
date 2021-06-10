@@ -54,7 +54,6 @@ export default function MainFeaturedPost(props) {
             data={db.alternative[1]}
             
             />
-            <h1>ASDASDADASASDd</h1>
           </div>
 
 

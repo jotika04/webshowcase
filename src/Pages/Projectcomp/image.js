@@ -9,6 +9,7 @@ const styles = theme => ({
     flexDirection: "column"
   },
   image: {
+    marginTop:'20px',
     width: "100%",
     maxHeight: 400,
     height: "auto"
@@ -16,7 +17,7 @@ const styles = theme => ({
   img: {
     width: "100%",
     maxHeight: 400,
-    height: "auto",
+    height: "100%",
   },
   titleBackground: {
     backgroundColor: theme.palette.common.black,
@@ -37,12 +38,12 @@ const Image = ({ classes, src, alt, title }) => (
     <div className={classes.image}>
       <img src={src} alt={alt} className={classes.img} />
     </div>
-    <div className={classes.title}>
+    {/* <div className={classes.title}>
       <Typography align="center" color="inherit">
         {title}
       </Typography>
     </div>
-    <div className={classes.titleBackground} />
+    <div className={classes.titleBackground} /> */}
   </div>
 );
 
