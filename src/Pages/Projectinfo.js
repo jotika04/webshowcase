@@ -20,6 +20,14 @@ const useStyles = makeStyles((theme) => ({
   mainGrid: {
     marginTop: theme.spacing(3),
   },
+  paper: {
+    position: "absolute",
+    width: 400,
+    backgroundColor: theme.palette.background.paper,
+    border: "2px solid #000",
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3)
+  },
 }));
 
 // const mainFeaturedPost = {
@@ -43,7 +51,11 @@ const Contactinfos = {
   };
 
 const posts = [post1];
+// const [data, setData] = useState([])
 
+//   useEffect(() => {
+//     axios.get(url).then(json => setData(json.data))
+//   }, [])
 const featuredPosts = [
   {
     title: 'Post??',
@@ -74,11 +86,11 @@ export default function Projectinfo() {
       <CssBaseline />
         
         {/* <Header title="Blog" sections={sections} /> */}
-    <main>
-        <Container maxWidth="lg" >
-          <MainFeaturedPost >
-          </MainFeaturedPost>
-          <Grid container spacing={4}>
+    <div>
+        <Container maxWidth="lg" classname={classes.paper}>
+          {/* <MainFeaturedPost >
+          </MainFeaturedPost> */}
+          <Grid container spacing={4} classname={classes.paper}>
             {featuredPosts.map((post) => (
               <FeaturedPost key={post.title} post={post} />
             ))}
@@ -92,7 +104,7 @@ export default function Projectinfo() {
             />
           </Grid>
         </Container>
-    </main>
+    </div>
       {/* <Footer title="Footer" description="Something here to give the footer a purpose!" /> */}
     </React.Fragment>
   );

@@ -28,9 +28,9 @@ export default function Contactinfo(props) {
         </Typography>
         <Typography>{description}</Typography>
       </Paper>
-      <Typography variant="h6" gutterBottom className={classes.sidebarSection}>
+      {/* <Typography variant="h6" gutterBottom className={classes.sidebarSection}>
         Social
-      </Typography>
+      </Typography> */}
       {social.map((network) => (
         <Link display="block" variant="body1" href="#" key={network}>
           <Grid container direction="row" spacing={1} alignItems="center">

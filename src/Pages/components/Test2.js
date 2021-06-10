@@ -14,10 +14,9 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import CommentIcon from '@material-ui/icons/Comment';
 import Sidebar from './Sidebar';
 import Button from '@material-ui/core/Button'
-import Backdrop from "@material-ui/core/Backdrop";
 import Projectinfo from "../Projectinfo";
-import {  Link } from 'react-router-dom';
-import { SettingsSystemDaydreamTwoTone } from '@material-ui/icons';
+import Modal from '@material-ui/core/Modal';
+
 
 const drawerWidth = 240;
 
@@ -84,7 +83,7 @@ const useStyles = makeStyles((theme) => ({
   },
   root: {
     maxWidth: 350,
-    height: 400,
+    height: 475,
     overflow:"auto",
     // textOverflow:"ellipsis"
   },
@@ -135,6 +134,7 @@ const useStyles = makeStyles((theme) => ({
   },
   cardContent: {
     flexGrow: 1,
+    
   },
   footer: {
     backgroundColor: theme.palette.background.paper,
@@ -217,17 +217,34 @@ const useStyles = makeStyles((theme) => ({
   },
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
-    // color: "#fff",
+    color: "#fff",
     backgroundColor: 'transparent',
-    width: "auto",
+    maxWidth: "auto",
     height: "auto",
+    paddingLeft: "450px",
+    paddingRight: "450px",
+    paddingTop: "30px",
+    // paddingBottom: "30px",
   },
+  // modal: {
+  //   position: "center",
+  //   width: 1200,
+  //   height: 800,
+  //   backgroundColor: theme.palette.background.paper,
+  //   border: "2px solid #000",
+  //   boxShadow: theme.shadows[5],
+  //   padding: theme.spacing(2, 4, 3),
+  //   overflow:"auto",
+  // },
   testroot: {
-      height: "900px",
+      height: "1000px",
       position: "relative",
       overflow: "auto",
     
     //   display: "inline-block",
+  },
+  custombox: {
+    display: "-webkit-box",
   }
 
 }));
@@ -319,6 +336,11 @@ export default function Dashboard() {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
   const handleToggle = () => {
     setOpen(!open);
   };
@@ -368,9 +390,9 @@ export default function Dashboard() {
               Recommendation
             </Typography>
           </Container>
-
-
         </div>
+
+        
         <Container className={classes.cardGrid} maxWidth="lg">
           <Grid container spacing={4} justify="space-evenly">
             {data.slice(0,8).map((data) => (
@@ -404,19 +426,20 @@ export default function Dashboard() {
       {/* </Link> */}
 
 
-
       <CardContent className={classes.cardControl} overflow="auto">
-        <Typography variant="body2" color="textSecondary" component="p">
-          {data.description}
-        </Typography>
+          <Typography variant="body2" color="textSecondary" component="p" textOverflow="ellipsis">
+            <p>{data.description.length > 75 ?
+              `${data.description.substring(0,75)}...` : data.description}</p>
+          </Typography>
       </CardContent>
-      <CardActions disableSpacing>
+
+      {/* <CardActions disableSpacing> */}
           
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
         </IconButton>
          
-        <Button onClick={handleToggle}>
+        <Button type="button" onClick={handleOpen}>
             <IconButton
             className={clsx(classes.expand, {
                 [classes.expandOpen]: expanded,
@@ -428,23 +451,27 @@ export default function Dashboard() {
                 <CommentIcon /> 
             </IconButton>
         </Button>
-        <Backdrop
-            className={classes.backdrop}
-            open={open}
-            onClick={handleClose}
-        >
-            <Card className={classes.testroot}>
-                <Projectinfo/>
-            </Card>
-      </Backdrop>
+        <Container>
+        
+      </Container>
 
-      </CardActions>
+
     </Card>
               </Grid>
             ))}
           </Grid>
         </Container>
       </main>
+      <Modal
+            className={classes.backdrop}
+            open={open}
+            onClose={handleClose}
+      >
+
+            <Card className={classes.testroot}>
+                <Projectinfo/>
+            </Card>
+      </Modal> 
     </React.Fragment>
   );
 }
