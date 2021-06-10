@@ -224,9 +224,9 @@ import {CardActions, CardContent, CardMedia, CssBaseline, Grid, Typography, Cont
     backgroundColor: 'transparent',
     maxWidth: "auto",
     height: "auto",
-    paddingLeft: "450px",
-    paddingRight: "450px",
-    paddingTop: "30px",
+    marginLeft: "450px",
+    marginRight: "450px",
+    marginTop: "30px",
   },
   testroot: {
     height: "900px",
