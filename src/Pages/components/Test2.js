@@ -2,34 +2,35 @@ import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import clsx from 'clsx';
 import {CardActions, CardContent, CardMedia, CssBaseline, Grid, Typography, Container, Card, 
-   CardHeader, Avatar, IconButton, Badge, Menu, MenuItem, ButtonBase, } 
+  CardHeader, Avatar, IconButton, Badge, Menu, MenuItem, ButtonBase, } 
   from '@material-ui/core';
-import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
-import { lightBlue } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import CommentIcon from '@material-ui/icons/Comment';
-import Sidebar from './Sidebar';
-import Button from '@material-ui/core/Button'
-import Backdrop from "@material-ui/core/Backdrop";
-import Projectinfo from "../Projectinfo";
-import {  Link } from 'react-router-dom';
-import { SettingsSystemDaydreamTwoTone } from '@material-ui/icons';
+  import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
+  import { lightBlue } from '@material-ui/core/colors';
+  import FavoriteIcon from '@material-ui/icons/Favorite';
+  import MoreVertIcon from '@material-ui/icons/MoreVert';
+  import AccountCircle from '@material-ui/icons/AccountCircle';
+  import MailIcon from '@material-ui/icons/Mail';
+  import NotificationsIcon from '@material-ui/icons/Notifications';
+  import CommentIcon from '@material-ui/icons/Comment';
+  import Sidebar from './Sidebar';
+  import Button from '@material-ui/core/Button'
+  import Backdrop from "@material-ui/core/Backdrop";
+  import Projectinfo from "../Projectinfo";
+  import {  Link } from 'react-router-dom';
+  import { SettingsSystemDaydreamTwoTone } from '@material-ui/icons';
+  
+  const drawerWidth = 240;
+  
+  function Copyright() {
+    return (
+      <Typography variant="body2" color="textSecondary" align="center" >
+        Copyright © Computer Science Program, Faculty of Computing and Media,<br/> Binus University International 2021
+      </Typography>
+    );
+  }
+  
+  const useStyles = makeStyles((theme) => ({
 
-const drawerWidth = 240;
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center" >
-      Copyright © Computer Science Program, Faculty of Computing and Media,<br/> Binus University International 2021
-    </Typography>
-  );
-}
-
-const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
   },
@@ -231,13 +232,13 @@ const useStyles = makeStyles((theme) => ({
     height: "auto",
   },
   testroot: {
-      height: "900px",
-      position: "relative",
-      overflow: "auto",
+    height: "900px",
+    position: "relative",
+    overflow: "auto",
     
     //   display: "inline-block",
   }
-
+  
 }));
 
 const cards = [1, 2, 3];
@@ -245,14 +246,14 @@ const cards = [1, 2, 3];
 export default function Dashboard() {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
-
+  
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
+  
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
+  
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const handleProfileMenuOpen = (event) => {
@@ -451,7 +452,10 @@ export default function Dashboard() {
             ))}
           </Grid>
         </Container>
-          <Copyright/>
+          
+          <Copyright >
+
+          </Copyright>
       </main>
     </React.Fragment>
   );
