@@ -14,7 +14,7 @@ import {CardActions, CardContent, CardMedia, CssBaseline, Grid, Typography, Cont
   import CommentIcon from '@material-ui/icons/Comment';
   import Sidebar from './Sidebar';
   import Button from '@material-ui/core/Button'
-  import Backdrop from "@material-ui/core/Backdrop";
+  import Modal from "@material-ui/core/Modal";
   import Projectinfo from "../Projectinfo";
   import {  Link } from 'react-router-dom';
   import { SettingsSystemDaydreamTwoTone } from '@material-ui/icons';
@@ -94,7 +94,7 @@ import {CardActions, CardContent, CardMedia, CssBaseline, Grid, Typography, Cont
   root: {
     maxWidth: 350,
     height: 400,
-    overflow:"auto",
+    // overflow:"auto",
     // textOverflow:"ellipsis"
   },
   media: {
@@ -139,7 +139,7 @@ import {CardActions, CardContent, CardMedia, CssBaseline, Grid, Typography, Cont
     flexDirection: 'column',
   },
   cardMedia: {
-    paddingTop: '65%', 
+    paddingTop: '50%', 
     overflow: "auto"
   },
   cardContent: {
@@ -214,22 +214,19 @@ import {CardActions, CardContent, CardMedia, CssBaseline, Grid, Typography, Cont
     }),
     marginLeft: 0,
   },
-  logobinus:{
-    margin: theme.spacing(1),
-    height:'73px',
-    width:'122px',
-    left:'200px'
-  },
   formControl: {
     margin: theme.spacing(1),
     minWidth: 120,
   },
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
-    // color: "#fff",
+    color: "#fff",
     backgroundColor: 'transparent',
-    width: "auto",
+    maxWidth: "auto",
     height: "auto",
+    paddingLeft: "450px",
+    paddingRight: "450px",
+    paddingTop: "30px",
   },
   testroot: {
     height: "900px",
@@ -413,9 +410,10 @@ export default function Dashboard() {
 
 
 
-      <CardContent className={classes.cardControl} overflow="auto">
+      <CardContent className={classes.cardControl} >
         <Typography variant="body2" color="textSecondary" component="p">
-          {data.description}
+        <p>{data.description.length > 75 ?
+              `${data.description.substring(0,75)}...` : data.description}</p>
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -436,15 +434,7 @@ export default function Dashboard() {
                 <CommentIcon /> 
             </IconButton>
         </Button>
-        <Backdrop
-            className={classes.backdrop}
-            open={open}
-            onClick={handleClose}
-        >
-            <Card className={classes.testroot}>
-                <Projectinfo/>
-            </Card>
-      </Backdrop>
+        
 
       </CardActions>
     </Card>
@@ -452,7 +442,15 @@ export default function Dashboard() {
             ))}
           </Grid>
         </Container>
-          
+        <Modal
+            className={classes.backdrop}
+            open={open}
+            onClick={handleClose}
+        >
+            <Card className={classes.testroot}>
+                <Projectinfo/>
+            </Card>
+      </Modal>
           <Copyright >
 
           </Copyright>
