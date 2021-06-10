@@ -19,8 +19,10 @@ const styles = theme => ({
     width: '675px',
     height: '425px',
     
+    // paddingLeft: '50px',
+    // paddingBottom: '50px',
     [theme.breakpoints.up('md')]: {
-      padding: theme.spacing(1),
+      // padding: theme.spacing(12),
       }
     },
 });

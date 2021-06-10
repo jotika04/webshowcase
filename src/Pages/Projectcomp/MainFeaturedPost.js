@@ -52,6 +52,7 @@ export default function MainFeaturedPost(props) {
             <MusicCard
             align="center"
             data={db.alternative[1]}
+            
             />
           </div>
 

@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import clsx from 'clsx';
 import {CardActions, CardContent, CardMedia, CssBaseline, Grid, Typography, Container, Card, 
-  CardHeader, Avatar, IconButton, Badge, Menu, MenuItem, ButtonBase, } 
+   CardHeader, Avatar, IconButton, Badge, Menu, MenuItem, ButtonBase, } 
   from '@material-ui/core';
   import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
   import { lightBlue } from '@material-ui/core/colors';
@@ -15,6 +15,7 @@ import {CardActions, CardContent, CardMedia, CssBaseline, Grid, Typography, Cont
   import Sidebar from './Sidebar';
   import Button from '@material-ui/core/Button'
   import Modal from "@material-ui/core/Modal";
+  import Dialog from "@material-ui/core/Dialog"
   import Projectinfo from "../Projectinfo";
   import {  Link } from 'react-router-dom';
   import { SettingsSystemDaydreamTwoTone } from '@material-ui/icons';
@@ -29,8 +30,7 @@ import {CardActions, CardContent, CardMedia, CssBaseline, Grid, Typography, Cont
     );
   }
   
-  const useStyles = makeStyles((theme) => ({
-
+const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
   },
@@ -144,6 +144,7 @@ import {CardActions, CardContent, CardMedia, CssBaseline, Grid, Typography, Cont
   },
   cardContent: {
     flexGrow: 1,
+    
   },
   footer: {
     backgroundColor: theme.palette.background.paper,
@@ -219,6 +220,7 @@ import {CardActions, CardContent, CardMedia, CssBaseline, Grid, Typography, Cont
     minWidth: 120,
   },
   backdrop: {
+<<<<<<< HEAD
     zIndex: theme.zIndex.drawer + 1,
     color: "#fff",
     backgroundColor: 'transparent',
@@ -227,15 +229,23 @@ import {CardActions, CardContent, CardMedia, CssBaseline, Grid, Typography, Cont
     marginLeft: "450px",
     marginRight: "450px",
     marginTop: "30px",
+=======
+    fullWidth: "true",
+    maxWidth: "xs",
+>>>>>>> 4be377bee2393e77e644afb36b17fc2f81477129
   },
   testroot: {
-    height: "900px",
-    position: "relative",
-    overflow: "auto",
+      position: "relative",
+      padding: theme.spacing(4, 4, 8),
+      justify: "center",
+      minHeight: "300px"
     
     //   display: "inline-block",
+  },
+  custombox: {
+    display: "-webkit-box",
   }
-  
+
 }));
 
 const cards = [1, 2, 3];
@@ -243,14 +253,14 @@ const cards = [1, 2, 3];
 export default function Dashboard() {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
-  
+
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-  
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  
+
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const handleProfileMenuOpen = (event) => {
@@ -325,6 +335,11 @@ export default function Dashboard() {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
   const handleToggle = () => {
     setOpen(!open);
   };
@@ -337,15 +352,7 @@ export default function Dashboard() {
     axios.get(url).then(json => setData(json.data))
   }, [])
 
-  
 
-//   useEffect(() => {
-//       axios.get(url)
-//         .then(json => setData(json.data))
-//         .then(res => res.json())
-//         .then(data => setFilms(data))
-//   }, [])
-  
 
   const renderTable = () => {
     return data.map(user => {
@@ -374,11 +381,12 @@ export default function Dashboard() {
               Recommendation
             </Typography>
           </Container>
-
         </div>
+
+        
         <Container className={classes.cardGrid} maxWidth="lg">
           <Grid container spacing={4} justify="space-evenly">
-            {data.slice(0,12).map((data) => (
+            {data.slice(0,8).map((data) => (
               <Grid item key={data.title} xs={8} sm={6} md={4} lg={3} alignContent="center">
                 <Card className={classes.root}>
       <CardHeader
@@ -398,15 +406,13 @@ export default function Dashboard() {
 
 
 
-      {/* <Link to ='/Projectdetails' style={{ textDecoration: 'none' , color: '#000000' }}> */}
-      {/* <ButtonBase> */}
+      
       <CardMedia
         className={classes.cardMedia}
         image="https://source.unsplash.com/random"
         title="Image title"
       />
-      {/* </ButtonBase> */}
-      {/* </Link> */}
+     
 
 
 
@@ -416,13 +422,14 @@ export default function Dashboard() {
               `${data.description.substring(0,75)}...` : data.description}</p>
         </Typography>
       </CardContent>
-      <CardActions disableSpacing>
+
+      {/* <CardActions disableSpacing> */}
           
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
         </IconButton>
          
-        <Button onClick={handleToggle}>
+        <Button type="button" onClick={handleOpen}>
             <IconButton
             className={clsx(classes.expand, {
                 [classes.expandOpen]: expanded,
@@ -434,27 +441,28 @@ export default function Dashboard() {
                 <CommentIcon /> 
             </IconButton>
         </Button>
-        
-
-      </CardActions>
     </Card>
-              </Grid>
+  </Grid>
             ))}
           </Grid>
         </Container>
-        <Modal
+          <Copyright/>
+      </main>
+      <Dialog
+            fullWidth={true}
+            maxWidth="md"
             className={classes.backdrop}
             open={open}
-            onClick={handleClose}
-        >
+            onClose={handleClose}
+      >
+        
+          <Grid>
             <Card className={classes.testroot}>
                 <Projectinfo/>
             </Card>
-      </Modal>
-          <Copyright >
-
-          </Copyright>
-      </main>
+          </Grid>
+        
+      </Dialog> 
     </React.Fragment>
   );
 }
