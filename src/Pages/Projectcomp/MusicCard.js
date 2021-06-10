@@ -16,9 +16,15 @@ const styles = theme => ({
   mainFeaturedPostContent: {
     position: 'relative',
     // padding: theme.spacing(4),
+<<<<<<< HEAD
     width: '1050px',
     height: '550px',
     paddingRight: '0px',
+=======
+    width: '675px',
+    height: '425px',
+    
+>>>>>>> dae2c24815d9f6bf3c2bc8df12a285ad3b57eaae
     [theme.breakpoints.up('md')]: {
       // padding: theme.spacing(12),
       }

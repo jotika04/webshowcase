@@ -91,15 +91,15 @@ export default function Projectinfo() {
       <CssBaseline />
         
         {/* <Header title="Blog" sections={sections} /> */}
-    <div>
-        <Container maxWidth="lg" classname={classes.paper}>
-          {/* <MainFeaturedPost >
-          </MainFeaturedPost> */}
-          <Grid container spacing={4} classname={classes.paper}>
+    <main>
+        <Container maxWidth="lg" >
+          
+          <Slider/>
+          {/* <Grid container spacing={4}>
             {featuredPosts.map((post) => (
               <FeaturedPost key={post.title} post={post} />
             ))}
-          </Grid>
+          </Grid> */}
           <Grid container spacing={6} className={classes.mainGrid}>
             <Main title="Description" posts={posts} />
             <Contactinfo
@@ -109,13 +109,15 @@ export default function Projectinfo() {
             />
             <MusicCard
             align="center"
+            paddingRight= '30px'
+            PaddingLeft='80px'
             data={db.alternative[1]}
             />
             {/* <MainFeaturedPost >
           </MainFeaturedPost> */}
           </Grid>
         </Container>
-    </div>
+    </main>
       {/* <Footer title="Footer" description="Something here to give the footer a purpose!" /> */}
     </React.Fragment>
   );

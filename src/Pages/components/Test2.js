@@ -4,22 +4,31 @@ import clsx from 'clsx';
 import {CardActions, CardContent, CardMedia, CssBaseline, Grid, Typography, Container, Card, 
    CardHeader, Avatar, IconButton, Badge, Menu, MenuItem, ButtonBase, } 
   from '@material-ui/core';
-import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
-import { lightBlue } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import CommentIcon from '@material-ui/icons/Comment';
-import Sidebar from './Sidebar';
-import Button from '@material-ui/core/Button'
-import Projectinfo from "../Projectinfo";
-import Modal from '@material-ui/core/Modal';
-
-
-const drawerWidth = 240;
-
+  import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
+  import { lightBlue } from '@material-ui/core/colors';
+  import FavoriteIcon from '@material-ui/icons/Favorite';
+  import MoreVertIcon from '@material-ui/icons/MoreVert';
+  import AccountCircle from '@material-ui/icons/AccountCircle';
+  import MailIcon from '@material-ui/icons/Mail';
+  import NotificationsIcon from '@material-ui/icons/Notifications';
+  import CommentIcon from '@material-ui/icons/Comment';
+  import Sidebar from './Sidebar';
+  import Button from '@material-ui/core/Button'
+  import Modal from "@material-ui/core/Modal";
+  import Projectinfo from "../Projectinfo";
+  import {  Link } from 'react-router-dom';
+  import { SettingsSystemDaydreamTwoTone } from '@material-ui/icons';
+  
+  const drawerWidth = 240;
+  
+  function Copyright() {
+    return (
+      <Typography variant="body2" color="textSecondary" align="center" >
+        Copyright © Computer Science Program, Faculty of Computing and Media,<br/> Binus University International 2021
+      </Typography>
+    );
+  }
+  
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
@@ -83,8 +92,8 @@ const useStyles = makeStyles((theme) => ({
   },
   root: {
     maxWidth: 350,
-    height: 475,
-    overflow:"auto",
+    height: 400,
+    // overflow:"auto",
     // textOverflow:"ellipsis"
   },
   media: {
@@ -129,7 +138,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
   },
   cardMedia: {
-    paddingTop: '65%', 
+    paddingTop: '50%', 
     overflow: "auto"
   },
   cardContent: {
@@ -205,12 +214,6 @@ const useStyles = makeStyles((theme) => ({
     }),
     marginLeft: 0,
   },
-  logobinus:{
-    margin: theme.spacing(1),
-    height:'73px',
-    width:'122px',
-    left:'200px'
-  },
   formControl: {
     margin: theme.spacing(1),
     minWidth: 120,
@@ -224,18 +227,7 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: "450px",
     paddingRight: "450px",
     paddingTop: "30px",
-    // paddingBottom: "30px",
   },
-  // modal: {
-  //   position: "center",
-  //   width: 1200,
-  //   height: 800,
-  //   backgroundColor: theme.palette.background.paper,
-  //   border: "2px solid #000",
-  //   boxShadow: theme.shadows[5],
-  //   padding: theme.spacing(2, 4, 3),
-  //   overflow:"auto",
-  // },
   testroot: {
       height: "1000px",
       position: "relative",
@@ -418,11 +410,12 @@ export default function Dashboard() {
       {/* </Link> */}
 
 
-      <CardContent className={classes.cardControl} overflow="auto">
-          <Typography variant="body2" color="textSecondary" component="p" textOverflow="ellipsis">
-            <p>{data.description.length > 75 ?
+
+      <CardContent className={classes.cardControl} >
+        <Typography variant="body2" color="textSecondary" component="p">
+        <p>{data.description.length > 75 ?
               `${data.description.substring(0,75)}...` : data.description}</p>
-          </Typography>
+        </Typography>
       </CardContent>
 
       {/* <CardActions disableSpacing> */}
@@ -443,16 +436,25 @@ export default function Dashboard() {
                 <CommentIcon /> 
             </IconButton>
         </Button>
-        <Container>
         
-      </Container>
-
 
     </Card>
               </Grid>
             ))}
           </Grid>
         </Container>
+        <Modal
+            className={classes.backdrop}
+            open={open}
+            onClick={handleClose}
+        >
+            <Card className={classes.testroot}>
+                <Projectinfo/>
+            </Card>
+      </Modal>
+          <Copyright >
+
+          </Copyright>
       </main>
       <Modal
             className={classes.backdrop}
