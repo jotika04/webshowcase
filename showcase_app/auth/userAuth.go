@@ -6,10 +6,8 @@ import(
 	"golang.org/x/crypto/bcrypt"
 	"fmt"
 	"time"
-	// "os"
-	// "strings"
 	"strconv"
-	jwt "github.com/form3tech-oss/jwt-go"
+	util "backend_rest/util"
 	
 
 )
@@ -39,31 +37,17 @@ type RequestResponse struct {
 	Message string
 }
 
-type Claim struct {
-	ClaimID int `json:"claimID"`
-	Issuer string `json:"issuer"`
-	ExpiresAt int `json:"expiresAt"`
-	Subject string `json:"subject"`
-	IssuedAt int `json:"issuedAt"`
-}
-
-type Claims struct {
-  jwt.StandardClaims
-  ID uint `gorm:"primaryKey"`
-}
 // Register godoc
 // @Summary Register a new user
 // @Description Add user to database
-// @ID Register
 // @Accept  json
 // @Produce  json
-// @Tags User
-// @Param userID path int true "User ID"
-// @Success 200 {object} User
+// @Param user body User true 
+// @Success 200 {object} Login
 // @Failure 400 {object} HTTPError
 // @Failure 404 {object} HTTPError
 // @Failure 500 {object} HTTPError
-// @Router /api/user/ [post]
+// @Router /api/v1/user/register [post]
 func RegisterUser(c *fiber.Ctx)error{
 	db := database.DBConn
 
@@ -106,52 +90,57 @@ func RegisterUser(c *fiber.Ctx)error{
 
 	
 	db.Exec("INSERT into user (email, userFirstName, userLastName, username, password) values (?,?,?,?,?)", user.Email, user.UserFirstName, user.UserLastName, user.Username, hashedPassword)
-	// if err != nil {
-	// 	return err
-	// }
-	// if count, _ := row.RowsAffected(); count != 1 {
-	// 	return errors.New("Error inserting row value")
-	// }
-	// return nil
 
-	// return c.JSON(RequestResponse{
-	// 	Status: 201,
-	// 	Message: "Register Success",
-	// })
 	Login(c)
 	return err
-
-	// setting up the authorization cookies
-    // accessToken, refreshToken := GenerateTokens(user.Username)
-    // accessCookie, refreshCookie := GetAuthCookies(accessToken, refreshToken)
-    // c.Cookie(accessCookie)
-    // c.Cookie(refreshCookie)
-
-    // return c.Status(fiber.StatusOK).JSON(fiber.Map{
-    //     "access_token":  accessToken,
-    //     "refresh_token": refreshToken,
-    // })
 }
 
 // GetUser godoc
-// @Summary Query user
-// @Description Get info of user from database
-// @ID Getuser
+// @Summary Query user info
+// @Description Get user info by userID in token
 // @Accept  json
 // @Produce  json
-// @Tags User
 // @Param userID path int true "User ID"
 // @Success 200 {object} User
 // @Failure 400 {object} HTTPError
 // @Failure 404 {object} HTTPError
 // @Failure 500 {object} HTTPError
-// @Router /api/user/:userID [post]
+// @Router /api/v1/user/:userID [get]
 func GetUser(c *fiber.Ctx)error{
+	now := time.Now().Unix()
+	claims, err := util.ExtractTokenMetadata(c)
+	if err != nil {
+        // Return status 500 and JWT parse error.
+        return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+            "error": true,
+            "msg":   err.Error(),
+        })
+    }
+    expires := claims.Expires
+
+    // Checking, if now time greather than expiration from JWT.
+    if now > expires {
+        // Return status 401 and unauthorized error message.
+        return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+            "error": true,
+            "msg":   "unauthorized, check expiration time of your token",
+        })
+    }
+
 	userID := c.Params("userID")
+
+	issuer := claims.Issuer
+    if issuer != userID{
+    	return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+            "error": true,
+            "msg":   "userID mismatch",
+        })
+    }
+
 	db := database.DBConn
 	var user User
 	
-    err := db.QueryRow(`
+    err = db.QueryRow(`
         SELECT userID, 
         username, 
         userFirstName, 
@@ -186,6 +175,20 @@ func GetUser(c *fiber.Ctx)error{
 
 	
 }
+
+// Login godoc
+// @Summary Login user
+// @Description Return tokens for authenticated users
+// @ID Login
+// @Accept  json
+// @Produce  json
+// @Tags User
+// @Param user body User true 
+// @Success 200 {object} User
+// @Failure 400 {object} HTTPError
+// @Failure 404 {object} HTTPError
+// @Failure 500 {object} HTTPError
+// @Router /api/user/:userID [post]
 func Login(c *fiber.Ctx)error{
 	user := new(User)
 
@@ -209,28 +212,10 @@ func Login(c *fiber.Ctx)error{
 		}
 	password_compare := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
 	if password_compare == nil {
-		// // Create token
-		// token := jwt.New(jwt.SigningMethodHS256)
-
-		// // Set claims
-		// claims := token.Claims.(jwt.MapClaims)
-		// claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
-		// // Generate encoded token and send it as response.
-		// t, err := token.SignedString([]byte("secret"))
-		// if err != nil {
-		// 	return c.SendStatus(fiber.StatusInternalServerError)
-		// }
-
-		// return c.JSON(fiber.Map{"token": t})
-
-		// return c.JSON(RequestResponse{
-		// 	Status: 200,
-		// 	Message: "Login Success",
-		// })
 
 		// setting up the authorization cookies
-	    accessToken, refreshToken := GenerateTokens(strconv.Itoa(user.UserID))
-	    accessCookie, refreshCookie := GetAuthCookies(accessToken, refreshToken)
+	    accessToken, refreshToken := util.GenerateTokens(strconv.Itoa(user.UserID))
+	    accessCookie, refreshCookie := util.GetAuthCookies(accessToken, refreshToken)
 	    c.Cookie(accessCookie)
 	    c.Cookie(refreshCookie)
 
@@ -248,227 +233,119 @@ func Login(c *fiber.Ctx)error{
 
 }
 
-// var jwtKey = []byte(os.Getenv("PRIV_KEY"))
-var jwtKey = []byte("secret")
+func UpdateProfile(c *fiber.Ctx)error{
+	now := time.Now().Unix()
+	claims, err := util.ExtractTokenMetadata(c)
+	if err != nil {
+        // Return status 500 and JWT parse error.
+        return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+            "error": true,
+            "msg":   err.Error(),
+        })
+    }
+    expires := claims.Expires
 
-// GenerateTokens returns the access and refresh tokens
-func GenerateTokens(uuid string) (string, string) {
-    claim, accessToken := GenerateAccessClaims(uuid)
-    refreshToken := GenerateRefreshClaims(claim)
+    // Checking, if now time greather than expiration from JWT.
+    if now > expires {
+        // Return status 401 and unauthorized error message.
+        return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+            "error": true,
+            "msg":   "unauthorized, check expiration time of your token",
+        })
+    }
 
-    return accessToken, refreshToken
+    issuer := claims.Issuer
+
+    userID, err := strconv.Atoi(issuer)
+
+    user := new(User)
+
+	if err = c.BodyParser(user); err != nil {
+            return err
+    }
+
+    db := database.DBConn
+	db.Exec(`
+		UPDATE user SET userFirstName=?, userLastName=?, batchYear=?, address=?, phoneNum=? WHERE userID=?
+		`, user.UserFirstName, user.UserLastName, user.BatchYear, user.Address, user.PhoneNum, userID)
+		if err != nil {
+			fmt.Println(err.Error())
+			// return err, nil
+		}
+	return c.JSON(RequestResponse{
+		Status: 200,
+		Message: "Profile Updated",
+	})
 }
 
-// GenerateAccessClaims returns a claim and an access_token string
-func GenerateAccessClaims(uuid string) (*Claims, string) {
+func UpdateRole(c *fiber.Ctx)error{
+	now := time.Now().Unix()
+	claims, err := util.ExtractTokenMetadata(c)
+	if err != nil {
+        // Return status 500 and JWT parse error.
+        return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+            "error": true,
+            "msg":   err.Error(),
+        })
+    }
+    expires := claims.Expires
 
-    t := time.Now()
-    claim := &Claims{
-        StandardClaims: jwt.StandardClaims{
-            Issuer:    uuid,
-            ExpiresAt: t.Add(15 * time.Minute).Unix(),
-            Subject:   "access_token",
-            IssuedAt:  t.Unix(),
-        },
+    // Checking, if now time greather than expiration from JWT.
+    if now > expires {
+        // Return status 401 and unauthorized error message.
+        return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+            "error": true,
+            "msg":   "unauthorized, check expiration time of your token",
+        })
     }
 
-    token := jwt.NewWithClaims(jwt.SigningMethodHS256, claim)
-    tokenString, err := token.SignedString(jwtKey)
-    if err != nil {
-        panic(err)
-    }
+    issuer := claims.Issuer
 
-    return claim, tokenString
-}
-
-// GenerateRefreshClaims returns refresh_token
-func GenerateRefreshClaims(cl *Claims) string {
-	db := database.DBConn
-	var claims []Claim
- //    result := db.Where(&Claim{
- //        StandardClaims: jwt.StandardClaims{
- //            Issuer: cl.Issuer,
- //        },
- //    }).Find(&Claim{})
-    result, err := db.Query("Select * From claim Where issuer=?", cl.Issuer)
-	var newclaim Claim
-    for result.Next() {
-        err := result.Scan(&newclaim.Issuer, &newclaim.ExpiresAt, &newclaim.Subject, &newclaim.IssuedAt)
-        if err != nil {
-            fmt.Println(err)
-        }
-        claims = append(claims, newclaim)
-    }
-
-    // checking the number of refresh tokens stored.
-    // If the number is higher than 3, remove all the refresh tokens and leave only new one.
-    if len(claims) > 3 {
-        // db.Where(&Claim{
-        //     StandardClaims: jwt.StandardClaims{Issuer: cl.Issuer},
-        // }).Delete(&Claim{})
-        db.Exec("DELETE FROM claim WHERE issuer=?", cl.Issuer)
-        fmt.Println("Tokens deleted")
-    }
-
-    t := time.Now()
-    refreshClaim := &Claims{
-        StandardClaims: jwt.StandardClaims{
-            Issuer:    cl.Issuer,
-            ExpiresAt: t.Add(7 * 24 * time.Hour).Unix(),
-            Subject:   "refresh_token",
-            IssuedAt:  t.Unix(),
-        },
-    }
-
-    // create a claim on DB
-    // db.Create(&refreshClaim)
-    db.Exec("INSERT INTO claim (issuer, expiresAt, subject, issuedAt) VALUES(?,?,?,?)", cl.Issuer, t.Add(30 * 24 * time.Hour).Unix(), "refresh_token", t.Unix())
-
-    refreshToken := jwt.NewWithClaims(jwt.SigningMethodHS256, refreshClaim)
-    refreshTokenString, err := refreshToken.SignedString(jwtKey)
-    if err != nil {
-        panic(err)
-    }
-
-    return refreshTokenString
-}
-
-// SecureAuth returns a middleware which secures all the private routes
-func SecureAuth() func(*fiber.Ctx) error {
-    return func(c *fiber.Ctx) error {
-        accessToken := c.Cookies("access_token")
-        claims := new(Claims)
-
-        token, err := jwt.ParseWithClaims(accessToken, claims,
-            func(token *jwt.Token) (interface{}, error) {
-                return jwtKey, nil
-            })
-
-        if token.Valid {
-            if claims.ExpiresAt < time.Now().Unix() {
-                return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
-                    "error":   true,
-                    "general": "Token Expired",
-                })
-            }
-        } else if ve, ok := err.(*jwt.ValidationError); ok {
-            if ve.Errors&jwt.ValidationErrorMalformed != 0 {
-                // this is not even a token, we should delete the cookies here
-                c.ClearCookie("access_token", "refresh_token")
-                return c.SendStatus(fiber.StatusForbidden)
-            } else if ve.Errors&(jwt.ValidationErrorExpired|jwt.ValidationErrorNotValidYet) != 0 {
-                // Token is either expired or not active yet
-                return c.SendStatus(fiber.StatusUnauthorized)
-            } else {
-                // cannot handle this token
-                c.ClearCookie("access_token", "refresh_token")
-                return c.SendStatus(fiber.StatusForbidden)
-            }
-        }
-
-        c.Locals("id", claims.Issuer)
-        return c.Next()
-    }
-}
-
-// GetAuthCookies sends two cookies of type access_token and refresh_token
-func GetAuthCookies(accessToken, refreshToken string) (*fiber.Cookie, *fiber.Cookie) {
-    accessCookie := &fiber.Cookie{
-        Name:     "access_token",
-        Value:    accessToken,
-        Expires:  time.Now().Add(24 * time.Hour),
-        HTTPOnly: true,
-        Secure:   true,
-    }
-
-    refreshCookie := &fiber.Cookie{
-        Name:     "refresh_token",
-        Value:    refreshToken,
-        Expires:  time.Now().Add(10 * 24 * time.Hour),
-        HTTPOnly: true,
-        Secure:   true,
-    }
-
-    return accessCookie, refreshCookie
-}
-
-// GetAccessToken generates and sends a new access token if there is a valid refresh token
-func GetAccessToken(c *fiber.Ctx) error {
-	type RefreshToken struct {
-		RefreshToken string `json:"refresh_token"`
-	}
-
-	reToken := new(RefreshToken)
-	if err := c.BodyParser(reToken); err != nil {
-		return c.JSON(fiber.Map{"error": true, "input": "Please review your input"})
-	}
-
-	refreshToken := reToken.RefreshToken
+    requestID, err := strconv.Atoi(issuer)
 
     db := database.DBConn
 
-    refreshClaims := new(Claims)
-    token, _ := jwt.ParseWithClaims(refreshToken, refreshClaims,
-        func(token *jwt.Token) (interface{}, error) {
-            return jwtKey, nil
-        })
-
-    var claims []Claim
-    result, err := db.Query("Select * From claim Where issuer=? AND expiresAt=? AND issuedAt=?", refreshClaims.Issuer, refreshClaims.ExpiresAt, refreshClaims.IssuedAt)
-	var newclaim Claim
-    for result.Next() {
-        err := result.Scan(&newclaim.Issuer, &newclaim.ExpiresAt, &newclaim.Subject, &newclaim.IssuedAt)
-        if err != nil {
-            fmt.Println(err)
-        }
-        claims = append(claims, newclaim)
+    var requestroleID int
+    err = db.QueryRow("SELECT roleID FROM user WHERE userID=?", requestID).Scan(&requestroleID)
+    if err != nil {
+			fmt.Println(err.Error())
+			// return err, nil
+	}
+    if requestroleID != 1{
+    	return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+            "error": true,
+            "msg":   "unauthorized, for admin use only",
+        }) 
     }
 
-    if len(claims) <= 0{
-    	// no such refresh token exist in the database
-    	fmt.Println(refreshClaims.Issuer, refreshClaims.ExpiresAt, refreshClaims.IssuedAt)
-    	fmt.Println("no refresh tokens in db")
-        c.ClearCookie("access_token", "refresh_token")
-        return c.SendStatus(fiber.StatusForbidden)
+    type UserRole struct{
+    	UserID int
+    	Role string
     }
 
-    // if res := db.Where(
-    //     "expires_at = ? AND issued_at = ? AND issuer = ?",
-    //     refreshClaims.ExpiresAt, refreshClaims.IssuedAt, refreshClaims.Issuer,
-    // ).First(&Claims{}); res.RowsAffected <= 0 {
-    //     // no such refresh token exist in the database
-    //     c.ClearCookie("access_token", "refresh_token")
-    //     return c.SendStatus(fiber.StatusForbidden)
-    // }
+    user := new(UserRole)
 
-    if token.Valid {
-        if refreshClaims.ExpiresAt < time.Now().Unix() {
-            // refresh token is expired
-            fmt.Println("refresh token expired")
-            c.ClearCookie("access_token", "refresh_token")
-            return c.SendStatus(fiber.StatusForbidden)
-        }
-    } else {
-        // malformed refresh token
-        fmt.Println("refresh token malformed")
-        c.ClearCookie("access_token", "refresh_token")
-        return c.SendStatus(fiber.StatusForbidden)
+	if err := c.BodyParser(user); err != nil {
+            return err
     }
 
-    _, accessToken := GenerateAccessClaims(refreshClaims.Issuer)
+    var roleID int
+    err = db.QueryRow("SELECT roleID FROM role WHERE role=?", user.Role).Scan(&roleID)
+    if err != nil {
+			fmt.Println(err.Error())
+			// return err, nil
+	}
 
-    c.Cookie(&fiber.Cookie{
-        Name:     "access_token",
-        Value:    accessToken,
-        Expires:  time.Now().Add(24 * time.Hour),
-        HTTPOnly: true,
-        Secure:   true,
-    })
+	db.Exec(`
+		UPDATE user SET roleID=? WHERE userID=?
+		`, roleID, user.UserID)
+		if err != nil {
+			fmt.Println(err.Error())
+			// return err, nil
+		}
+	return c.JSON(RequestResponse{
+		Status: 200,
+		Message: "User Role Updated",
+	})
 
-    if err != nil{
-    	panic(err)
-    }
-
-    return c.JSON(fiber.Map{"access_token": accessToken})
 }
-

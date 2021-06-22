@@ -70,11 +70,11 @@ func GetProject(c *fiber.Ctx)error{
 }
 
 func SubmitProject(c *fiber.Ctx)error{
+	fmt.Println("submit project ok")
 	db := database.DBConn
 
 	now := time.Now().Unix()
 	claims, err := util.ExtractTokenMetadata(c)
-	fmt.Println(claims)
 	if err != nil {
         // Return status 500 and JWT parse error.
         return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
@@ -147,4 +147,120 @@ func SubmitProject(c *fiber.Ctx)error{
 		})
 	}
 	
+}
+
+func GetUnverifiedProjects(c *fiber.Ctx)error{
+	now := time.Now().Unix()
+	claims, err := util.ExtractTokenMetadata(c)
+	if err != nil {
+        // Return status 500 and JWT parse error.
+        return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+            "error": true,
+            "msg":   err.Error(),
+        })
+    }
+    expires := claims.Expires
+
+    // Checking, if now time greather than expiration from JWT.
+    if now > expires {
+        // Return status 401 and unauthorized error message.
+        return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+            "error": true,
+            "msg":   "unauthorized, check expiration time of your token",
+        })
+    }
+
+	db := database.DBConn
+	var projects []Project
+	projectStatus := false
+
+    rows, err := db.Query(`
+        SELECT *
+        FROM project WHERE verified=?
+        `, projectStatus)
+
+	if err != nil {
+		fmt.Println(err.Error())
+		// return err, nil
+	}
+
+	var project Project
+    for rows.Next() {
+        err := rows.Scan(&project.ProjectID,
+            	&project.ProjectName,
+            	&project.Description,
+            	&project.Verified,
+            	&project.Course, 
+            	&project.ProjectImage,
+            	&project.ProjectVideo,
+            	&project.ProjectThumbnail,
+            	&project.UserID)
+        if err != nil {
+            fmt.Println(err)
+        }
+        projects = append(projects, project)
+    }
+
+	return c.JSON(projects)
+}
+
+func ValidateProject(c *fiber.Ctx)error{
+	now := time.Now().Unix()
+	claims, err := util.ExtractTokenMetadata(c)
+	if err != nil {
+        // Return status 500 and JWT parse error.
+        return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+            "error": true,
+            "msg":   err.Error(),
+        })
+    }
+    expires := claims.Expires
+
+    // Checking, if now time greather than expiration from JWT.
+    if now > expires {
+        // Return status 401 and unauthorized error message.
+        return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+            "error": true,
+            "msg":   "unauthorized, check expiration time of your token",
+        })
+    }
+
+    issuer := claims.Issuer
+    requestID, err := strconv.Atoi(issuer)
+
+    var requestroleID int
+    db := database.DBConn
+
+    err = db.QueryRow("SELECT roleID FROM user WHERE userID=?", requestID).Scan(&requestroleID)
+    if err != nil {
+			fmt.Println(err.Error())
+			// return err, nil
+	}
+    if requestroleID > 2{
+    	return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+            "error": true,
+            "msg":   "unauthorized, for validators and admins only",
+        }) 
+    }
+
+    project := new(Project)
+
+
+	if err := c.BodyParser(project); err != nil {
+            return err
+    }
+
+    projectStatus := true
+    
+    db.Exec(`
+		UPDATE project SET verified=? WHERE projectID=?
+		`, projectStatus, project.ProjectID)
+		if err != nil {
+			fmt.Println(err.Error())
+			// return err, nil
+		}
+	return c.JSON(RequestResponse{
+		Status: 200,
+		Message: "Project Verified",
+	})
 }
