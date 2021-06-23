@@ -7,35 +7,24 @@ import(
 	util "backend_rest/util"
 	"time"
 	"strconv"
+	model "backend_rest/model"
 )
 
-type Project struct {
-	ProjectID int `json:"projectID"`
-	UserID int `json:"userID"`
-	Course string `json:"course"`
-	ProjectName string `json:"projectName"`
-	Description string `json:"description"`
-	Verified bool `json:"verified"`
-	ProjectImage string `json:"projectImage"`
-	ProjectVideo string `json:"projectVideo"`
-	ProjectThumbnail string `json:"projectThumbnail"`
-
-}
-
-type HTTPError struct {
-	Status  string
-	Message string
-}
-
-type RequestResponse struct {
-	Status  int
-	Message string
-}
-
+// GetProject godoc
+// @Summary Get project details
+// @Description Get project info by projectID
+// @Accept  json
+// @Produce  json
+// @Param project body model.Project true "Get Project"
+// @Success 200 {object} model.Project
+// @Failure 400 {object} model.HTTPError
+// @Failure 404 {object} model.HTTPError
+// @Failure 500 {object} model.HTTPError
+// @Router /api/v1/project/:projectID [get]
 func GetProject(c *fiber.Ctx)error{
 	projectID := c.Params("projectID")
 	db := database.DBConn
-	var project Project
+	var project *model.Project = &model.Project{}
 
     err := db.QueryRow(`
         SELECT projectID,
@@ -69,8 +58,18 @@ func GetProject(c *fiber.Ctx)error{
 
 }
 
+// SubmitProject godoc
+// @Summary Submit project 
+// @Description Submit project into database 
+// @Accept  json
+// @Produce  json
+// @Param project body model.Project true "Submit Project"
+// @Success 200 {object} model.HTTPError
+// @Failure 400 {object} model.HTTPError
+// @Failure 404 {object} model.HTTPError
+// @Failure 500 {object} model.HTTPError
+// @Router /api/v1/project/submit [post]
 func SubmitProject(c *fiber.Ctx)error{
-	fmt.Println("submit project ok")
 	db := database.DBConn
 
 	now := time.Now().Unix()
@@ -94,19 +93,31 @@ func SubmitProject(c *fiber.Ctx)error{
     }
     
 
-	project := new(Project)
+	// project := new(Project)
+	var project *model.Project = &model.Project{}
 
 	if err := c.BodyParser(project); err != nil {
         return err
     }
-
-    
 
     // userID := project.UserID
 
     issuer := claims.Issuer
 
     userID, err := strconv.Atoi(issuer)
+
+    var requestroleID int
+    err = db.QueryRow("SELECT roleID FROM user WHERE userID=?", userID).Scan(&requestroleID)
+    if err != nil {
+			fmt.Println(err.Error())
+			// return err, nil
+	}
+    if requestroleID == 4{
+    	return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+            "error": true,
+            "msg":   "unauthorized for project submission",
+        }) 
+    }
 
 	err = db.QueryRow(`
 		Select userID From user Where userID=?
@@ -122,7 +133,8 @@ func SubmitProject(c *fiber.Ctx)error{
 		
 		submit_notif := project.ProjectName + " Successfully Submitted"
 
-		var newproject Project
+		// var newproject Project
+		var newproject *model.Project = &model.Project{}
 		err := db.QueryRow(`
 		Select projectID From project Where projectName=? AND userID=?
 		`, project.ProjectName, project.UserID).
@@ -136,12 +148,12 @@ func SubmitProject(c *fiber.Ctx)error{
 
 		db.Exec("INSERT into notification (userID, projectID, notif_text) values (?,?,?)", userID, newproject.ProjectID, submit_notif)
 
-		return c.JSON(RequestResponse{
+		return c.JSON(model.HTTPError{
 			Status: 201,
 			Message: "Project Submission Success",
 		})
 	} else{
-		return c.JSON(RequestResponse{
+		return c.JSON(model.HTTPError{
 			Status: 201,
 			Message: "User does not exist",
 		})
@@ -149,6 +161,16 @@ func SubmitProject(c *fiber.Ctx)error{
 	
 }
 
+// GetUnverifiedProjects godoc
+// @Summary Display list of unverified projects
+// @Description query projects from database where verified = false
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} model.Project
+// @Failure 400 {object} model.HTTPError
+// @Failure 404 {object} model.HTTPError
+// @Failure 500 {object} model.HTTPError
+// @Router /api/v1/unverified-project [get]
 func GetUnverifiedProjects(c *fiber.Ctx)error{
 	now := time.Now().Unix()
 	claims, err := util.ExtractTokenMetadata(c)
@@ -170,8 +192,26 @@ func GetUnverifiedProjects(c *fiber.Ctx)error{
         })
     }
 
-	db := database.DBConn
-	var projects []Project
+	issuer := claims.Issuer
+    requestID, err := strconv.Atoi(issuer)
+
+    var requestroleID int
+    db := database.DBConn
+
+    err = db.QueryRow("SELECT roleID FROM user WHERE userID=?", requestID).Scan(&requestroleID)
+    if err != nil {
+			fmt.Println(err.Error())
+			// return err, nil
+	}
+    if requestroleID > 2{
+    	return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+            "error": true,
+            "msg":   "unauthorized, for validators and admins only",
+        }) 
+    }
+
+	// var projects []Project
+	var projects []*model.Project
 	projectStatus := false
 
     rows, err := db.Query(`
@@ -184,7 +224,8 @@ func GetUnverifiedProjects(c *fiber.Ctx)error{
 		// return err, nil
 	}
 
-	var project Project
+	// var project Project
+	var project *model.Project = &model.Project{}
     for rows.Next() {
         err := rows.Scan(&project.ProjectID,
             	&project.ProjectName,
@@ -204,6 +245,17 @@ func GetUnverifiedProjects(c *fiber.Ctx)error{
 	return c.JSON(projects)
 }
 
+// ValidateProject godoc
+// @Summary Validate project 
+// @Description Update project verified status into true
+// @Accept  json
+// @Produce  json
+// @Param project body model.Project true "Validate Project"
+// @Success 200 {object} model.HTTPError
+// @Failure 400 {object} model.HTTPError
+// @Failure 404 {object} model.HTTPError
+// @Failure 500 {object} model.HTTPError
+// @Router /api/v1/project/validate [post]
 func ValidateProject(c *fiber.Ctx)error{
 	now := time.Now().Unix()
 	claims, err := util.ExtractTokenMetadata(c)
@@ -243,7 +295,8 @@ func ValidateProject(c *fiber.Ctx)error{
         }) 
     }
 
-    project := new(Project)
+    // project := new(Project)
+    var project *model.Project = &model.Project{}
 
 
 	if err := c.BodyParser(project); err != nil {
@@ -259,7 +312,7 @@ func ValidateProject(c *fiber.Ctx)error{
 			fmt.Println(err.Error())
 			// return err, nil
 		}
-	return c.JSON(RequestResponse{
+	return c.JSON(model.HTTPError{
 		Status: 200,
 		Message: "Project Verified",
 	})
