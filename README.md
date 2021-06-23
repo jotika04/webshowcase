@@ -19,7 +19,7 @@ http://127.0.0.1:3000/api/v1/user/login			: login
 http://127.0.0.1:3000/api/v1/user/get-access-token  	: get new access token
 
 Profile:
-http://127.0.0.1:3000/api/v1/user/:userID	: return user info
+http://127.0.0.1:3000/api/v1/user/:userID		: return user info
 http://127.0.0.1:3000/api/v1/user/update-profile	: update user profile
 http://127.0.0.1:3000/api/v1/user/update-role    	: update user role
 
