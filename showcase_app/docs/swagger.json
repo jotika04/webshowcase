@@ -12,25 +12,21 @@
     "host": "localhost:3000",
     "basePath": "/",
     "paths": {
-        "/api/item/{id}": {
+        "/api/v1/user/:userID": {
             "get": {
-                "description": "Get an item by its ID",
+                "description": "Get user info by userID in token",
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
                     "application/json"
                 ],
-                "tags": [
-                    "Item"
-                ],
-                "summary": "Get an item",
-                "operationId": "get-item-by-int",
+                "summary": "Query user info",
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "Item ID",
-                        "name": "id",
+                        "description": "Get User Profile",
+                        "name": "userID",
                         "in": "path",
                         "required": true
                     }
@@ -39,31 +35,80 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/main.Item"
+                            "$ref": "#/definitions/model.User"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/main.HTTPError"
+                            "$ref": "#/definitions/model.HTTPError"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/main.HTTPError"
+                            "$ref": "#/definitions/model.HTTPError"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/main.HTTPError"
+                            "$ref": "#/definitions/model.HTTPError"
                         }
                     }
                 }
             }
         },
-        "/api/user/": {
+        "/api/v1/user/login": {
+            "post": {
+                "description": "Return tokens for authenticated users",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Login user",
+                "parameters": [
+                    {
+                        "description": "Login User",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.LoginUser"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Token"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/model.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/user/register": {
             "post": {
                 "description": "Add user to database",
                 "consumes": [
@@ -72,94 +117,139 @@
                 "produces": [
                     "application/json"
                 ],
-                "tags": [
-                    "User"
-                ],
                 "summary": "Register a new user",
-                "operationId": "Register",
                 "parameters": [
                     {
-                        "type": "integer",
-                        "description": "User ID",
-                        "name": "userID",
-                        "in": "path",
-                        "required": true
+                        "description": "Register User",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.RegisterUser"
+                        }
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/auth.User"
+                            "$ref": "#/definitions/model.Token"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/auth.HTTPError"
+                            "$ref": "#/definitions/model.HTTPError"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/auth.HTTPError"
+                            "$ref": "#/definitions/model.HTTPError"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/auth.HTTPError"
+                            "$ref": "#/definitions/model.HTTPError"
                         }
                     }
                 }
             }
         },
-        "/api/user/:userID": {
-            "post": {
-                "description": "Get info of user from database",
+        "/api/v1/user/update-profile": {
+            "patch": {
+                "description": "Update user profile by userID in token",
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
                     "application/json"
                 ],
-                "tags": [
-                    "User"
-                ],
-                "summary": "Query user",
-                "operationId": "Getuser",
+                "summary": "Update user profile",
                 "parameters": [
                     {
-                        "type": "integer",
-                        "description": "User ID",
-                        "name": "userID",
-                        "in": "path",
-                        "required": true
+                        "description": "Update Profile",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.UpdateProfile"
+                        }
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/auth.User"
+                            "$ref": "#/definitions/model.HTTPError"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/auth.HTTPError"
+                            "$ref": "#/definitions/model.HTTPError"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/auth.HTTPError"
+                            "$ref": "#/definitions/model.HTTPError"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/auth.HTTPError"
+                            "$ref": "#/definitions/model.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/user/update-role": {
+            "patch": {
+                "description": "Update user profile by userID in token",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Update user role",
+                "parameters": [
+                    {
+                        "description": "Update Role",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.UpdateRole"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.HTTPError"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/model.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.HTTPError"
                         }
                     }
                 }
@@ -167,18 +257,94 @@
         }
     },
     "definitions": {
-        "auth.HTTPError": {
+        "model.HTTPError": {
             "type": "object",
             "properties": {
                 "message": {
                     "type": "string"
                 },
                 "status": {
+                    "type": "integer"
+                }
+            }
+        },
+        "model.LoginUser": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "userID": {
+                    "type": "integer"
+                }
+            }
+        },
+        "model.RegisterUser": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "userFirstName": {
+                    "type": "string"
+                },
+                "userLastName": {
+                    "type": "string"
+                },
+                "username": {
                     "type": "string"
                 }
             }
         },
-        "auth.User": {
+        "model.Token": {
+            "type": "object",
+            "properties": {
+                "access_token": {
+                    "type": "string"
+                },
+                "refresh_token": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.UpdateProfile": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "batchYear": {
+                    "type": "integer"
+                },
+                "phoneNum": {
+                    "type": "string"
+                },
+                "userFirstName": {
+                    "type": "string"
+                },
+                "userLastName": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.UpdateRole": {
+            "type": "object",
+            "properties": {
+                "role": {
+                    "type": "string"
+                },
+                "userID": {
+                    "type": "integer"
+                }
+            }
+        },
+        "model.User": {
             "type": "object",
             "properties": {
                 "address": {
@@ -212,25 +378,6 @@
                     "type": "string"
                 },
                 "username": {
-                    "type": "string"
-                }
-            }
-        },
-        "main.HTTPError": {
-            "type": "object",
-            "properties": {
-                "message": {
-                    "type": "string"
-                },
-                "status": {
-                    "type": "string"
-                }
-            }
-        },
-        "main.Item": {
-            "type": "object",
-            "properties": {
-                "id": {
                     "type": "string"
                 }
             }

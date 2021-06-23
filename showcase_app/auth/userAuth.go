@@ -8,50 +8,26 @@ import(
 	"time"
 	"strconv"
 	util "backend_rest/util"
-	
+	model "backend_rest/model"
 
 )
-
-type User struct {
-	UserID int `json:"userID"`
-	Username string `json:"username"`
-	UserFirstName string `json:"userFirstName"`
-	UserLastName string `json:"userLastName"`
-	Password string `json:"password"`
-	BatchYear int `json:"batchYear"`
-	Address string `json:"address"`
-	BinusianID int `json:"binusianID"`
-	Email string `json:"email"`
-	PhoneNum string `json:"phoneNum"`
-	RoleID int `json:"roleID"`
-
-}
-
-type HTTPError struct {
-	Status  string
-	Message string
-}
-
-type RequestResponse struct {
-	Status  int
-	Message string
-}
 
 // Register godoc
 // @Summary Register a new user
 // @Description Add user to database
 // @Accept  json
 // @Produce  json
-// @Param user body User true 
-// @Success 200 {object} Login
-// @Failure 400 {object} HTTPError
-// @Failure 404 {object} HTTPError
-// @Failure 500 {object} HTTPError
+// @Param user body model.RegisterUser true "Register User"
+// @Success 200 {object} model.Token
+// @Failure 400 {object} model.HTTPError
+// @Failure 404 {object} model.HTTPError
+// @Failure 500 {object} model.HTTPError
 // @Router /api/v1/user/register [post]
 func RegisterUser(c *fiber.Ctx)error{
 	db := database.DBConn
 
-	user := new(User)
+	// user := new(User)
+	var user *model.RegisterUser = &model.RegisterUser{}
 
 
 	if err := c.BodyParser(user); err != nil {
@@ -68,7 +44,7 @@ func RegisterUser(c *fiber.Ctx)error{
 		)
 
 	if err == nil {
-		return c.JSON(RequestResponse{
+		return c.JSON(model.HTTPError{
 			Status: 201,
 			Message: "Email is already Registered",
 		})
@@ -100,11 +76,11 @@ func RegisterUser(c *fiber.Ctx)error{
 // @Description Get user info by userID in token
 // @Accept  json
 // @Produce  json
-// @Param userID path int true "User ID"
-// @Success 200 {object} User
-// @Failure 400 {object} HTTPError
-// @Failure 404 {object} HTTPError
-// @Failure 500 {object} HTTPError
+// @Param userID path int true "Get User Profile"
+// @Success 200 {object} model.User
+// @Failure 400 {object} model.HTTPError
+// @Failure 404 {object} model.HTTPError
+// @Failure 500 {object} model.HTTPError
 // @Router /api/v1/user/:userID [get]
 func GetUser(c *fiber.Ctx)error{
 	now := time.Now().Unix()
@@ -138,7 +114,7 @@ func GetUser(c *fiber.Ctx)error{
     }
 
 	db := database.DBConn
-	var user User
+	var user *model.User = &model.User{}
 	
     err = db.QueryRow(`
         SELECT userID, 
@@ -179,24 +155,24 @@ func GetUser(c *fiber.Ctx)error{
 // Login godoc
 // @Summary Login user
 // @Description Return tokens for authenticated users
-// @ID Login
 // @Accept  json
 // @Produce  json
-// @Tags User
-// @Param user body User true 
-// @Success 200 {object} User
-// @Failure 400 {object} HTTPError
-// @Failure 404 {object} HTTPError
-// @Failure 500 {object} HTTPError
-// @Router /api/user/:userID [post]
+// @Param user body model.LoginUser true "Login User"
+// @Success 200 {object} model.Token
+// @Failure 400 {object} model.HTTPError
+// @Failure 404 {object} model.HTTPError
+// @Failure 500 {object} model.HTTPError
+// @Router /api/v1/user/login [post]
 func Login(c *fiber.Ctx)error{
-	user := new(User)
+	// user := new(User)
+	var user *model.LoginUser = &model.LoginUser{}
 
 	if err := c.BodyParser(user); err != nil {
             return err
     }
     email := user.Email
     password := user.Password
+
 
 	db := database.DBConn
 	err := db.QueryRow(`
@@ -219,13 +195,19 @@ func Login(c *fiber.Ctx)error{
 	    c.Cookie(accessCookie)
 	    c.Cookie(refreshCookie)
 
-	    return c.Status(fiber.StatusOK).JSON(fiber.Map{
-	        "access_token":  accessToken,
-	        "refresh_token": refreshToken,
+	    // return c.Status(fiber.StatusOK).JSON(fiber.Map{
+	    //     "access_token":  accessToken,
+	    //     "refresh_token": refreshToken,
+	    // })
+
+	    return c.Status(fiber.StatusOK).JSON(model.Token{
+	        Access_token:  accessToken,
+	        Refresh_token: refreshToken,
 	    })
 
+
 		} else {
-			return c.JSON(RequestResponse{
+			return c.JSON(model.HTTPError{
 				Status: 401,
 				Message: "Unauthorized Login",
 			})
@@ -233,6 +215,17 @@ func Login(c *fiber.Ctx)error{
 
 }
 
+// UpdateProfile godoc
+// @Summary Update user profile
+// @Description Update user profile by userID in token
+// @Accept  json
+// @Produce  json
+// @Param user body model.UpdateProfile true "Update Profile"
+// @Success 200 {object} model.HTTPError
+// @Failure 400 {object} model.HTTPError
+// @Failure 404 {object} model.HTTPError
+// @Failure 500 {object} model.HTTPError
+// @Router /api/v1/user/update-profile [patch]
 func UpdateProfile(c *fiber.Ctx)error{
 	now := time.Now().Unix()
 	claims, err := util.ExtractTokenMetadata(c)
@@ -258,7 +251,9 @@ func UpdateProfile(c *fiber.Ctx)error{
 
     userID, err := strconv.Atoi(issuer)
 
-    user := new(User)
+    // user := new(User)
+
+    var user *model.UpdateProfile = &model.UpdateProfile{}
 
 	if err = c.BodyParser(user); err != nil {
             return err
@@ -272,12 +267,23 @@ func UpdateProfile(c *fiber.Ctx)error{
 			fmt.Println(err.Error())
 			// return err, nil
 		}
-	return c.JSON(RequestResponse{
+	return c.JSON(model.HTTPError{
 		Status: 200,
 		Message: "Profile Updated",
 	})
 }
 
+// UpdateRole godoc
+// @Summary Update user role
+// @Description Update user profile by userID in token
+// @Accept  json
+// @Produce  json
+// @Param user body model.UpdateRole true "Update Role"
+// @Success 200 {object} model.HTTPError
+// @Failure 400 {object} model.HTTPError
+// @Failure 404 {object} model.HTTPError
+// @Failure 500 {object} model.HTTPError
+// @Router /api/v1/user/update-role [patch]
 func UpdateRole(c *fiber.Ctx)error{
 	now := time.Now().Unix()
 	claims, err := util.ExtractTokenMetadata(c)
@@ -318,12 +324,14 @@ func UpdateRole(c *fiber.Ctx)error{
         }) 
     }
 
-    type UserRole struct{
-    	UserID int
-    	Role string
-    }
+    // type UserRole struct{
+    // 	UserID int
+    // 	Role string
+    // }
 
-    user := new(UserRole)
+    // user := new(UserRole)
+
+    var user *model.UpdateRole = &model.UpdateRole{}
 
 	if err := c.BodyParser(user); err != nil {
             return err
@@ -343,7 +351,7 @@ func UpdateRole(c *fiber.Ctx)error{
 			fmt.Println(err.Error())
 			// return err, nil
 		}
-	return c.JSON(RequestResponse{
+	return c.JSON(model.HTTPError{
 		Status: 200,
 		Message: "User Role Updated",
 	})

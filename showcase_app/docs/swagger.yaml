@@ -1,13 +1,62 @@
 basePath: /
 definitions:
-  auth.HTTPError:
+  model.HTTPError:
     properties:
       message:
         type: string
       status:
+        type: integer
+    type: object
+  model.LoginUser:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      userID:
+        type: integer
+    type: object
+  model.RegisterUser:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      userFirstName:
+        type: string
+      userLastName:
+        type: string
+      username:
         type: string
     type: object
-  auth.User:
+  model.Token:
+    properties:
+      access_token:
+        type: string
+      refresh_token:
+        type: string
+    type: object
+  model.UpdateProfile:
+    properties:
+      address:
+        type: string
+      batchYear:
+        type: integer
+      phoneNum:
+        type: string
+      userFirstName:
+        type: string
+      userLastName:
+        type: string
+    type: object
+  model.UpdateRole:
+    properties:
+      role:
+        type: string
+      userID:
+        type: integer
+    type: object
+  model.User:
     properties:
       address:
         type: string
@@ -32,18 +81,6 @@ definitions:
       username:
         type: string
     type: object
-  main.HTTPError:
-    properties:
-      message:
-        type: string
-      status:
-        type: string
-    type: object
-  main.Item:
-    properties:
-      id:
-        type: string
-    type: object
 host: localhost:3000
 info:
   contact:
@@ -53,16 +90,15 @@ info:
   title: Fiber Example API
   version: "1.0"
 paths:
-  /api/item/{id}:
+  /api/v1/user/:userID:
     get:
       consumes:
       - application/json
-      description: Get an item by its ID
-      operationId: get-item-by-int
+      description: Get user info by userID in token
       parameters:
-      - description: Item ID
+      - description: Get User Profile
         in: path
-        name: id
+        name: userID
         required: true
         type: integer
       produces:
@@ -71,88 +107,146 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/main.Item'
+            $ref: '#/definitions/model.User'
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/main.HTTPError'
+            $ref: '#/definitions/model.HTTPError'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/main.HTTPError'
+            $ref: '#/definitions/model.HTTPError'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/main.HTTPError'
-      summary: Get an item
-      tags:
-      - Item
-  /api/user/:
+            $ref: '#/definitions/model.HTTPError'
+      summary: Query user info
+  /api/v1/user/login:
+    post:
+      consumes:
+      - application/json
+      description: Return tokens for authenticated users
+      parameters:
+      - description: Login User
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/model.LoginUser'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Token'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.HTTPError'
+      summary: Login user
+  /api/v1/user/register:
     post:
       consumes:
       - application/json
       description: Add user to database
-      operationId: Register
       parameters:
-      - description: User ID
-        in: path
-        name: userID
+      - description: Register User
+        in: body
+        name: user
         required: true
-        type: integer
+        schema:
+          $ref: '#/definitions/model.RegisterUser'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/auth.User'
+            $ref: '#/definitions/model.Token'
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/auth.HTTPError'
+            $ref: '#/definitions/model.HTTPError'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/auth.HTTPError'
+            $ref: '#/definitions/model.HTTPError'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/auth.HTTPError'
+            $ref: '#/definitions/model.HTTPError'
       summary: Register a new user
-      tags:
-      - User
-  /api/user/:userID:
-    post:
+  /api/v1/user/update-profile:
+    patch:
       consumes:
       - application/json
-      description: Get info of user from database
-      operationId: Getuser
+      description: Update user profile by userID in token
       parameters:
-      - description: User ID
-        in: path
-        name: userID
+      - description: Update Profile
+        in: body
+        name: user
         required: true
-        type: integer
+        schema:
+          $ref: '#/definitions/model.UpdateProfile'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/auth.User'
+            $ref: '#/definitions/model.HTTPError'
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/auth.HTTPError'
+            $ref: '#/definitions/model.HTTPError'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/auth.HTTPError'
+            $ref: '#/definitions/model.HTTPError'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/auth.HTTPError'
-      summary: Query user
-      tags:
-      - User
+            $ref: '#/definitions/model.HTTPError'
+      summary: Update user profile
+  /api/v1/user/update-role:
+    patch:
+      consumes:
+      - application/json
+      description: Update user profile by userID in token
+      parameters:
+      - description: Update Role
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/model.UpdateRole'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.HTTPError'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.HTTPError'
+      summary: Update user role
 swagger: "2.0"
