@@ -308,6 +308,53 @@ var doc = `{
                 }
             }
         },
+        "/api/v1/user/notification/:userID": {
+            "get": {
+                "description": "Get all notifications of user by userID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Display all notifications",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Get User Notification",
+                        "name": "userID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Notification"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/model.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/user/register": {
             "post": {
                 "description": "Add user to database",
@@ -484,6 +531,26 @@ var doc = `{
                 }
             }
         },
+        "model.Notification": {
+            "type": "object",
+            "properties": {
+                "notif_text": {
+                    "type": "string",
+                    "example": "project successfully submitted"
+                },
+                "notificationID": {
+                    "type": "integer"
+                },
+                "projectID": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "userID": {
+                    "type": "integer",
+                    "example": 1
+                }
+            }
+        },
         "model.Project": {
             "type": "object",
             "properties": {
@@ -571,10 +638,12 @@ var doc = `{
             "type": "object",
             "properties": {
                 "role": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "guest"
                 },
                 "userID": {
-                    "type": "integer"
+                    "type": "integer",
+                    "example": 1
                 }
             }
         },

@@ -18,6 +18,20 @@ definitions:
       userID:
         type: integer
     type: object
+  model.Notification:
+    properties:
+      notif_text:
+        example: project successfully submitted
+        type: string
+      notificationID:
+        type: integer
+      projectID:
+        example: 1
+        type: integer
+      userID:
+        example: 1
+        type: integer
+    type: object
   model.Project:
     properties:
       course:
@@ -75,8 +89,10 @@ definitions:
   model.UpdateRole:
     properties:
       role:
+        example: guest
         type: string
       userID:
+        example: 1
         type: integer
     type: object
   model.User:
@@ -297,6 +313,37 @@ paths:
           schema:
             $ref: '#/definitions/model.HTTPError'
       summary: Login user
+  /api/v1/user/notification/:userID:
+    get:
+      consumes:
+      - application/json
+      description: Get all notifications of user by userID
+      parameters:
+      - description: Get User Notification
+        in: path
+        name: userID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Notification'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.HTTPError'
+      summary: Display all notifications
   /api/v1/user/register:
     post:
       consumes:

@@ -39,8 +39,8 @@ type UpdateProfile struct{
 }
 
 type UpdateRole struct{
-    UserID int `json:"userID"`
-   	Role string `json:"role"`
+    UserID int `json:"userID" example:"1"`
+   	Role string `json:"role" example:"guest"`
 }
 
 type HTTPError struct {

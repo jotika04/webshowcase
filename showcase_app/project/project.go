@@ -312,6 +312,22 @@ func ValidateProject(c *fiber.Ctx)error{
 			fmt.Println(err.Error())
 			// return err, nil
 		}
+
+	var newproject *model.Project = &model.Project{}
+	err = db.QueryRow(`
+		Select userID, projectName From project Where projectID=?
+		`, project.ProjectID).
+		Scan(
+			&newproject.UserID,
+			&newproject.ProjectName,
+		)
+		if err != nil{
+			fmt.Println(err.Error())
+		}
+
+	submit_notif := newproject.ProjectName + " Verified" 
+	db.Exec("INSERT into notification (userID, projectID, notif_text) values (?,?,?)", newproject.UserID, project.ProjectID, submit_notif)
+
 	return c.JSON(model.HTTPError{
 		Status: 200,
 		Message: "Project Verified",

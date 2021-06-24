@@ -6,21 +6,20 @@ import(
 	"fmt"
 	"time"
 	util "backend_rest/util"
+	model "backend_rest/model"
 )
 	
-
-type Notification struct {
-	NotificationID int `json: notificationID`
-	ProjectID int `json:"projectID"`
-	UserID int `json:"userID"`
-	Notif_text string `json:"notif_text"`
-}
-
-type HTTPError struct {
-	Status  string
-	Message string
-}
-
+// GetNotification godoc
+// @Summary Display all notifications 
+// @Description Get all notifications of user by userID 
+// @Accept  json
+// @Produce  json
+// @Param userID path int true "Get User Notification"
+// @Success 200 {object} model.Notification
+// @Failure 400 {object} model.HTTPError
+// @Failure 404 {object} model.HTTPError
+// @Failure 500 {object} model.HTTPError
+// @Router /api/v1/user/notification/:userID [get]
 func GetNotification(c *fiber.Ctx)error{
 	now := time.Now().Unix()
 	claims, err := util.ExtractTokenMetadata(c)
@@ -54,7 +53,7 @@ func GetNotification(c *fiber.Ctx)error{
     }
 
 	db := database.DBConn
-	var notifs []Notification
+	var notifs []*model.Notification
 
     rows, err := db.Query(`
         SELECT *
@@ -66,7 +65,7 @@ func GetNotification(c *fiber.Ctx)error{
 		// return err, nil
 	}
 
-	var notif Notification
+	var notif *model.Notification = &model.Notification{}
     for rows.Next() {
         err := rows.Scan(&notif.NotificationID, &notif.UserID, &notif.ProjectID, &notif.Notif_text)
         if err != nil {
