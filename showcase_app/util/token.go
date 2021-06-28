@@ -6,20 +6,8 @@ import(
 	"fmt"
 	"time"
 	jwt "github.com/form3tech-oss/jwt-go"
+    model "backend_rest/model"
 )
-
-type Claim struct {
-	ClaimID int `json:"claimID"`
-	Issuer string `json:"issuer"`
-	ExpiresAt int `json:"expiresAt"`
-	Subject string `json:"subject"`
-	IssuedAt int `json:"issuedAt"`
-}
-
-type Claims struct {
-  jwt.StandardClaims
-  ID uint `gorm:"primaryKey"`
-}
 
 // var jwtKey = []byte(os.Getenv("PRIV_KEY"))
 var jwtKey = []byte("secret")
@@ -33,10 +21,10 @@ func GenerateTokens(uuid string) (string, string) {
 }
 
 // GenerateAccessClaims returns a claim and an access_token string
-func GenerateAccessClaims(uuid string) (*Claims, string) {
+func GenerateAccessClaims(uuid string) (*model.Claims, string) {
 
     t := time.Now()
-    claim := &Claims{
+    claim := &model.Claims{
         StandardClaims: jwt.StandardClaims{
             Issuer:    uuid,
             ExpiresAt: t.Add(15 * time.Minute).Unix(),
@@ -55,16 +43,12 @@ func GenerateAccessClaims(uuid string) (*Claims, string) {
 }
 
 // GenerateRefreshClaims returns refresh_token
-func GenerateRefreshClaims(cl *Claims) string {
+func GenerateRefreshClaims(cl *model.Claims) string {
 	db := database.DBConn
-	var claims []Claim
- //    result := db.Where(&Claim{
- //        StandardClaims: jwt.StandardClaims{
- //            Issuer: cl.Issuer,
- //        },
- //    }).Find(&Claim{})
+	var claims []*model.Claim
+
     result, err := db.Query("Select * From claim Where issuer=?", cl.Issuer)
-	var newclaim Claim
+	var newclaim *model.Claim = &model.Claim{}
     for result.Next() {
         err := result.Scan(&newclaim.Issuer, &newclaim.ExpiresAt, &newclaim.Subject, &newclaim.IssuedAt)
         if err != nil {
@@ -76,15 +60,12 @@ func GenerateRefreshClaims(cl *Claims) string {
     // checking the number of refresh tokens stored.
     // If the number is higher than 3, remove all the refresh tokens and leave only new one.
     if len(claims) > 3 {
-        // db.Where(&Claim{
-        //     StandardClaims: jwt.StandardClaims{Issuer: cl.Issuer},
-        // }).Delete(&Claim{})
         db.Exec("DELETE FROM claim WHERE issuer=?", cl.Issuer)
         fmt.Println("Tokens deleted")
     }
 
     t := time.Now()
-    refreshClaim := &Claims{
+    refreshClaim := &model.Claims{
         StandardClaims: jwt.StandardClaims{
             Issuer:    cl.Issuer,
             ExpiresAt: t.Add(7 * 24 * time.Hour).Unix(),
@@ -95,7 +76,8 @@ func GenerateRefreshClaims(cl *Claims) string {
 
     // create a claim on DB
     // db.Create(&refreshClaim)
-    db.Exec("INSERT INTO claim (issuer, expiresAt, subject, issuedAt) VALUES(?,?,?,?)", cl.Issuer, t.Add(30 * 24 * time.Hour).Unix(), "refresh_token", t.Unix())
+    ExpiresAt := t.Add(7 * 24 * time.Hour).Unix()
+    db.Exec("INSERT INTO claim (issuer, expiresAt, subject, issuedAt) VALUES(?,?,?,?)", cl.Issuer, ExpiresAt, "refresh_token", t.Unix())
 
     refreshToken := jwt.NewWithClaims(jwt.SigningMethodHS256, refreshClaim)
     refreshTokenString, err := refreshToken.SignedString(jwtKey)
@@ -110,7 +92,8 @@ func GenerateRefreshClaims(cl *Claims) string {
 func SecureAuth() func(*fiber.Ctx) error {
     return func(c *fiber.Ctx) error {
         accessToken := c.Cookies("access_token")
-        claims := new(Claims)
+        // claims := new(Claims)
+        var claims *model.Claims = &model.Claims{}
 
         token, err := jwt.ParseWithClaims(accessToken, claims,
             func(token *jwt.Token) (interface{}, error) {
@@ -165,13 +148,21 @@ func GetAuthCookies(accessToken, refreshToken string) (*fiber.Cookie, *fiber.Coo
     return accessCookie, refreshCookie
 }
 
-// GetAccessToken generates and sends a new access token if there is a valid refresh token
+// GetAccessToken godoc
+// @Summary Get New Access Token
+// @Description returns a new access token using refresh token
+// @Tags User Authentication
+// @Accept  json
+// @Produce  json
+// @Param refreshtoken body model.RefreshToken true "Get access token"
+// @Success 200 {object} model.AccessToken
+// @Failure 400 {object} model.HTTPError
+// @Failure 404 {object} model.HTTPError
+// @Failure 500 {object} model.HTTPError
+// @Router /api/v1/get-access-token [get]
 func GetAccessToken(c *fiber.Ctx) error {
-	type RefreshToken struct {
-		RefreshToken string `json:"refresh_token"`
-	}
+    var reToken *model.RefreshToken = &model.RefreshToken{}
 
-	reToken := new(RefreshToken)
 	if err := c.BodyParser(reToken); err != nil {
 		return c.JSON(fiber.Map{"error": true, "input": "Please review your input"})
 	}
@@ -180,15 +171,16 @@ func GetAccessToken(c *fiber.Ctx) error {
 
     db := database.DBConn
 
-    refreshClaims := new(Claims)
+    var refreshClaims *model.Claims = &model.Claims{}
+
     token, _ := jwt.ParseWithClaims(refreshToken, refreshClaims,
         func(token *jwt.Token) (interface{}, error) {
             return jwtKey, nil
         })
 
-    var claims []Claim
+    var claims []*model.Claim
     result, err := db.Query("Select * From claim Where issuer=? AND expiresAt=? AND issuedAt=?", refreshClaims.Issuer, refreshClaims.ExpiresAt, refreshClaims.IssuedAt)
-	var newclaim Claim
+	var newclaim *model.Claim = &model.Claim{}
     for result.Next() {
         err := result.Scan(&newclaim.Issuer, &newclaim.ExpiresAt, &newclaim.Subject, &newclaim.IssuedAt)
         if err != nil {
@@ -199,20 +191,10 @@ func GetAccessToken(c *fiber.Ctx) error {
 
     if len(claims) <= 0{
     	// no such refresh token exist in the database
-    	fmt.Println(refreshClaims.Issuer, refreshClaims.ExpiresAt, refreshClaims.IssuedAt)
     	fmt.Println("no refresh tokens in db")
         c.ClearCookie("access_token", "refresh_token")
         return c.SendStatus(fiber.StatusForbidden)
     }
-
-    // if res := db.Where(
-    //     "expires_at = ? AND issued_at = ? AND issuer = ?",
-    //     refreshClaims.ExpiresAt, refreshClaims.IssuedAt, refreshClaims.Issuer,
-    // ).First(&Claims{}); res.RowsAffected <= 0 {
-    //     // no such refresh token exist in the database
-    //     c.ClearCookie("access_token", "refresh_token")
-    //     return c.SendStatus(fiber.StatusForbidden)
-    // }
 
     if token.Valid {
         if refreshClaims.ExpiresAt < time.Now().Unix() {
@@ -242,5 +224,8 @@ func GetAccessToken(c *fiber.Ctx) error {
     	panic(err)
     }
 
-    return c.JSON(fiber.Map{"access_token": accessToken})
+    return c.JSON(model.AccessToken{
+        AccessToken: accessToken,
+    })
+
 }

@@ -13,6 +13,7 @@ import(
 // GetProject godoc
 // @Summary Get project details
 // @Description Get project info by projectID
+// @Tags Project
 // @Accept  json
 // @Produce  json
 // @Param project body model.Project true "Get Project"
@@ -60,7 +61,8 @@ func GetProject(c *fiber.Ctx)error{
 
 // SubmitProject godoc
 // @Summary Submit project 
-// @Description Submit project into database 
+// @Description Submit project into database
+// @Tags Project 
 // @Accept  json
 // @Produce  json
 // @Param project body model.Project true "Submit Project"
@@ -92,15 +94,11 @@ func SubmitProject(c *fiber.Ctx)error{
         })
     }
     
-
-	// project := new(Project)
 	var project *model.Project = &model.Project{}
 
 	if err := c.BodyParser(project); err != nil {
         return err
     }
-
-    // userID := project.UserID
 
     issuer := claims.Issuer
 
@@ -164,6 +162,7 @@ func SubmitProject(c *fiber.Ctx)error{
 // GetUnverifiedProjects godoc
 // @Summary Display list of unverified projects
 // @Description query projects from database where verified = false
+// @Tags Project
 // @Accept  json
 // @Produce  json
 // @Success 200 {object} model.Project
@@ -248,6 +247,7 @@ func GetUnverifiedProjects(c *fiber.Ctx)error{
 // ValidateProject godoc
 // @Summary Validate project 
 // @Description Update project verified status into true
+// @Tags Project
 // @Accept  json
 // @Produce  json
 // @Param project body model.Project true "Validate Project"
@@ -295,7 +295,6 @@ func ValidateProject(c *fiber.Ctx)error{
         }) 
     }
 
-    // project := new(Project)
     var project *model.Project = &model.Project{}
 
 

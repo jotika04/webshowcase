@@ -15,6 +15,7 @@ import(
 // Register godoc
 // @Summary Register a new user
 // @Description Add user to database
+// @Tags User Authentication
 // @Accept  json
 // @Produce  json
 // @Param user body model.RegisterUser true "Register User"
@@ -26,7 +27,6 @@ import(
 func RegisterUser(c *fiber.Ctx)error{
 	db := database.DBConn
 
-	// user := new(User)
 	var user *model.RegisterUser = &model.RegisterUser{}
 
 
@@ -74,6 +74,7 @@ func RegisterUser(c *fiber.Ctx)error{
 // GetUser godoc
 // @Summary Query user info
 // @Description Get user info by userID in token
+// @Tags User Profile
 // @Accept  json
 // @Produce  json
 // @Param userID path int true "Get User Profile"
@@ -155,6 +156,7 @@ func GetUser(c *fiber.Ctx)error{
 // Login godoc
 // @Summary Login user
 // @Description Return tokens for authenticated users
+// @Tags User Authentication
 // @Accept  json
 // @Produce  json
 // @Param user body model.LoginUser true "Login User"
@@ -164,7 +166,6 @@ func GetUser(c *fiber.Ctx)error{
 // @Failure 500 {object} model.HTTPError
 // @Router /api/v1/user/login [post]
 func Login(c *fiber.Ctx)error{
-	// user := new(User)
 	var user *model.LoginUser = &model.LoginUser{}
 
 	if err := c.BodyParser(user); err != nil {
@@ -195,10 +196,6 @@ func Login(c *fiber.Ctx)error{
 	    c.Cookie(accessCookie)
 	    c.Cookie(refreshCookie)
 
-	    // return c.Status(fiber.StatusOK).JSON(fiber.Map{
-	    //     "access_token":  accessToken,
-	    //     "refresh_token": refreshToken,
-	    // })
 
 	    return c.Status(fiber.StatusOK).JSON(model.Token{
 	        Access_token:  accessToken,
@@ -218,6 +215,7 @@ func Login(c *fiber.Ctx)error{
 // UpdateProfile godoc
 // @Summary Update user profile
 // @Description Update user profile by userID in token
+// @Tags User Profile
 // @Accept  json
 // @Produce  json
 // @Param user body model.UpdateProfile true "Update Profile"
@@ -251,8 +249,6 @@ func UpdateProfile(c *fiber.Ctx)error{
 
     userID, err := strconv.Atoi(issuer)
 
-    // user := new(User)
-
     var user *model.UpdateProfile = &model.UpdateProfile{}
 
 	if err = c.BodyParser(user); err != nil {
@@ -276,6 +272,7 @@ func UpdateProfile(c *fiber.Ctx)error{
 // UpdateRole godoc
 // @Summary Update user role
 // @Description Update user profile by userID in token
+// @Tags Admin
 // @Accept  json
 // @Produce  json
 // @Param user body model.UpdateRole true "Update Role"
@@ -323,13 +320,6 @@ func UpdateRole(c *fiber.Ctx)error{
             "msg":   "unauthorized, for admin use only",
         }) 
     }
-
-    // type UserRole struct{
-    // 	UserID int
-    // 	Role string
-    // }
-
-    // user := new(UserRole)
 
     var user *model.UpdateRole = &model.UpdateRole{}
 

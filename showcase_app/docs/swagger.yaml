@@ -1,5 +1,10 @@
 basePath: /
 definitions:
+  model.AccessToken:
+    properties:
+      access_token:
+        type: string
+    type: object
   model.HTTPError:
     properties:
       message:
@@ -52,6 +57,11 @@ definitions:
         type: integer
       verified:
         type: boolean
+    type: object
+  model.RefreshToken:
+    properties:
+      refresh_token:
+        type: string
     type: object
   model.RegisterUser:
     properties:
@@ -129,6 +139,40 @@ info:
   title: Fiber Example API
   version: "1.0"
 paths:
+  /api/v1/get-access-token:
+    get:
+      consumes:
+      - application/json
+      description: returns a new access token using refresh token
+      parameters:
+      - description: Get access token
+        in: body
+        name: refreshtoken
+        required: true
+        schema:
+          $ref: '#/definitions/model.RefreshToken'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.AccessToken'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.HTTPError'
+      summary: Get New Access Token
+      tags:
+      - User Authentication
   /api/v1/project/:projectID:
     get:
       consumes:
@@ -161,6 +205,8 @@ paths:
           schema:
             $ref: '#/definitions/model.HTTPError'
       summary: Get project details
+      tags:
+      - Project
   /api/v1/project/submit:
     post:
       consumes:
@@ -193,6 +239,8 @@ paths:
           schema:
             $ref: '#/definitions/model.HTTPError'
       summary: Submit project
+      tags:
+      - Project
   /api/v1/project/validate:
     post:
       consumes:
@@ -225,6 +273,8 @@ paths:
           schema:
             $ref: '#/definitions/model.HTTPError'
       summary: Validate project
+      tags:
+      - Project
   /api/v1/unverified-project:
     get:
       consumes:
@@ -250,6 +300,8 @@ paths:
           schema:
             $ref: '#/definitions/model.HTTPError'
       summary: Display list of unverified projects
+      tags:
+      - Project
   /api/v1/user/:userID:
     get:
       consumes:
@@ -281,6 +333,8 @@ paths:
           schema:
             $ref: '#/definitions/model.HTTPError'
       summary: Query user info
+      tags:
+      - User Profile
   /api/v1/user/login:
     post:
       consumes:
@@ -313,6 +367,8 @@ paths:
           schema:
             $ref: '#/definitions/model.HTTPError'
       summary: Login user
+      tags:
+      - User Authentication
   /api/v1/user/notification/:userID:
     get:
       consumes:
@@ -344,6 +400,8 @@ paths:
           schema:
             $ref: '#/definitions/model.HTTPError'
       summary: Display all notifications
+      tags:
+      - Notification
   /api/v1/user/register:
     post:
       consumes:
@@ -376,6 +434,8 @@ paths:
           schema:
             $ref: '#/definitions/model.HTTPError'
       summary: Register a new user
+      tags:
+      - User Authentication
   /api/v1/user/update-profile:
     patch:
       consumes:
@@ -408,6 +468,8 @@ paths:
           schema:
             $ref: '#/definitions/model.HTTPError'
       summary: Update user profile
+      tags:
+      - User Profile
   /api/v1/user/update-role:
     patch:
       consumes:
@@ -440,4 +502,6 @@ paths:
           schema:
             $ref: '#/definitions/model.HTTPError'
       summary: Update user role
+      tags:
+      - Admin
 swagger: "2.0"

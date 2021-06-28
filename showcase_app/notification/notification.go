@@ -12,6 +12,7 @@ import(
 // GetNotification godoc
 // @Summary Display all notifications 
 // @Description Get all notifications of user by userID 
+// @Tags Notification
 // @Accept  json
 // @Produce  json
 // @Param userID path int true "Get User Notification"

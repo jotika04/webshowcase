@@ -5,6 +5,7 @@ import (
 	swagger "github.com/arsmn/fiber-swagger/v2"
 	// Import Go Fiber
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	// Side Effect import for auto-generated swagger documentation
 	"backend_rest/auth"
 	"backend_rest/database"
@@ -86,6 +87,15 @@ func setupRoutes(app *fiber.App) {
 func main() {
 	// Create new Fiber application
 	app := fiber.New()
+
+	// Default config
+	app.Use(cors.New())
+
+	// Or extend your config for customization
+	app.Use(cors.New(cors.Config{
+	    AllowOrigins: "https://gofiber.io, https://gofiber.net",
+	    AllowHeaders:  "Origin, Content-Type, Accept",
+	}))
 
 	connect_db()
 

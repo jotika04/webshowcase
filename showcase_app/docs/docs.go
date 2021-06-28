@@ -27,6 +27,58 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/api/v1/get-access-token": {
+            "get": {
+                "description": "returns a new access token using refresh token",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User Authentication"
+                ],
+                "summary": "Get New Access Token",
+                "parameters": [
+                    {
+                        "description": "Get access token",
+                        "name": "refreshtoken",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.RefreshToken"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.AccessToken"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/model.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/project/:projectID": {
             "get": {
                 "description": "Get project info by projectID",
@@ -35,6 +87,9 @@ var doc = `{
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "Project"
                 ],
                 "summary": "Get project details",
                 "parameters": [
@@ -85,6 +140,9 @@ var doc = `{
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "Project"
+                ],
                 "summary": "Submit project",
                 "parameters": [
                     {
@@ -133,6 +191,9 @@ var doc = `{
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "Project"
                 ],
                 "summary": "Validate project",
                 "parameters": [
@@ -183,6 +244,9 @@ var doc = `{
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "Project"
+                ],
                 "summary": "Display list of unverified projects",
                 "responses": {
                     "200": {
@@ -220,6 +284,9 @@ var doc = `{
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "User Profile"
                 ],
                 "summary": "Query user info",
                 "parameters": [
@@ -267,6 +334,9 @@ var doc = `{
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "User Authentication"
                 ],
                 "summary": "Login user",
                 "parameters": [
@@ -317,6 +387,9 @@ var doc = `{
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "Notification"
+                ],
                 "summary": "Display all notifications",
                 "parameters": [
                     {
@@ -363,6 +436,9 @@ var doc = `{
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "User Authentication"
                 ],
                 "summary": "Register a new user",
                 "parameters": [
@@ -413,6 +489,9 @@ var doc = `{
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "User Profile"
+                ],
                 "summary": "Update user profile",
                 "parameters": [
                     {
@@ -462,6 +541,9 @@ var doc = `{
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "Admin"
+                ],
                 "summary": "Update user role",
                 "parameters": [
                     {
@@ -504,6 +586,14 @@ var doc = `{
         }
     },
     "definitions": {
+        "model.AccessToken": {
+            "type": "object",
+            "properties": {
+                "access_token": {
+                    "type": "string"
+                }
+            }
+        },
         "model.HTTPError": {
             "type": "object",
             "properties": {
@@ -580,6 +670,14 @@ var doc = `{
                 },
                 "verified": {
                     "type": "boolean"
+                }
+            }
+        },
+        "model.RefreshToken": {
+            "type": "object",
+            "properties": {
+                "refresh_token": {
+                    "type": "string"
                 }
             }
         },
