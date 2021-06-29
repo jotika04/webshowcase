@@ -21,12 +21,13 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 
 	jwtware "github.com/gofiber/jwt/v2"
+
 )
 
 func connect_db() {
 	var err error
-	// database.DBConn, err = sql.Open("mysql", "root:my-secret-pw@tcp(127.0.0.1:3306)/showcasedb?parseTime=true")
-	database.DBConn, err = sql.Open("mysql", "root:my-secret-pw@tcp(mysql:3306)/showcasedb")
+	database.DBConn, err = sql.Open("mysql", "root:my-secret-pw@tcp(127.0.0.1:3306)/showcasedb?parseTime=true")
+	// database.DBConn, err = sql.Open("mysql", "root:my-secret-pw@tcp(mysql:3306)/showcasedb")
 	database.DBConn.SetMaxIdleConns(0)                  //No Idle connection
 	database.DBConn.SetMaxOpenConns(400)                //Max connection to 400
 	database.DBConn.SetConnMaxLifetime(time.Second * 5) //Connection dies after 5 seconds
@@ -39,11 +40,11 @@ func connect_db() {
 	}
 	fmt.Println("Database connection successfully opened")
 
-	_, err = database.DBConn.Exec("CREATE DATABASE IF NOT EXISTS showcasedb")
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println("showcasedb is successfully created")
+	// _, err = database.DBConn.Exec("CREATE DATABASE IF NOT EXISTS showcasedb")
+	// if err != nil {
+	// 	panic(err)
+	// }
+	// fmt.Println("showcasedb is successfully created")
 
 }
 
@@ -73,6 +74,9 @@ func setupRoutes(app *fiber.App) {
 	//notification endpoint
 	app.Get("/api/v1/user/notification/:userID", notification.GetNotification)
 
+	app.Use("api/v1/healthcheck", func(c *fiber.Ctx)error{
+		return c.JSON(fiber.Map{"code": 200, "status": "up",})
+	})
 }
 
 // @title Fiber Example API
@@ -86,7 +90,7 @@ func main() {
 	// Create new Fiber application
 	app := fiber.New()
 
-	// Default config
+	// Default config for CORS
 	app.Use(cors.New())
 
 	connect_db()
