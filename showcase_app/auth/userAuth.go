@@ -19,7 +19,7 @@ import(
 // @Accept  json
 // @Produce  json
 // @Param user body model.RegisterUser true "Register User"
-// @Success 200 {object} model.Token
+// @Success 200 {object} model.LoginResponse
 // @Failure 400 {object} model.HTTPError
 // @Failure 404 {object} model.HTTPError
 // @Failure 500 {object} model.HTTPError
@@ -160,7 +160,7 @@ func GetUser(c *fiber.Ctx)error{
 // @Accept  json
 // @Produce  json
 // @Param user body model.LoginUser true "Login User"
-// @Success 200 {object} model.Token
+// @Success 200 {object} model.LoginResponse
 // @Failure 400 {object} model.HTTPError
 // @Failure 404 {object} model.HTTPError
 // @Failure 500 {object} model.HTTPError
@@ -197,7 +197,9 @@ func Login(c *fiber.Ctx)error{
 	    c.Cookie(refreshCookie)
 
 
-	    return c.Status(fiber.StatusOK).JSON(model.Token{
+	    return c.Status(fiber.StatusOK).JSON(model.LoginResponse{
+	    	UserID: user.UserID,
+	    	Success: true,
 	        Access_token:  accessToken,
 	        Refresh_token: refreshToken,
 	    })

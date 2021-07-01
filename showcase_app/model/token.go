@@ -14,7 +14,6 @@ type Claim struct {
 
 type Claims struct {
   	jwt.StandardClaims
-  	ID uint `gorm:"primaryKey"`
 }
 
 type RefreshToken struct {

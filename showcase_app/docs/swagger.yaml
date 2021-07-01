@@ -14,6 +14,17 @@ definitions:
         example: 400
         type: integer
     type: object
+  model.LoginResponse:
+    properties:
+      access_token:
+        type: string
+      refresh_token:
+        type: string
+      success:
+        type: boolean
+      userID:
+        type: integer
+    type: object
   model.LoginUser:
     properties:
       email:
@@ -74,13 +85,6 @@ definitions:
       userLastName:
         type: string
       username:
-        type: string
-    type: object
-  model.Token:
-    properties:
-      access_token:
-        type: string
-      refresh_token:
         type: string
     type: object
   model.UpdateProfile:
@@ -353,7 +357,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Token'
+            $ref: '#/definitions/model.LoginResponse'
         "400":
           description: Bad Request
           schema:
@@ -420,7 +424,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Token'
+            $ref: '#/definitions/model.LoginResponse'
         "400":
           description: Bad Request
           schema:

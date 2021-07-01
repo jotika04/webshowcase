@@ -354,7 +354,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/model.Token"
+                            "$ref": "#/definitions/model.LoginResponse"
                         }
                     },
                     "400": {
@@ -456,7 +456,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/model.Token"
+                            "$ref": "#/definitions/model.LoginResponse"
                         }
                     },
                     "400": {
@@ -607,6 +607,23 @@ var doc = `{
                 }
             }
         },
+        "model.LoginResponse": {
+            "type": "object",
+            "properties": {
+                "access_token": {
+                    "type": "string"
+                },
+                "refresh_token": {
+                    "type": "string"
+                },
+                "success": {
+                    "type": "boolean"
+                },
+                "userID": {
+                    "type": "integer"
+                }
+            }
+        },
         "model.LoginUser": {
             "type": "object",
             "properties": {
@@ -697,17 +714,6 @@ var doc = `{
                     "type": "string"
                 },
                 "username": {
-                    "type": "string"
-                }
-            }
-        },
-        "model.Token": {
-            "type": "object",
-            "properties": {
-                "access_token": {
-                    "type": "string"
-                },
-                "refresh_token": {
                     "type": "string"
                 }
             }

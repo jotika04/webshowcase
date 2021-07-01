@@ -48,7 +48,9 @@ type HTTPError struct {
 	Message string `json:"message" example:"status bad request"`
 }
 
-type Token struct{
+type LoginResponse struct{
+	UserID int `json:"userID"`
+	Success bool `json:"success"`
 	Access_token string `json:"access_token"`
 	Refresh_token string `json:"refresh_token"`
 }
