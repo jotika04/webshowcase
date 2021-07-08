@@ -26,7 +26,7 @@ Project:
 http://127.0.0.1:3000/api/v1/project/:projectID		: return project info
 http://127.0.0.1:3000/api/v1/project/submit		: submit project
 http://127.0.0.1:3000/api/v1/unverified-project		: get unverified projects
-http://127.0.0.1:3000/api/v1/project/validate    	: validate project
+http://127.0.0.1:3000/api/v1/project/verify    	: verify project
 
 Notification:
 http://127.0.0.1:3000/api/v1/user/notification/:userID	: return notifications

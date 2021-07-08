@@ -166,14 +166,15 @@ func GetUser(c *fiber.Ctx)error{
 // @Failure 500 {object} model.HTTPError
 // @Router /api/v1/user/login [post]
 func Login(c *fiber.Ctx)error{
-	var user *model.LoginUser = &model.LoginUser{}
+	var login *model.LoginUser = &model.LoginUser{}
 
-	if err := c.BodyParser(user); err != nil {
+	if err := c.BodyParser(login); err != nil {
             return err
     }
-    email := user.Email
-    password := user.Password
+    email := login.Email
+    password := login.Password
 
+    var user *model.User = &model.User{}
 
 	db := database.DBConn
 	err := db.QueryRow(`

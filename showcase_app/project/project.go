@@ -16,7 +16,7 @@ import(
 // @Tags Project
 // @Accept  json
 // @Produce  json
-// @Param project body model.Project true "Get Project"
+// @Param projectID path int true "Get Project"
 // @Success 200 {object} model.Project
 // @Failure 400 {object} model.HTTPError
 // @Failure 404 {object} model.HTTPError
@@ -36,7 +36,8 @@ func GetProject(c *fiber.Ctx)error{
         verified,
         projectImage,
         projectVideo,
-        projectThumbnail 
+        projectThumbnail,
+        status 
         FROM project WHERE projectID=?
         `, projectID).
         Scan(
@@ -49,6 +50,7 @@ func GetProject(c *fiber.Ctx)error{
             &project.ProjectImage,
             &project.ProjectVideo,
             &project.ProjectThumbnail,
+            &project.Status,
             
         )
 		if err != nil {
@@ -65,7 +67,7 @@ func GetProject(c *fiber.Ctx)error{
 // @Tags Project 
 // @Accept  json
 // @Produce  json
-// @Param project body model.Project true "Submit Project"
+// @Param project body model.SubmitProject true "Submit Project"
 // @Success 200 {object} model.HTTPError
 // @Failure 400 {object} model.HTTPError
 // @Failure 404 {object} model.HTTPError
@@ -95,8 +97,9 @@ func SubmitProject(c *fiber.Ctx)error{
     }
     
 	var project *model.Project = &model.Project{}
+	var submitProject *model.SubmitProject = &model.SubmitProject{}
 
-	if err := c.BodyParser(project); err != nil {
+	if err := c.BodyParser(submitProject); err != nil {
         return err
     }
 
@@ -124,12 +127,14 @@ func SubmitProject(c *fiber.Ctx)error{
 			&project.UserID,
 		)
 
-	projectStatus := false
+	projectVerified := false
+	projectStatus := "unchecked"
+
 
 	if err == nil{
-		db.Exec("INSERT into project (userID, course, projectName, description, verified, projectImage, projectVideo, projectThumbnail) values (?,?,?,?,?,?,?,?)", project.UserID, project.Course, project.ProjectName, project.Description, projectStatus, project.ProjectImage, project.ProjectVideo, project.ProjectThumbnail)
+		db.Exec("INSERT into project (userID, course, projectName, description, verified, projectImage, projectVideo, projectThumbnail, status) values (?,?,?,?,?,?,?,?,?)", project.UserID, submitProject.Course, submitProject.ProjectName, submitProject.Description, projectVerified, submitProject.ProjectImage, submitProject.ProjectVideo, submitProject.ProjectThumbnail, projectStatus)
 		
-		submit_notif := project.ProjectName + " Successfully Submitted"
+		submit_notif := submitProject.ProjectName + " Successfully Submitted"
 
 		// var newproject Project
 		var newproject *model.Project = &model.Project{}
@@ -211,12 +216,13 @@ func GetUnverifiedProjects(c *fiber.Ctx)error{
 
 	// var projects []Project
 	var projects []*model.Project
-	projectStatus := false
+	projectVerified := false
+	projectStatus := "unchecked"
 
     rows, err := db.Query(`
         SELECT *
-        FROM project WHERE verified=?
-        `, projectStatus)
+        FROM project WHERE verified=? AND status=?
+        `, projectVerified, projectStatus)
 
 	if err != nil {
 		fmt.Println(err.Error())
@@ -234,7 +240,8 @@ func GetUnverifiedProjects(c *fiber.Ctx)error{
             	&project.ProjectImage,
             	&project.ProjectVideo,
             	&project.ProjectThumbnail,
-            	&project.UserID)
+            	&project.UserID,
+            	&project.Status)
         if err != nil {
             fmt.Println(err)
         }
@@ -244,19 +251,19 @@ func GetUnverifiedProjects(c *fiber.Ctx)error{
 	return c.JSON(projects)
 }
 
-// ValidateProject godoc
-// @Summary Validate project 
+// VerifyProject godoc
+// @Summary Verify project 
 // @Description Update project verified status into true
 // @Tags Project
 // @Accept  json
 // @Produce  json
-// @Param project body model.Project true "Validate Project"
+// @Param project body model.VerifyProject true "Verify Project"
 // @Success 200 {object} model.HTTPError
 // @Failure 400 {object} model.HTTPError
 // @Failure 404 {object} model.HTTPError
 // @Failure 500 {object} model.HTTPError
-// @Router /api/v1/project/validate [post]
-func ValidateProject(c *fiber.Ctx)error{
+// @Router /api/v1/project/verify [patch]
+func VerifyProject(c *fiber.Ctx)error{
 	now := time.Now().Unix()
 	claims, err := util.ExtractTokenMetadata(c)
 	if err != nil {
@@ -295,7 +302,8 @@ func ValidateProject(c *fiber.Ctx)error{
         }) 
     }
 
-    var project *model.Project = &model.Project{}
+    // var project *model.Project = &model.Project{}
+    var project *model.VerifyProject = &model.VerifyProject{}
 
 
 	if err := c.BodyParser(project); err != nil {

@@ -29,7 +29,7 @@ CREATE TABLE `claim` (
   `subject` varchar(255) DEFAULT NULL,
   `issuedAt` int DEFAULT NULL,
   PRIMARY KEY (`claimID`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,6 +38,7 @@ CREATE TABLE `claim` (
 
 LOCK TABLES `claim` WRITE;
 /*!40000 ALTER TABLE `claim` DISABLE KEYS */;
+INSERT INTO `claim` VALUES (18,'testuser',1625658342,'refresh_token',1623066342),(19,'John_Doe',1625658912,'refresh_token',1623066912),(20,'0',1625659082,'refresh_token',1623067082),(56,'38',1627044924,'refresh_token',1624452924),(57,'39',1627044988,'refresh_token',1624452988),(59,'38',1627126112,'refresh_token',1624534112),(60,'38',1627463411,'refresh_token',1624871411),(61,'38',1627463589,'refresh_token',1624871589),(65,'37',1625480356,'refresh_token',1624875556),(67,'34',1626349499,'refresh_token',1625744699),(68,'34',1626349509,'refresh_token',1625744709),(69,'34',1626350153,'refresh_token',1625745353),(70,'37',1626350226,'refresh_token',1625745426);
 /*!40000 ALTER TABLE `claim` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -81,7 +82,7 @@ CREATE TABLE `notification` (
   KEY `fk_projectID` (`projectID`),
   CONSTRAINT `fk_projectID_notif` FOREIGN KEY (`projectID`) REFERENCES `project` (`projectID`),
   CONSTRAINT `fk_userID_notif` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -90,7 +91,7 @@ CREATE TABLE `notification` (
 
 LOCK TABLES `notification` WRITE;
 /*!40000 ALTER TABLE `notification` DISABLE KEYS */;
-INSERT INTO `notification` VALUES (1,33,6,'testing'),(2,33,6,'testingagain'),(9,34,22,'Project Successfully Submitted'),(10,33,23,'webdeb project Successfully Submitted');
+INSERT INTO `notification` VALUES (1,33,6,'testing'),(2,33,6,'testingagain'),(9,34,22,'Project Successfully Submitted'),(10,33,23,'webdeb project Successfully Submitted'),(11,34,24,'test project 2 Successfully Submitted'),(12,34,24,'test project 2 Successfully Submitted'),(13,33,26,'test project 2 Successfully Submitted'),(14,37,27,'test project 2 Successfully Submitted'),(15,37,27,'test project 2 Successfully Submitted'),(16,34,24,'test project 2 Successfully Submitted'),(17,37,27,' Verified'),(18,37,27,'test project 2 Verified');
 /*!40000 ALTER TABLE `notification` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -111,10 +112,11 @@ CREATE TABLE `project` (
   `projectVideo` varchar(255) DEFAULT '',
   `projectThumbnail` varchar(255) DEFAULT '',
   `userID` int NOT NULL,
+  `status` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`projectID`),
   KEY `fk_userID` (`userID`),
   CONSTRAINT `fk_userID` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -123,7 +125,7 @@ CREATE TABLE `project` (
 
 LOCK TABLES `project` WRITE;
 /*!40000 ALTER TABLE `project` DISABLE KEYS */;
-INSERT INTO `project` VALUES (6,'newproject','this is my project',0,'test','path','path','path',33),(22,'newproject2','this is my project',0,'test','path','path','path',34),(23,'webdeb project','this is my project',0,'test','path','path','path',33);
+INSERT INTO `project` VALUES (6,'newproject','this is my project',0,'test','path','path','path',33,''),(22,'newproject2','this is my project',0,'test','path','path','path',34,''),(23,'webdeb project','this is my project',1,'test','path','path','path',33,''),(24,'test project 2','this is my new project',0,'test','path','path','path',34,''),(25,'test project 2','this is my new project',0,'test','path','path','path',34,''),(26,'test project 2','this is my new project',0,'test','path','path','path',33,''),(27,'test project 2','this is my new project',1,'test','path','path','path',37,''),(28,'test project 2','this is my new project',0,'test','path','path','path',37,''),(29,'test project 2','this is my new project',0,'test','path','path','path',34,''),(30,'test project 2','this is my new project',0,'test','path','path','path',37,'unchecked');
 /*!40000 ALTER TABLE `project` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -173,7 +175,7 @@ CREATE TABLE `user` (
   PRIMARY KEY (`userID`),
   KEY `fk_roleID` (`roleID`),
   CONSTRAINT `fk_roleID` FOREIGN KEY (`roleID`) REFERENCES `role` (`roleID`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -182,7 +184,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (33,'bbb','ccc','$2a$10$vUIU0.LAFs6s2HoFT1CsyuWyc5Wmbprv2oFg9mKDY5O85iF9uh8n.',0,'',0,'abc@mail.com','aaa','',4),(34,'userfn','userln','$2a$10$QJ60Y/KKjimcC8nhaEvL.u.AJk8.m8f8j8iVr54NXykKg.Z2wqyEC',0,'',0,'testing@mail.com','testuser','',4),(35,'test','user','$2a$10$HJd3/XB25rAtgBluGGkNvONKT1Y8aSXLZqMaDRnbm0koWb.xgd.fe',0,'',0,'testuser@mail.com','testuser','',4);
+INSERT INTO `user` VALUES (33,'hello','world','$2a$10$vUIU0.LAFs6s2HoFT1CsyuWyc5Wmbprv2oFg9mKDY5O85iF9uh8n.',2020,'jakarta',0,'abc@mail.com','aaa','081234567890',4),(34,'Jane','Doe','$2a$10$QJ60Y/KKjimcC8nhaEvL.u.AJk8.m8f8j8iVr54NXykKg.Z2wqyEC',2022,'sydney',0,'testing@mail.com','testuser','081255555555',4),(35,'test','user','$2a$10$HJd3/XB25rAtgBluGGkNvONKT1Y8aSXLZqMaDRnbm0koWb.xgd.fe',0,'',0,'testuser@mail.com','testuser','',4),(37,'John','Doe','$2a$10$sCdOiHmGOguHxnnyuhnLxufOJU9K2oVzZy9mEGXPt5ixGGfKY8Wxi',0,'',0,'johndoe@mail.com','John_Doe','',2),(38,'test','admin','$2a$10$GsKdhhD56DsYN5qKNyAQWeFoQa7nT.X.j5tBWbB9TlvgOKi0xE7SO',0,'',0,'admin@mail.com','admin','',1),(39,'test','user','$2a$10$Lpoq9hv9mVK6dWrSxDVaduqtXWWIVEJeK/htEQ.hAvkbUOpCTH29y',0,'',0,'hello@mail.com','testinggg','',3);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -195,4 +197,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-06-03  6:37:42
+-- Dump completed on 2021-07-08 12:26:29

@@ -94,13 +94,11 @@ var doc = `{
                 "summary": "Get project details",
                 "parameters": [
                     {
+                        "type": "integer",
                         "description": "Get Project",
-                        "name": "project",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/model.Project"
-                        }
+                        "name": "projectID",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -151,7 +149,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.Project"
+                            "$ref": "#/definitions/model.SubmitProject"
                         }
                     }
                 ],
@@ -183,8 +181,8 @@ var doc = `{
                 }
             }
         },
-        "/api/v1/project/validate": {
-            "post": {
+        "/api/v1/project/verify": {
+            "patch": {
                 "description": "Update project verified status into true",
                 "consumes": [
                     "application/json"
@@ -195,15 +193,15 @@ var doc = `{
                 "tags": [
                     "Project"
                 ],
-                "summary": "Validate project",
+                "summary": "Verify project",
                 "parameters": [
                     {
-                        "description": "Validate Project",
+                        "description": "Verify Project",
                         "name": "project",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.Project"
+                            "$ref": "#/definitions/model.VerifyProject"
                         }
                     }
                 ],
@@ -632,9 +630,6 @@ var doc = `{
                 },
                 "password": {
                     "type": "string"
-                },
-                "userID": {
-                    "type": "integer"
                 }
             }
         },
@@ -682,6 +677,9 @@ var doc = `{
                 "projectVideo": {
                     "type": "string"
                 },
+                "status": {
+                    "type": "string"
+                },
                 "userID": {
                     "type": "integer"
                 },
@@ -714,6 +712,29 @@ var doc = `{
                     "type": "string"
                 },
                 "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.SubmitProject": {
+            "type": "object",
+            "properties": {
+                "course": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "projectImage": {
+                    "type": "string"
+                },
+                "projectName": {
+                    "type": "string"
+                },
+                "projectThumbnail": {
+                    "type": "string"
+                },
+                "projectVideo": {
                     "type": "string"
                 }
             }
@@ -786,6 +807,14 @@ var doc = `{
                 },
                 "username": {
                     "type": "string"
+                }
+            }
+        },
+        "model.VerifyProject": {
+            "type": "object",
+            "properties": {
+                "projectID": {
+                    "type": "integer"
                 }
             }
         }

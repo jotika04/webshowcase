@@ -69,7 +69,7 @@ func setupRoutes(app *fiber.App) {
 	app.Get("/api/v1/project/:projectID", project.GetProject)
 	app.Get("/api/v1/unverified-project", project.GetUnverifiedProjects)
 	app.Post("/api/v1/project/submit", project.SubmitProject)
-	app.Patch("/api/v1/project/validate", project.ValidateProject)
+	app.Patch("/api/v1/project/verify", project.VerifyProject)
 
 	//notification endpoint
 	app.Get("/api/v1/user/notification/:userID", notification.GetNotification)

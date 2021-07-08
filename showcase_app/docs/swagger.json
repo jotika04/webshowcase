@@ -79,13 +79,11 @@
                 "summary": "Get project details",
                 "parameters": [
                     {
+                        "type": "integer",
                         "description": "Get Project",
-                        "name": "project",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/model.Project"
-                        }
+                        "name": "projectID",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -136,7 +134,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.Project"
+                            "$ref": "#/definitions/model.SubmitProject"
                         }
                     }
                 ],
@@ -168,8 +166,8 @@
                 }
             }
         },
-        "/api/v1/project/validate": {
-            "post": {
+        "/api/v1/project/verify": {
+            "patch": {
                 "description": "Update project verified status into true",
                 "consumes": [
                     "application/json"
@@ -180,15 +178,15 @@
                 "tags": [
                     "Project"
                 ],
-                "summary": "Validate project",
+                "summary": "Verify project",
                 "parameters": [
                     {
-                        "description": "Validate Project",
+                        "description": "Verify Project",
                         "name": "project",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.Project"
+                            "$ref": "#/definitions/model.VerifyProject"
                         }
                     }
                 ],
@@ -617,9 +615,6 @@
                 },
                 "password": {
                     "type": "string"
-                },
-                "userID": {
-                    "type": "integer"
                 }
             }
         },
@@ -667,6 +662,9 @@
                 "projectVideo": {
                     "type": "string"
                 },
+                "status": {
+                    "type": "string"
+                },
                 "userID": {
                     "type": "integer"
                 },
@@ -699,6 +697,29 @@
                     "type": "string"
                 },
                 "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.SubmitProject": {
+            "type": "object",
+            "properties": {
+                "course": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "projectImage": {
+                    "type": "string"
+                },
+                "projectName": {
+                    "type": "string"
+                },
+                "projectThumbnail": {
+                    "type": "string"
+                },
+                "projectVideo": {
                     "type": "string"
                 }
             }
@@ -771,6 +792,14 @@
                 },
                 "username": {
                     "type": "string"
+                }
+            }
+        },
+        "model.VerifyProject": {
+            "type": "object",
+            "properties": {
+                "projectID": {
+                    "type": "integer"
                 }
             }
         }
