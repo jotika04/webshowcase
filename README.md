@@ -14,29 +14,29 @@ and login using the username 'root' and the password 'my-secret-pw'
 ```
 Available Endpoints:
 User:
-http://127.0.0.1:3000/api/v1/user/register			: register
-http://127.0.0.1:3000/api/v1/user/login				: login
-http://127.0.0.1:3000/api/v1/user/get-access-token  		: get new access token
+http://127.0.0.1:3000/api/v1/user/register				: register
+http://127.0.0.1:3000/api/v1/user/login					: login
+http://127.0.0.1:3000/api/v1/user/get-access-token  			: get new access token
 
 Profile:
-http://127.0.0.1:3000/api/v1/user/:userID			: return user info
-http://127.0.0.1:3000/api/v1/user/update-profile		: update user profile
+http://127.0.0.1:3000/api/v1/user/:userID				: return user info
+http://127.0.0.1:3000/api/v1/user/update-profile			: update user profile
 
 Project:
-http://127.0.0.1:3000/api/v1/project/:projectID			: return project info
-http://127.0.0.1:3000/api/v1/project/submit			: submit project
-http://127.0.0.1:3000/api/v1/unverified-project			: get unverified projects
-http://127.0.0.1:3000/api/v1/project/verify    			: verify project submission
-http://127.0.0.1:3000/api/v1/project/reject			: reject project submission
+http://127.0.0.1:3000/api/v1/project/:projectID				: return project info
+http://127.0.0.1:3000/api/v1/project/submit				: submit project
+http://127.0.0.1:3000/api/v1/unverified-project				: get unverified projects
+http://127.0.0.1:3000/api/v1/project/verify    				: verify project submission
+http://127.0.0.1:3000/api/v1/project/reject				: reject project submission
 
 Notification:
-http://127.0.0.1:3000/api/v1/user/notification/:userID		: return notifications
+http://127.0.0.1:3000/api/v1/user/notification/:userID			: return notifications
 http://127.0.0.1:3000/ap1/v1/user/notification/read/:notificationID	:	read notification and delete from database
 
 Admin:
-http://127.0.0.1:3000/api/v1/user/update-role    		: update user role
+http://127.0.0.1:3000/api/v1/user/update-role    			: update user role
 
-http://127.0.0.1:3000/api/v1/healthcheck			: healthcheck
+http://127.0.0.1:3000/api/v1/healthcheck				: healthcheck
 ```
 
 # Reference
