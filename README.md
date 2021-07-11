@@ -26,13 +26,17 @@ Project:
 http://127.0.0.1:3000/api/v1/project/:projectID		: return project info
 http://127.0.0.1:3000/api/v1/project/submit		: submit project
 http://127.0.0.1:3000/api/v1/unverified-project		: get unverified projects
-http://127.0.0.1:3000/api/v1/project/verify    	: verify project
+http://127.0.0.1:3000/api/v1/project/verify    	: verify project submission
+http://127.0.0.1:3000/api/v1/project/reject		: reject project submission
 
 Notification:
 http://127.0.0.1:3000/api/v1/user/notification/:userID	: return notifications
+http://127.0.0.1:3000/ap1/v1/user/notification/read/:notificationID	:read notification and delete from database
 
 Admin:
 http://127.0.0.1:3000/api/v1/user/update-role    	: update user role
+
+http://127.0.0.1:3000/api/v1/healthcheck		: healthcheck
 ```
 
 # Reference

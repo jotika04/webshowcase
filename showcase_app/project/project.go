@@ -16,7 +16,7 @@ import(
 // @Tags Project
 // @Accept  json
 // @Produce  json
-// @Param projectID path int true "Get Project"
+// @Param projectID path int true "Project ID"
 // @Success 200 {object} model.Project
 // @Failure 400 {object} model.HTTPError
 // @Failure 404 {object} model.HTTPError
@@ -36,8 +36,7 @@ func GetProject(c *fiber.Ctx)error{
         verified,
         projectImage,
         projectVideo,
-        projectThumbnail,
-        status 
+        projectThumbnail
         FROM project WHERE projectID=?
         `, projectID).
         Scan(
@@ -50,7 +49,6 @@ func GetProject(c *fiber.Ctx)error{
             &project.ProjectImage,
             &project.ProjectVideo,
             &project.ProjectThumbnail,
-            &project.Status,
             
         )
 		if err != nil {
@@ -128,11 +126,10 @@ func SubmitProject(c *fiber.Ctx)error{
 		)
 
 	projectVerified := false
-	projectStatus := "unchecked"
 
 
 	if err == nil{
-		db.Exec("INSERT into project (userID, course, projectName, description, verified, projectImage, projectVideo, projectThumbnail, status) values (?,?,?,?,?,?,?,?,?)", project.UserID, submitProject.Course, submitProject.ProjectName, submitProject.Description, projectVerified, submitProject.ProjectImage, submitProject.ProjectVideo, submitProject.ProjectThumbnail, projectStatus)
+		db.Exec("INSERT into project (userID, course, projectName, description, verified, projectImage, projectVideo, projectThumbnail) values (?,?,?,?,?,?,?,?)", project.UserID, submitProject.Course, submitProject.ProjectName, submitProject.Description, projectVerified, submitProject.ProjectImage, submitProject.ProjectVideo, submitProject.ProjectThumbnail)
 		
 		submit_notif := submitProject.ProjectName + " Successfully Submitted"
 
@@ -149,7 +146,7 @@ func SubmitProject(c *fiber.Ctx)error{
 		}
 		// fmt.Println("Project ID is ...", newproject.ProjectID)
 
-		db.Exec("INSERT into notification (userID, projectID, notif_text) values (?,?,?)", userID, newproject.ProjectID, submit_notif)
+		db.Exec("INSERT into notification (userID, notif_text) values (?,?)", userID, submit_notif)
 
 		return c.JSON(model.HTTPError{
 			Status: 201,
@@ -217,12 +214,11 @@ func GetUnverifiedProjects(c *fiber.Ctx)error{
 	// var projects []Project
 	var projects []*model.Project
 	projectVerified := false
-	projectStatus := "unchecked"
 
     rows, err := db.Query(`
         SELECT *
-        FROM project WHERE verified=? AND status=?
-        `, projectVerified, projectStatus)
+        FROM project WHERE verified=?
+        `, projectVerified)
 
 	if err != nil {
 		fmt.Println(err.Error())
@@ -240,8 +236,7 @@ func GetUnverifiedProjects(c *fiber.Ctx)error{
             	&project.ProjectImage,
             	&project.ProjectVideo,
             	&project.ProjectThumbnail,
-            	&project.UserID,
-            	&project.Status)
+            	&project.UserID)
         if err != nil {
             fmt.Println(err)
         }
@@ -333,10 +328,98 @@ func VerifyProject(c *fiber.Ctx)error{
 		}
 
 	submit_notif := newproject.ProjectName + " Verified" 
-	db.Exec("INSERT into notification (userID, projectID, notif_text) values (?,?,?)", newproject.UserID, project.ProjectID, submit_notif)
+	db.Exec("INSERT into notification (userID, notif_text) values (?,?)", newproject.UserID, submit_notif)
 
 	return c.JSON(model.HTTPError{
 		Status: 200,
 		Message: "Project Verified",
+	})
+}
+
+// RejectProject godoc
+// @Summary Reject project submission
+// @Description Decline project submission
+// @Tags Project
+// @Accept  json
+// @Produce  json
+// @Param project body model.RejectProject true "Reject Project"
+// @Success 200 {object} model.HTTPError
+// @Failure 400 {object} model.HTTPError
+// @Failure 404 {object} model.HTTPError
+// @Failure 500 {object} model.HTTPError
+// @Router /api/v1/project/reject [delete]
+func RejectProject(c *fiber.Ctx)error{
+	now := time.Now().Unix()
+	claims, err := util.ExtractTokenMetadata(c)
+	if err != nil {
+        // Return status 500 and JWT parse error.
+        return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+            "error": true,
+            "msg":   err.Error(),
+        })
+    }
+    expires := claims.Expires
+
+    // Checking, if now time greather than expiration from JWT.
+    if now > expires {
+        // Return status 401 and unauthorized error message.
+        return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+            "error": true,
+            "msg":   "unauthorized, check expiration time of your token",
+        })
+    }
+
+    issuer := claims.Issuer
+    requestID, err := strconv.Atoi(issuer)
+
+    var requestroleID int
+    db := database.DBConn
+
+    err = db.QueryRow("SELECT roleID FROM user WHERE userID=?", requestID).Scan(&requestroleID)
+    if err != nil {
+			fmt.Println(err.Error())
+			// return err, nil
+	}
+    if requestroleID > 2{
+    	return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+            "error": true,
+            "msg":   "unauthorized, for validators and admins only",
+        }) 
+    }
+
+    // var project *model.Project = &model.Project{}
+    var project *model.RejectProject = &model.RejectProject{}
+
+
+	if err := c.BodyParser(project); err != nil {
+            return err
+    }
+
+    var newproject *model.Project = &model.Project{}
+	err = db.QueryRow(`
+		Select userID, projectName From project Where projectID=?
+		`, project.ProjectID).
+		Scan(
+			&newproject.UserID,
+			&newproject.ProjectName,
+		)
+		if err != nil{
+			fmt.Println(err.Error())
+		}
+
+	reject_notif := newproject.ProjectName + " Rejected, Reason: " + project.Message 
+	
+	db.Exec("DELETE FROM project WHERE projectID=?", project.ProjectID)
+		if err != nil {
+			fmt.Println(err.Error())
+			// return err, nil
+		}
+
+	db.Exec("INSERT into notification (userID, notif_text) values (?,?)", newproject.UserID, reject_notif)
+    
+
+	return c.JSON(model.HTTPError{
+		Status: 200,
+		Message: "Project Rejected",
 	})
 }

@@ -95,7 +95,7 @@ var doc = `{
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "Get Project",
+                        "description": "Project ID",
                         "name": "projectID",
                         "in": "path",
                         "required": true
@@ -106,6 +106,58 @@ var doc = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/model.Project"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/model.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/project/reject": {
+            "delete": {
+                "description": "Decline project submission",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Project"
+                ],
+                "summary": "Reject project submission",
+                "parameters": [
+                    {
+                        "description": "Reject Project",
+                        "name": "project",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.RejectProject"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.HTTPError"
                         }
                     },
                     "400": {
@@ -290,7 +342,7 @@ var doc = `{
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "Get User Profile",
+                        "description": "User ID",
                         "name": "userID",
                         "in": "path",
                         "required": true
@@ -392,7 +444,7 @@ var doc = `{
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "Get User Notification",
+                        "description": "User ID",
                         "name": "userID",
                         "in": "path",
                         "required": true
@@ -403,6 +455,56 @@ var doc = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/model.Notification"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/model.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/user/notification/read/:notificationID": {
+            "delete": {
+                "description": "Read a notification and delete it from database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Notification"
+                ],
+                "summary": "Read notification",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Notification ID",
+                        "name": "notificationID",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.HTTPError"
                         }
                     },
                     "400": {
@@ -677,9 +779,6 @@ var doc = `{
                 "projectVideo": {
                     "type": "string"
                 },
-                "status": {
-                    "type": "string"
-                },
                 "userID": {
                     "type": "integer"
                 },
@@ -713,6 +812,17 @@ var doc = `{
                 },
                 "username": {
                     "type": "string"
+                }
+            }
+        },
+        "model.RejectProject": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                },
+                "projectID": {
+                    "type": "integer"
                 }
             }
         },

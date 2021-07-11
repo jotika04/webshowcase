@@ -70,9 +70,11 @@ func setupRoutes(app *fiber.App) {
 	app.Get("/api/v1/unverified-project", project.GetUnverifiedProjects)
 	app.Post("/api/v1/project/submit", project.SubmitProject)
 	app.Patch("/api/v1/project/verify", project.VerifyProject)
+	app.Delete("/api/v1/project/reject", project.RejectProject)
 
 	//notification endpoint
 	app.Get("/api/v1/user/notification/:userID", notification.GetNotification)
+	app.Delete("/api/v1/user/notification/read/:notificationID", notification.ReadNotification)
 
 	app.Use("api/v1/healthcheck", func(c *fiber.Ctx)error{
 		return c.JSON(fiber.Map{"code": 200, "status": "up",})

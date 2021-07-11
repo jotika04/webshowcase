@@ -77,7 +77,7 @@ func RegisterUser(c *fiber.Ctx)error{
 // @Tags User Profile
 // @Accept  json
 // @Produce  json
-// @Param userID path int true "Get User Profile"
+// @Param userID path int true "User ID"
 // @Success 200 {object} model.User
 // @Failure 400 {object} model.HTTPError
 // @Failure 404 {object} model.HTTPError

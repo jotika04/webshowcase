@@ -10,8 +10,6 @@ type Project struct {
 	ProjectImage string `json:"projectImage"`
 	ProjectVideo string `json:"projectVideo"`
 	ProjectThumbnail string `json:"projectThumbnail"`
-	Status string `json:"status"` 
-
 }
 
 type VerifyProject struct {
@@ -25,4 +23,9 @@ type SubmitProject struct{
 	ProjectImage string `json:"projectImage"`
 	ProjectVideo string `json:"projectVideo"`
 	ProjectThumbnail string `json:"projectThumbnail"`
+}
+
+type RejectProject struct{
+	ProjectID int `json:"projectID"`
+	Message string `json:"message"`
 }

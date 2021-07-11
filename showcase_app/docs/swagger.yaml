@@ -62,8 +62,6 @@ definitions:
         type: string
       projectVideo:
         type: string
-      status:
-        type: string
       userID:
         type: integer
       verified:
@@ -86,6 +84,13 @@ definitions:
         type: string
       username:
         type: string
+    type: object
+  model.RejectProject:
+    properties:
+      message:
+        type: string
+      projectID:
+        type: integer
     type: object
   model.SubmitProject:
     properties:
@@ -203,7 +208,7 @@ paths:
       - application/json
       description: Get project info by projectID
       parameters:
-      - description: Get Project
+      - description: Project ID
         in: path
         name: projectID
         required: true
@@ -228,6 +233,40 @@ paths:
           schema:
             $ref: '#/definitions/model.HTTPError'
       summary: Get project details
+      tags:
+      - Project
+  /api/v1/project/reject:
+    delete:
+      consumes:
+      - application/json
+      description: Decline project submission
+      parameters:
+      - description: Reject Project
+        in: body
+        name: project
+        required: true
+        schema:
+          $ref: '#/definitions/model.RejectProject'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.HTTPError'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.HTTPError'
+      summary: Reject project submission
       tags:
       - Project
   /api/v1/project/submit:
@@ -331,7 +370,7 @@ paths:
       - application/json
       description: Get user info by userID in token
       parameters:
-      - description: Get User Profile
+      - description: User ID
         in: path
         name: userID
         required: true
@@ -398,7 +437,7 @@ paths:
       - application/json
       description: Get all notifications of user by userID
       parameters:
-      - description: Get User Notification
+      - description: User ID
         in: path
         name: userID
         required: true
@@ -423,6 +462,39 @@ paths:
           schema:
             $ref: '#/definitions/model.HTTPError'
       summary: Display all notifications
+      tags:
+      - Notification
+  /api/v1/user/notification/read/:notificationID:
+    delete:
+      consumes:
+      - application/json
+      description: Read a notification and delete it from database
+      parameters:
+      - description: Notification ID
+        in: path
+        name: notificationID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.HTTPError'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.HTTPError'
+      summary: Read notification
       tags:
       - Notification
   /api/v1/user/register:
