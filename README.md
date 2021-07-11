@@ -31,7 +31,7 @@ http://127.0.0.1:3000/api/v1/project/reject				: reject project submission
 
 Notification:
 http://127.0.0.1:3000/api/v1/user/notification/:userID			: return notifications
-http://127.0.0.1:3000/ap1/v1/user/notification/read/:notificationID	:	read notification and delete from database
+http://127.0.0.1:3000/ap1/v1/user/notification/read/:notificationID	: read notification and delete from database
 
 Admin:
 http://127.0.0.1:3000/api/v1/user/update-role    			: update user role
