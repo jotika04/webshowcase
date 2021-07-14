@@ -15,6 +15,7 @@ import SubmissionPage from "./Pages/Submission";
 import { SubmitProcess } from "./Pages/SubmitProcess";
 import Test from "./Pages/components/Test";
 import Test2 from "./Pages/components/Test2";
+import Test3 from "./Pages/components/Test3";
 import Projectdetails from './Pages/Projectdetails';
 import Projectinfo from './Pages/Projectinfo';
 import ToDo from './Pages/ToDo';
@@ -23,6 +24,8 @@ import ToDo from './Pages/ToDo';
 import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 // import Frontlogin from "./components/FrontLogin";
+
+
 
 function App() {
   return (
@@ -46,6 +49,7 @@ function App() {
           <Route exact path='/Notification'  component={Notification} />
           <Route exact path='/Test' component={Test}/>
           <Route exact path='/Test2' component={Test2}/>
+          <Route exact path='/Test3' component={Test3}/>
           <Route exact path='/Projectdetails' component={Projectdetails}/>
           <Route exact path='/Projectinfo' component={Projectinfo}/>
           <Route exact path='/testing' component={ToDo}/>

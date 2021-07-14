@@ -29,7 +29,7 @@ export default function Contactinfo(props) {
         <Typography>{description}</Typography>
       </Paper>
       <Typography variant="h6" gutterBottom className={classes.sidebarSection}>
-        Social
+        Social Link
       </Typography>
       {social.map((network) => (
         <Link display="block" variant="body1" href="#" key={network}>

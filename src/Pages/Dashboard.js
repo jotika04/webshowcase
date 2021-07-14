@@ -1,22 +1,34 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import clsx from 'clsx';
-import {CardActions, CardContent, CardMedia, CssBaseline, Grid, Typography, Container, Card, 
-   CardHeader, Avatar, IconButton, Badge, Menu, MenuItem, } 
+import {CardActions, CardContent, CardMedia, CssBaseline, Grid, Toolbar, Typography, Container, Card, 
+  AppBar, CardHeader, Avatar, IconButton, InputBase, Badge, Menu, MenuItem, Drawer, List, Divider, 
+  ListItem, ListItemIcon, ListItemText, InputLabel, FormControl, Select, ListSubheader} 
   from '@material-ui/core';
-import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
-import { lightBlue } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import CommentIcon from '@material-ui/icons/Comment';
-import Sidebar from './components/Sidebar';
-import {  Link } from 'react-router-dom';
-
-const drawerWidth = 240;
-
+  import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
+  import { lightBlue } from '@material-ui/core/colors';
+  import FavoriteIcon from '@material-ui/icons/Favorite';
+  import MoreVertIcon from '@material-ui/icons/MoreVert';
+  import AccountCircle from '@material-ui/icons/AccountCircle';
+  import MailIcon from '@material-ui/icons/Mail';
+  import NotificationsIcon from '@material-ui/icons/Notifications';
+  import CommentIcon from '@material-ui/icons/Comment';
+  import Sidebar from './components/Sidebar';
+  import Button from '@material-ui/core/Button'
+  import Modal from "@material-ui/core/Modal";
+  import Dialog from "@material-ui/core/Dialog"
+  import Projectinfo from "./Projectinfo";
+  
+  const drawerWidth = 240;
+  
+  function Copyright() {
+    return (
+      <Typography variant="body2" color="textSecondary" align="center" >
+        Copyright © Computer Science Program, Faculty of Computing and Media,<br/> Binus University International 2021
+      </Typography>
+    );
+  }
+  
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
@@ -80,6 +92,9 @@ const useStyles = makeStyles((theme) => ({
   },
   root: {
     maxWidth: 350,
+    height: 400,
+    // overflow:"auto",
+    // textOverflow:"ellipsis"
   },
   media: {
     height: 0,
@@ -104,6 +119,7 @@ const useStyles = makeStyles((theme) => ({
   heroContent: {
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(8, 0, 6),
+    whiteSpace: "nowrap"
   },
   heroButtons: {
     marginTop: theme.spacing(4),
@@ -111,6 +127,10 @@ const useStyles = makeStyles((theme) => ({
   cardGrid: {
     paddingTop: theme.spacing(8),
     paddingBottom: theme.spacing(8),
+    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(1),
+    // marginLeft: "100px",
+    // marginRight: "100px"
   },
   card: {
     height: '100%',
@@ -118,10 +138,12 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
   },
   cardMedia: {
-    paddingTop: '56.25%', 
+    paddingTop: '50%', 
+    overflow: "auto"
   },
   cardContent: {
     flexGrow: 1,
+    
   },
   footer: {
     backgroundColor: theme.palette.background.paper,
@@ -192,20 +214,29 @@ const useStyles = makeStyles((theme) => ({
     }),
     marginLeft: 0,
   },
-  logobinus:{
-    margin: theme.spacing(1),
-    height:'73px',
-    width:'122px',
-    left:'200px'
-  },
   formControl: {
     margin: theme.spacing(1),
     minWidth: 120,
+    justify:"center",
   },
+  backdrop: {
+    fullWidth: "true",
+    maxWidth: "xs",
+  },
+  testroot: {
+      position: "relative",
+      padding: theme.spacing(4, 4, 8),
+      justify: "center",
+      minHeight: "300px"
+    
+    //   display: "inline-block",
+  },
+  custombox: {
+    display: "-webkit-box",
+  }
 
 }));
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
 export default function Dashboard() {
   const classes = useStyles();
@@ -279,6 +310,7 @@ export default function Dashboard() {
   );
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [openOverlay, setOpenOverlay] = React.useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -288,26 +320,37 @@ export default function Dashboard() {
     setOpen(false);
   };
 
-  const url = 'https://ghibliapi.herokuapp.com/films'
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleToggle = () => {
+    setOpen(!open);
+  };
+
+  const url = 'http://localhost:3000/DummyDatas'
   
   const [data, setData] = useState([])
-      
+
+  // useEffect(() => {
+    
+  //   axios.get(url)
+  //  .then((res)=>{
+  //    console.log(res.data);
+  //  }).catch((err)=>{
+  //    console.log(err);
+  //  })
+
+  // }, [])
+
   useEffect(() => {
     axios.get(url).then(json => setData(json.data))
   }, [])
-  
-  const renderTable = () => {
-    return data.map(user => {
-      return (
-        <tr>
-          <td>{user.id}</td>
-          <td>{user.title}</td>
-          <td>{user.original_title}</td>
-          <td>{user.director}</td> 
-        </tr>
-      )
-    })
-  }
+
       
 
   return (
@@ -317,19 +360,48 @@ export default function Dashboard() {
     
       <main>
         {/* The Projects */}
-        <div className={classes.heroContent}>
+        <div className={classes.heroContent} >
           <Container maxWidth="sm" >
             <Typography component="h1" variant="h4" align="center" color="inherit" gutterBottom>
               Recommendation
             </Typography>
           </Container>
-
-
+          <Container maxWidth="lg" align="center">
+            <FormControl className={classes.formControl} >
+            <InputLabel htmlFor="grouped-select">Filtering</InputLabel>
+            <Select defaultValue="" id="grouped-select">
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              <ListSubheader>Sort 1</ListSubheader>
+              <MenuItem value='Filter 1.1'>Filter 1.1</MenuItem>
+              <MenuItem value='Filter 1.2'>Filter 1.2</MenuItem>
+              <ListSubheader>Sort 2</ListSubheader>
+              <MenuItem value='Filter 2.1'>Filter 2.1</MenuItem>
+              <MenuItem value='Filter 2.2'>Filter 2.2</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl className={classes.formControl}>
+            <InputLabel htmlFor="grouped-select">Sorting</InputLabel>
+            <Select defaultValue="" id="grouped-select">
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              <ListSubheader>Sort 1</ListSubheader>
+              <MenuItem value='Sort 1.1'>Sort 1.1</MenuItem>
+              <MenuItem value='Sort 1.2'>Sort 1.2</MenuItem>
+              <ListSubheader>Sort 2</ListSubheader>
+              <MenuItem value='Sort 2.1'>Sort 2.1</MenuItem>
+              <MenuItem value='Sort 2.2'>Sort 2.2</MenuItem>
+            </Select>
+          </FormControl>
+          </Container>
         </div>
-        <Container className={classes.cardGrid} maxWidth="md">
+
+        <Container className={classes.cardGrid} maxWidth="lg">
           <Grid container spacing={4} justify="space-evenly">
-            {cards.map((card) => (
-              <Grid item key={card} xs={12} sm={10} md={4}>
+            {data.slice(0,8).map((data) => (
+              <Grid item key={data.Project_name} xs={8} sm={6} md={4} lg={3} alignContent="center">
                 <Card className={classes.root}>
       <CardHeader
         avatar={
@@ -342,43 +414,68 @@ export default function Dashboard() {
             <MoreVertIcon />
           </IconButton>
         }
-        title="Students"
-        subheader="September 14, 2016"
+        title={data.Project_name}
       />
-      <Link to ='/Projectdetails' style={{ textDecoration: 'none' , color: '#000000' }}>
+
+
+
+      
       <CardMedia
         className={classes.cardMedia}
         image="https://source.unsplash.com/random"
         title="Image title"
       />
-      </Link>
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p" >
-          This impressive paella is a perfect party dish and a fun meal to cook together with your
-          guests. Add 1 cup of frozen peas along with the mussels, if you like.
+     
+
+
+
+      <CardContent className={classes.cardControl} >
+        <Typography variant="body2" color="textSecondary" component="p">
+        <p>{data.Description.length > 75 ?
+              `${data.Description.substring(0,75)}...` : data.Description}</p>
         </Typography>
       </CardContent>
-      <CardActions disableSpacing>
+
+      {/* <CardActions disableSpacing> */}
+          
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
         </IconButton>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <CommentIcon />
-        </IconButton>
-      </CardActions>
+         
+        <Button type="button" onClick={handleOpen}>
+            <IconButton
+            className={clsx(classes.expand, {
+                [classes.expandOpen]: expanded,
+            })}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="show more"
+            >
+                <CommentIcon /> 
+            </IconButton>
+        </Button>
     </Card>
-              </Grid>
+  </Grid>
             ))}
           </Grid>
         </Container>
+          <Copyright/>
       </main>
+      <Dialog
+            fullWidth={true}
+            maxWidth="md"
+            className={classes.backdrop}
+            open={open}
+            onClose={handleClose}
+      >
+        
+          <Grid>
+            <Card className={classes.testroot}>
+                <Projectinfo/>
+            </Card>
+          </Grid>
+        
+      </Dialog> 
     </React.Fragment>
   );
 }

@@ -6,14 +6,69 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import MusicCard from "../Projectcomp/MusicCard";
+import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
+import createBreakpoints from "@material-ui/core/styles/createBreakpoints";
 import axios from "axios";
 
 
+function pxToRem(value) {
+  return `${value / 16}rem`;
+}
+
+const breakpoints = createBreakpoints({});
+  const theme = createMuiTheme({
+    breakpoints,
+    overrides: {
+      MuiTypography: {
+        headline: {
+          fontSize: pxToRem(24),
+          [breakpoints.up("md")]: {
+            fontSize: pxToRem(32)
+          }
+        },
+        title: {
+          fontSize: pxToRem(21),
+          [breakpoints.up("md")]: {
+            fontSize: pxToRem(24)
+          }
+        },
+        body1: {
+          fontSize: pxToRem(14),
+  
+          [breakpoints.up("md")]: {
+            fontSize: pxToRem(16)
+          }
+        },
+        body2: {
+          fontSize: pxToRem(14),
+          [breakpoints.up("md")]: {
+            fontSize: pxToRem(16)
+          }
+        },
+        button: {
+          fontSize: pxToRem(14),
+          [breakpoints.up("md")]: {
+            fontSize: pxToRem(16)
+          }
+        }
+      }
+    }
+  });
+  
 const useStyles = makeStyles((theme) => ({
   markdown: {
     ...theme.typography.body2,
     padding: theme.spacing(3, 0),
   },
+  root: {
+    width: "100%",
+    maxWidth: 650
+  },
+
+  
+  // Generate breakpoints so we can use them in the theme definition
+  
+  
 }));
 
 export default function ProjectDescription() {
@@ -29,12 +84,14 @@ export default function ProjectDescription() {
 
   return (
     <Grid item xs={12} md={8}>
+      <div className={classes.root}>
+
       <Typography variant="h4" gutterBottom>
         Description
       </Typography>
       <Divider />
       {/* {posts} */}
-      <Typography variant="h5" gutterBottom>
+      <Typography justify="center" gutterBottom>
         Definition and synonyms of of any description from the online English dictionary from Macmillan Education.
 
         This is the British English definition of of any description.View American English definition of of any description.
@@ -42,6 +99,7 @@ export default function ProjectDescription() {
         Change your default dictionary to American English.
         
       </Typography>
+      </div>
     </Grid>
   );
 }

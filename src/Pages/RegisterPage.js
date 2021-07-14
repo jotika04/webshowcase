@@ -85,10 +85,10 @@ function RegisterPage() {
     <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="xs">
         <div className={classes.paper}>
-            <img src={backgroundlogo} className="App-logo" alt="logo" />
+            {/* <img src={backgroundlogo} className="App-logo" alt="logo" /> */}
             <Paper className={classes.greypaper} elevation={10}>
                 <form className={classes.form} noValidate autoComplete="off">
-                  <Grid justify="center" alignItem="center" container spacing={1}>
+                  <Grid justify="center" alignItem="center" container spacing={2}>
                     <Grid item xs={4}>
                       <img src={logo} className={classes.logo} alt="logo" />
                     </Grid>

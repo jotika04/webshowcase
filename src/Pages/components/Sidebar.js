@@ -5,6 +5,7 @@ import {CardActions, CardContent, CardMedia, CssBaseline, Grid, Toolbar, Typogra
   ListItem, ListItemIcon, ListItemText, InputLabel, FormControl, Select, ListSubheader } 
   from '@material-ui/core';
 import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
+import { useState } from 'react';
 import { lightBlue } from '@material-ui/core/colors';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -281,6 +282,7 @@ export default function Sidebar() {
     setOpen(false);
   };
   
+  const [searchTerm, setSearchTerm] = useState("");
 
   return (
     <React.Fragment>
@@ -309,44 +311,20 @@ export default function Sidebar() {
               <SearchIcon />
             </div>
             <InputBase
+              type="text"
               placeholder="Search…"
+              onChange={(event) => {setSearchTerm(event.target.value);
+              }}
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
+
             />
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-          <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="grouped-select">Filtering</InputLabel>
-            <Select defaultValue="" id="grouped-select">
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <ListSubheader>Sort 1</ListSubheader>
-              <MenuItem value='Filter 1.1'>Filter 1.1</MenuItem>
-              <MenuItem value='Filter 1.2'>Filter 1.2</MenuItem>
-              <ListSubheader>Sort 2</ListSubheader>
-              <MenuItem value='Filter 2.1'>Filter 2.1</MenuItem>
-              <MenuItem value='Filter 2.2'>Filter 2.2</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="grouped-select">Sorting</InputLabel>
-            <Select defaultValue="" id="grouped-select">
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <ListSubheader>Sort 1</ListSubheader>
-              <MenuItem value='Sort 1.1'>Sort 1.1</MenuItem>
-              <MenuItem value='Sort 1.2'>Sort 1.2</MenuItem>
-              <ListSubheader>Sort 2</ListSubheader>
-              <MenuItem value='Sort 2.1'>Sort 2.1</MenuItem>
-              <MenuItem value='Sort 2.2'>Sort 2.2</MenuItem>
-            </Select>
-          </FormControl>
             <IconButton aria-label="show 17 new notifications" color="inherit">
               <Badge badgeContent={17} color="secondary">
                 <NotificationsIcon />
