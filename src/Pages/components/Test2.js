@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import clsx from 'clsx';
-import {CardActions, CardContent, CardMedia, CssBaseline, Grid, Typography, Container, Card, 
-   CardHeader, Avatar, IconButton, Badge, Menu, MenuItem, ButtonBase, } 
+import { CardContent, CardMedia, CssBaseline, Grid,  Typography, Container, Card, 
+   CardHeader, Avatar, IconButton,  Badge, Menu, MenuItem, CardActionArea,  
+  InputLabel, FormControl, Select, ListSubheader, InputBase} 
   from '@material-ui/core';
   import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
   import { lightBlue } from '@material-ui/core/colors';
@@ -12,13 +13,18 @@ import {CardActions, CardContent, CardMedia, CssBaseline, Grid, Typography, Cont
   import MailIcon from '@material-ui/icons/Mail';
   import NotificationsIcon from '@material-ui/icons/Notifications';
   import CommentIcon from '@material-ui/icons/Comment';
-  import Sidebar from './Sidebar';
+  import Sidebar, {searchTerm, setSearchTerm} from './Sidebar';
+  import Pagination from './Pagination';
   import Button from '@material-ui/core/Button'
-  import Modal from "@material-ui/core/Modal";
   import Dialog from "@material-ui/core/Dialog"
   import Projectinfo from "../Projectinfo";
-  import {  Link } from 'react-router-dom';
-  import { SettingsSystemDaydreamTwoTone } from '@material-ui/icons';
+  import Chip from '@material-ui/core/Chip';
+  import TextField from '@material-ui/core/TextField';
+  import Datepicker from 'react-datepicker'
+  import 'react-datepicker/dist/react-datepicker.css'
+  import SearchIcon from '@material-ui/icons/Search';
+
+  // import Autocomplete from '@material-ui/lab/Autocomplete';
   
   const drawerWidth = 240;
   
@@ -29,6 +35,7 @@ import {CardActions, CardContent, CardMedia, CssBaseline, Grid, Typography, Cont
       </Typography>
     );
   }
+
   
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -218,6 +225,7 @@ const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
     minWidth: 120,
+    justify:"center",
   },
   backdrop: {
     fullWidth: "true",
@@ -237,10 +245,11 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const cards = [1, 2, 3];
 
 export default function Dashboard() {
   const classes = useStyles();
+  const [searchTerm, setSearchTerm] = useState("");
+
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
@@ -332,35 +341,62 @@ export default function Dashboard() {
   const handleToggle = () => {
     setOpen(!open);
   };
+  
+  const [postMessage, setPosts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsperPage, setPostsPerPage] = useState(8);
 
-  const url = 'https://ghibliapi.herokuapp.com/films'
+  const url = 'http://localhost:3000/DummyDatas'
   
   const [data, setData] = useState([])
+
+  // useEffect(() => {
+    
+  //   axios.get(url)
+  //  .then((res)=>{
+  //    console.log(res.data);
+  //  }).catch((err)=>{
+  //    console.log(err);
+  //  })
+
+  // }, [])
+  
 
   useEffect(() => {
     axios.get(url).then(json => setData(json.data))
   }, [])
 
+  const indexOfLastPost = currentPage * postsperPage;
+  const indexOfFirstPost = indexOfLastPost - postsperPage;
+  const currentPosts = data.slice(indexOfFirstPost, indexOfLastPost)
 
+  const Paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  const renderTable = () => {
-    return data.map(user => {
-      return (
-        <tr>
-          <td>{user.id}</td>
-          <td>{user.title}</td>
-          <td>{user.original_title}</td>
-          <td>{user.director}</td> 
-        </tr>
-      )
-    })
-  }
-      
+  const [selectedDate, setSelectedDate] = useState(null);
+  
 
   return (
     <React.Fragment>
       <CssBaseline />
       <Sidebar/>
+      <div className={classes.search}>
+            <div className={classes.searchIcon}>
+              <SearchIcon />
+            </div>
+            <InputBase
+              type="text"
+              placeholder="Search…"
+              onChange={(event) => {setSearchTerm(event.target.value);
+              }}
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput,
+              }}
+              inputProps={{ 'aria-label': 'search' }}
+
+            />
+          </div>
     
       <main>
         {/* The Projects */}
@@ -370,12 +406,45 @@ export default function Dashboard() {
               Recommendation
             </Typography>
           </Container>
+          <Container maxWidth="lg" align="center">
+          <Datepicker 
+            selected={selectedDate} 
+            onChange={date => setSelectedDate(date)} 
+            maxDate = {new Date()}
+            isClearable
+            showYearDropdown
+            scrollableMonthYearDropdown
+            className={classes.formControl}
+            />
+          <FormControl className={classes.formControl}>
+            <InputLabel htmlFor="grouped-select">Sorting</InputLabel>
+            <Select defaultValue="" id="grouped-select">
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              <ListSubheader>Sort 1</ListSubheader>
+              <MenuItem value='Sort 1.1'>Sort 1.1</MenuItem>
+              <MenuItem value='Sort 1.2'>Sort 1.2</MenuItem>
+              <ListSubheader>Sort 2</ListSubheader>
+              <MenuItem value='Sort 2.1'>Sort 2.1</MenuItem>
+              <MenuItem value='Sort 2.2'>Sort 2.2</MenuItem>
+            </Select>
+          </FormControl>
+          
+          </Container>
         </div>
 
         <Container className={classes.cardGrid} maxWidth="lg">
           <Grid container spacing={4} justify="space-evenly">
-            {data.slice(0,8).map((data) => (
-              <Grid item key={data.title} xs={8} sm={6} md={4} lg={3} alignContent="center">
+            {currentPosts.filter((data) => {
+              if (searchTerm == ""){
+                return data
+              } else if (data.Project_name.toLowerCase().includes(searchTerm.toLowerCase())){
+                return data
+              }
+            }).map((data) => (
+              <Grid item key={data.Project_name} xs={8} sm={6} md={4} lg={3} alignContent="center">
+
                 <Card className={classes.root}>
       <CardHeader
         avatar={
@@ -388,25 +457,27 @@ export default function Dashboard() {
             <MoreVertIcon />
           </IconButton>
         }
-        title={data.title}
-      />
+        title={data.Project_name}
+        />
 
 
 
+      <CardActionArea type="button" onClick={handleOpen}>
       
       <CardMedia
         className={classes.cardMedia}
         image="https://source.unsplash.com/random"
-        title="Image title"
-      />
+        title="Image "
+        />
+        </CardActionArea>
      
 
 
 
       <CardContent className={classes.cardControl} >
         <Typography variant="body2" color="textSecondary" component="p">
-        <p>{data.description.length > 75 ?
-              `${data.description.substring(0,75)}...` : data.description}</p>
+        <p>{data.Description.length > 75 ?
+              `${data.Description.substring(0,75)}...` : data.Description}</p>
         </Typography>
       </CardContent>
 
@@ -419,7 +490,7 @@ export default function Dashboard() {
         <Button type="button" onClick={handleOpen}>
             <IconButton
             className={clsx(classes.expand, {
-                [classes.expandOpen]: expanded,
+              [classes.expandOpen]: expanded,
             })}
             onClick={handleExpandClick}
             aria-expanded={expanded}
@@ -432,6 +503,9 @@ export default function Dashboard() {
   </Grid>
             ))}
           </Grid>
+        </Container>
+        <Container>
+        <Pagination postsPerPage = {postsperPage} totalPosts = {data.length} paginate={Paginate} />
         </Container>
           <Copyright/>
       </main>

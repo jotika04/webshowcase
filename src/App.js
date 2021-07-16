@@ -19,6 +19,7 @@ import Test3 from "./Pages/components/Test3";
 import Projectdetails from './Pages/Projectdetails';
 import Projectinfo from './Pages/Projectinfo';
 import ToDo from './Pages/ToDo';
+import Search from "./Pages/components/Search";
 
 // import logo from 'C:/Users/Ryo/webshowcase/src/image/site-logo.png';
 import './App.css';
@@ -53,6 +54,7 @@ function App() {
           <Route exact path='/Projectdetails' component={Projectdetails}/>
           <Route exact path='/Projectinfo' component={Projectinfo}/>
           <Route exact path='/testing' component={ToDo}/>
+          <Route exact path='/search' component={Search}/>
         </Switch>
       </Router>
     </div>

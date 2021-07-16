@@ -371,9 +371,10 @@ export default function Dashboard() {
   const indexOfFirstPost = indexOfLastPost - postsperPage;
   const currentPosts = data.slice(indexOfFirstPost, indexOfLastPost)
 
-const Paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const Paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const [selectedDate, setSelectedDate] = useState(null);
+  
 
   return (
     <React.Fragment>
