@@ -745,10 +745,6 @@ var doc = `{
                 "notificationID": {
                     "type": "integer"
                 },
-                "projectID": {
-                    "type": "integer",
-                    "example": 1
-                },
                 "userID": {
                     "type": "integer",
                     "example": 1
@@ -759,6 +755,9 @@ var doc = `{
             "type": "object",
             "properties": {
                 "course": {
+                    "type": "string"
+                },
+                "date": {
                     "type": "string"
                 },
                 "description": {

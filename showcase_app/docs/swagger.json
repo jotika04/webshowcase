@@ -730,10 +730,6 @@
                 "notificationID": {
                     "type": "integer"
                 },
-                "projectID": {
-                    "type": "integer",
-                    "example": 1
-                },
                 "userID": {
                     "type": "integer",
                     "example": 1
@@ -744,6 +740,9 @@
             "type": "object",
             "properties": {
                 "course": {
+                    "type": "string"
+                },
+                "date": {
                     "type": "string"
                 },
                 "description": {

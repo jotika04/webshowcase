@@ -36,7 +36,8 @@ func GetProject(c *fiber.Ctx)error{
         verified,
         projectImage,
         projectVideo,
-        projectThumbnail
+        projectThumbnail,
+        date
         FROM project WHERE projectID=?
         `, projectID).
         Scan(
@@ -49,6 +50,7 @@ func GetProject(c *fiber.Ctx)error{
             &project.ProjectImage,
             &project.ProjectVideo,
             &project.ProjectThumbnail,
+            &project.Date,
             
         )
 		if err != nil {
@@ -226,8 +228,9 @@ func GetUnverifiedProjects(c *fiber.Ctx)error{
 	}
 
 	// var project Project
-	var project *model.Project = &model.Project{}
+	
     for rows.Next() {
+    	var project *model.Project = &model.Project{}
         err := rows.Scan(&project.ProjectID,
             	&project.ProjectName,
             	&project.Description,
@@ -306,10 +309,20 @@ func VerifyProject(c *fiber.Ctx)error{
     }
 
     projectStatus := true
+
+    currentTime := time.Now()
+    // date := currentTime.Format("2006-01-02")
     
     db.Exec(`
 		UPDATE project SET verified=? WHERE projectID=?
 		`, projectStatus, project.ProjectID)
+		if err != nil {
+			fmt.Println(err.Error())
+			// return err, nil
+		}
+	db.Exec(`
+		UPDATE project SET date=? WHERE projectID=?
+		`, currentTime, project.ProjectID)
 		if err != nil {
 			fmt.Println(err.Error())
 			// return err, nil

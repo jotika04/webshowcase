@@ -10,6 +10,7 @@ type Project struct {
 	ProjectImage string `json:"projectImage"`
 	ProjectVideo string `json:"projectVideo"`
 	ProjectThumbnail string `json:"projectThumbnail"`
+	Date string `json:"date"`
 }
 
 type VerifyProject struct {

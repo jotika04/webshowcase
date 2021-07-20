@@ -59,7 +59,7 @@ func GetNotification(c *fiber.Ctx)error{
 
     rows, err := db.Query(`
         SELECT *
-        FROM notification WHERE userID=?
+        FROM notification WHERE userID=? ORDER BY notificationID DESC
         `, userID)
 
 	if err != nil {
@@ -67,9 +67,10 @@ func GetNotification(c *fiber.Ctx)error{
 		// return err, nil
 	}
 
-	var notif *model.Notification = &model.Notification{}
+	
     for rows.Next() {
-        err := rows.Scan(&notif.NotificationID, &notif.UserID, &notif.ProjectID, &notif.Notif_text)
+    	var notif *model.Notification = &model.Notification{}
+        err := rows.Scan(&notif.NotificationID, &notif.UserID, &notif.Notif_text)
         if err != nil {
             fmt.Println(err)
         }

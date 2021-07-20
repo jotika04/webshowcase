@@ -39,9 +39,6 @@ definitions:
         type: string
       notificationID:
         type: integer
-      projectID:
-        example: 1
-        type: integer
       userID:
         example: 1
         type: integer
@@ -49,6 +46,8 @@ definitions:
   model.Project:
     properties:
       course:
+        type: string
+      date:
         type: string
       description:
         type: string

@@ -29,7 +29,7 @@ CREATE TABLE `claim` (
   `subject` varchar(255) DEFAULT NULL,
   `issuedAt` int DEFAULT NULL,
   PRIMARY KEY (`claimID`)
-) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `claim` (
 
 LOCK TABLES `claim` WRITE;
 /*!40000 ALTER TABLE `claim` DISABLE KEYS */;
-INSERT INTO `claim` VALUES (18,'testuser',1625658342,'refresh_token',1623066342),(19,'John_Doe',1625658912,'refresh_token',1623066912),(20,'0',1625659082,'refresh_token',1623067082),(56,'38',1627044924,'refresh_token',1624452924),(57,'39',1627044988,'refresh_token',1624452988),(59,'38',1627126112,'refresh_token',1624534112),(60,'38',1627463411,'refresh_token',1624871411),(61,'38',1627463589,'refresh_token',1624871589),(65,'37',1625480356,'refresh_token',1624875556),(67,'34',1626349499,'refresh_token',1625744699),(68,'34',1626349509,'refresh_token',1625744709),(69,'34',1626350153,'refresh_token',1625745353),(70,'37',1626350226,'refresh_token',1625745426);
+INSERT INTO `claim` VALUES (18,'testuser',1625658342,'refresh_token',1623066342),(19,'John_Doe',1625658912,'refresh_token',1623066912),(20,'0',1625659082,'refresh_token',1623067082),(56,'38',1627044924,'refresh_token',1624452924),(57,'39',1627044988,'refresh_token',1624452988),(59,'38',1627126112,'refresh_token',1624534112),(60,'38',1627463411,'refresh_token',1624871411),(61,'38',1627463589,'refresh_token',1624871589),(65,'37',1625480356,'refresh_token',1624875556),(67,'34',1626349499,'refresh_token',1625744699),(68,'34',1626349509,'refresh_token',1625744709),(69,'34',1626350153,'refresh_token',1625745353),(70,'37',1626350226,'refresh_token',1625745426),(71,'37',1627383832,'refresh_token',1626779032);
 /*!40000 ALTER TABLE `claim` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -79,7 +79,7 @@ CREATE TABLE `notification` (
   PRIMARY KEY (`notificationID`),
   KEY `fk_userID` (`userID`),
   CONSTRAINT `fk_userID_notif` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -88,7 +88,7 @@ CREATE TABLE `notification` (
 
 LOCK TABLES `notification` WRITE;
 /*!40000 ALTER TABLE `notification` DISABLE KEYS */;
-INSERT INTO `notification` VALUES (1,33,'testing'),(2,33,'testingagain'),(9,34,'Project Successfully Submitted'),(10,33,'webdeb project Successfully Submitted'),(11,34,'test project 2 Successfully Submitted'),(12,34,'test project 2 Successfully Submitted'),(13,33,'test project 2 Successfully Submitted'),(14,37,'test project 2 Successfully Submitted'),(15,37,'test project 2 Successfully Submitted'),(16,34,'test project 2 Successfully Submitted'),(17,37,' Verified'),(18,37,'test project 2 Verified');
+INSERT INTO `notification` VALUES (1,33,'testing'),(2,33,'testingagain'),(9,34,'Project Successfully Submitted'),(10,33,'webdeb project Successfully Submitted'),(11,34,'test project 2 Successfully Submitted'),(12,34,'test project 2 Successfully Submitted'),(13,33,'test project 2 Successfully Submitted'),(14,37,'test project 2 Successfully Submitted'),(15,37,'test project 2 Successfully Submitted'),(16,34,'test project 2 Successfully Submitted'),(17,37,' Verified'),(18,37,'test project 2 Verified'),(20,34,'test project 2 Verified'),(21,37,'test project 2 Verified');
 /*!40000 ALTER TABLE `notification` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -109,6 +109,7 @@ CREATE TABLE `project` (
   `projectVideo` varchar(255) DEFAULT '',
   `projectThumbnail` varchar(255) DEFAULT '',
   `userID` int NOT NULL,
+  `date` date DEFAULT NULL,
   PRIMARY KEY (`projectID`),
   KEY `fk_userID` (`userID`),
   CONSTRAINT `fk_userID` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`)
@@ -121,7 +122,7 @@ CREATE TABLE `project` (
 
 LOCK TABLES `project` WRITE;
 /*!40000 ALTER TABLE `project` DISABLE KEYS */;
-INSERT INTO `project` VALUES (6,'newproject','this is my project',0,'test','path','path','path',33),(22,'newproject2','this is my project',0,'test','path','path','path',34),(23,'webdeb project','this is my project',1,'test','path','path','path',33),(24,'test project 2','this is my new project',0,'test','path','path','path',34),(25,'test project 2','this is my new project',0,'test','path','path','path',34),(26,'test project 2','this is my new project',0,'test','path','path','path',33),(27,'test project 2','this is my new project',1,'test','path','path','path',37),(28,'test project 2','this is my new project',0,'test','path','path','path',37),(29,'test project 2','this is my new project',0,'test','path','path','path',34),(30,'test project 2','this is my new project',0,'test','path','path','path',37);
+INSERT INTO `project` VALUES (6,'newproject','this is my project',0,'test','path','path','path',33,NULL),(22,'newproject2','this is my project',0,'test','path','path','path',34,NULL),(23,'webdeb project','this is my project',1,'test','path','path','path',33,NULL),(24,'test project 2','this is my new project',0,'test','path','path','path',34,NULL),(25,'test project 2','this is my new project',0,'test','path','path','path',34,NULL),(26,'test project 2','this is my new project',0,'test','path','path','path',33,NULL),(27,'test project 2','this is my new project',1,'test','path','path','path',37,NULL),(28,'test project 2','this is my new project',0,'test','path','path','path',37,NULL),(29,'test project 2','this is my new project',1,'test','path','path','path',34,'2021-07-20'),(30,'test project 2','this is my new project',1,'test','path','path','path',37,'2021-07-20');
 /*!40000 ALTER TABLE `project` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -193,4 +194,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-07-11 10:10:55
+-- Dump completed on 2021-07-20 11:43:19
