@@ -16,10 +16,14 @@ import { SubmitProcess } from "./Pages/SubmitProcess";
 import Test from "./Pages/components/Test";
 import Test2 from "./Pages/components/Test2";
 import Test3 from "./Pages/components/Test3";
+import Test4 from "./Pages/components/Test4";
 import Projectdetails from './Pages/Projectdetails';
 import Projectinfo from './Pages/Projectinfo';
 import ToDo from './Pages/ToDo';
 import Search from "./Pages/components/Search";
+import Sidebartest2 from './Pages/components/sidebartest2';
+
+
 
 // import logo from 'C:/Users/Ryo/webshowcase/src/image/site-logo.png';
 import './App.css';
@@ -51,6 +55,8 @@ function App() {
           <Route exact path='/Test' component={Test}/>
           <Route exact path='/Test2' component={Test2}/>
           <Route exact path='/Test3' component={Test3}/>
+          <Route exact path='/Test4' component={Test4}/>
+          <Route exact path='/Sidebartest'  component={Sidebartest2} /> 
           <Route exact path='/Projectdetails' component={Projectdetails}/>
           <Route exact path='/Projectinfo' component={Projectinfo}/>
           <Route exact path='/testing' component={ToDo}/>

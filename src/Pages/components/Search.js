@@ -1,10 +1,8 @@
 import React from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 import axios from 'axios'
-import { CardContent, CardMedia, CssBaseline, Grid,  Typography, Container, Card, 
-    CardHeader, Avatar, IconButton,  Badge, Menu, MenuItem, CardActionArea,  
-   InputLabel, FormControl, Select, Button, InputBase} 
-   from '@material-ui/core';
+import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
+import { CardContent, CardMedia, Grid,  Typography, Container, Card, CardHeader, Avatar, IconButton, CardActionArea, Button, InputBase} from '@material-ui/core';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import FavoriteIcon from '@material-ui/icons/Favorite';
@@ -27,12 +25,10 @@ constructor( props ){
     this.cancel = '';
 
 }
-
-
   
 fetchSearchResults = ( query ) => {
-    const searchUrl = 'http://localhost:3000/DummyDatas';
-
+    var searchUrl = 'http://localhost:3002/projectName/'+ query;
+    console.log(searchUrl);
     if( this.cancel){
         this.cancel.cancel();
     }
@@ -42,6 +38,7 @@ fetchSearchResults = ( query ) => {
         cancelToken: this.cancel.token
     })
         .then( res =>{
+          console.log(res);
             const resultNotFoundMsg = ! res.data.length
                                     ? 'Search Not Found': '';
             this.setState({
@@ -63,13 +60,21 @@ fetchSearchResults = ( query ) => {
 handleOnInputChange = (event) => {
     
     const query = event.target.value;
-    if ( ! query ){
-        this.setState( { query, results: {}, message: '' })
-    } else {
-        this.setState( { query, loading: true, message:''} );
-    this.fetchSearchResults( query );
-    }
     
+      if ( ! query ){
+          this.setState( { query, results: {}, message: '' })
+      } else {
+        
+          this.setState( { query, loading: true, message:''} );
+        
+      }
+      
+};
+
+handleKeyDown = (e) => {
+  if (e.key === 'Enter') {
+    this.fetchSearchResults(this.state.query)
+  }
 };
 
 renderSearchResults = () => {
@@ -80,7 +85,7 @@ renderSearchResults = () => {
             <Container  maxWidth="lg">
           <Grid container spacing={4} justify="space-evenly">
             {results.map(data => (
-              <Grid item key={data.Project_name} xs={8} sm={6} md={4} lg={3} alignContent="center">
+              <Grid item key={data.authors} xs={8} sm={6} md={4} lg={3} alignContent="center">
 
                 <Card >
       <CardHeader
@@ -94,26 +99,22 @@ renderSearchResults = () => {
             <MoreVertIcon />
           </IconButton>
         }
-        title={data.Project_name}
+        title={data.authors}
         />
-
-
 
       <CardActionArea type="button" >
       
       <CardMedia
+        
         image="https://source.unsplash.com/random"
         title="Image "
         />
         </CardActionArea>
-     
-
-
 
       <CardContent  >
         <Typography variant="body2" color="textSecondary" component="p">
-        <p>{data.Description.length > 75 ?
-              `${data.Description.substring(0,75)}...` : data.Description}</p>
+        <p>{data.description.length > 75 ?
+              `${data.description.substring(0,75)}...` : data.description}</p>
         </Typography>
       </CardContent>
 
@@ -140,24 +141,25 @@ renderSearchResults = () => {
 };
 
     render() {
-        const { query, message, loading } = this.state;
+        const { query, message,results } = this.state;
         console.warn( this.state );
+        console.log(results);
         return (
-            <div >
+          
+            <div>
             
-            <SearchIcon />
-            
+           
             <InputBase
               type="text"
               name="query"
               value={ query }
               placeholder="Search…"
               onChange={this.handleOnInputChange}
+              onKeyDown={this.handleKeyDown}
               inputProps={{ 'aria-label': 'search' }}
-
             />
+
             {message && <p className="message"> {message}</p>}
-            
             {this.renderSearchResults()}
             
           </div>
