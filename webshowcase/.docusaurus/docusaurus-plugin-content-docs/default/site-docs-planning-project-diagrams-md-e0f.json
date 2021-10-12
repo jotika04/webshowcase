@@ -1,0 +1,26 @@
+{
+  "unversionedId": "Planning/ProjectDiagrams",
+  "id": "Planning/ProjectDiagrams",
+  "isDocsHomePage": false,
+  "title": "Diagram and Designs",
+  "description": "After the plan has been build we proceed to build the necesary diagrams and simulation on what we would build and the functions it would contain.",
+  "source": "@site/docs/Planning/ProjectDiagrams.md",
+  "sourceDirName": "Planning",
+  "slug": "/Planning/ProjectDiagrams",
+  "permalink": "/docs/Planning/ProjectDiagrams",
+  "editUrl": "https://github.com/facebook/docusaurus/edit/master/website/docs/Planning/ProjectDiagrams.md",
+  "version": "current",
+  "sidebarPosition": 2,
+  "frontMatter": {
+    "sidebar_position": 2
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Project Plan",
+    "permalink": "/docs/Planning/ProjectPlan"
+  },
+  "next": {
+    "title": "Introduction",
+    "permalink": "/docs/Documentation/Frontpage"
+  }
+}

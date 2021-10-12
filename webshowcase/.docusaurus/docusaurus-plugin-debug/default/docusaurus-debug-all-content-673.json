@@ -1,0 +1,594 @@
+{
+  "docusaurus-plugin-content-docs": {
+    "default": {
+      "loadedVersions": [
+        {
+          "versionName": "current",
+          "versionLabel": "Next",
+          "versionPath": "/docs",
+          "versionEditUrl": "https://github.com/facebook/docusaurus/edit/master/website/docs",
+          "versionEditUrlLocalized": "https://github.com/facebook/docusaurus/edit/master/website/i18n/en/docusaurus-plugin-content-docs/current",
+          "isLast": true,
+          "routePriority": -1,
+          "sidebarFilePath": "D:\\webshowcase-frontend-combined\\webshowcase\\sidebars.js",
+          "contentPath": "D:\\webshowcase-frontend-combined\\webshowcase\\docs",
+          "contentPathLocalized": "D:\\webshowcase-frontend-combined\\webshowcase\\i18n\\en\\docusaurus-plugin-content-docs\\current",
+          "mainDocId": "intro",
+          "sidebars": {
+            "tutorialSidebar": [
+              {
+                "type": "doc",
+                "id": "intro"
+              },
+              {
+                "type": "category",
+                "label": "Project Planning",
+                "items": [
+                  {
+                    "type": "doc",
+                    "id": "Planning/ProjectPlan"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "Planning/ProjectDiagrams"
+                  }
+                ],
+                "collapsed": true
+              },
+              {
+                "type": "category",
+                "label": "Project Documentation",
+                "items": [
+                  {
+                    "type": "doc",
+                    "id": "Documentation/Frontpage"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "Documentation/login"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "Documentation/Dashboard"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "Documentation/Profilepage"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "Documentation/Submission"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "Documentation/History"
+                  }
+                ],
+                "collapsed": true
+              },
+              {
+                "type": "category",
+                "label": "API documentation",
+                "items": [
+                  {
+                    "type": "doc",
+                    "id": "Endpoints/Backend"
+                  },
+                  {
+                    "type": "doc",
+                    "id": "Endpoints/registerapi"
+                  }
+                ],
+                "collapsed": true
+              }
+            ]
+          },
+          "permalinkToSidebar": {
+            "/docs/Documentation/Dashboard": "tutorialSidebar",
+            "/docs/Documentation/Frontpage": "tutorialSidebar",
+            "/docs/Documentation/History": "tutorialSidebar",
+            "/docs/Documentation/login": "tutorialSidebar",
+            "/docs/Documentation/Profilepage": "tutorialSidebar",
+            "/docs/Documentation/Submission": "tutorialSidebar",
+            "/docs/Endpoints/Backend": "tutorialSidebar",
+            "/docs/Endpoints/registerapi": "tutorialSidebar",
+            "/docs/intro": "tutorialSidebar",
+            "/docs/Planning/ProjectDiagrams": "tutorialSidebar",
+            "/docs/Planning/ProjectPlan": "tutorialSidebar"
+          },
+          "docs": [
+            {
+              "unversionedId": "Documentation/Dashboard",
+              "id": "Documentation/Dashboard",
+              "isDocsHomePage": false,
+              "title": "Dashboard",
+              "description": "The dashboard is a page where it serves as a main menu for the application.",
+              "source": "@site/docs/Documentation/Dashboard.md",
+              "sourceDirName": "Documentation",
+              "slug": "/Documentation/Dashboard",
+              "permalink": "/docs/Documentation/Dashboard",
+              "editUrl": "https://github.com/facebook/docusaurus/edit/master/website/docs/Documentation/Dashboard.md",
+              "version": "current",
+              "sidebarPosition": 3,
+              "frontMatter": {
+                "title": "Dashboard",
+                "sidebar_position": 3
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Login and Register",
+                "permalink": "/docs/Documentation/login"
+              },
+              "next": {
+                "title": "Profile Page",
+                "permalink": "/docs/Documentation/Profilepage"
+              }
+            },
+            {
+              "unversionedId": "Documentation/Frontpage",
+              "id": "Documentation/Frontpage",
+              "isDocsHomePage": false,
+              "title": "Introduction",
+              "description": "This is a web application that is build by a team of students from Binus. This aim for this application is that any person from Binus can use this website to submit and show their project.",
+              "source": "@site/docs/Documentation/Frontpage.md",
+              "sourceDirName": "Documentation",
+              "slug": "/Documentation/Frontpage",
+              "permalink": "/docs/Documentation/Frontpage",
+              "editUrl": "https://github.com/facebook/docusaurus/edit/master/website/docs/Documentation/Frontpage.md",
+              "version": "current",
+              "sidebarPosition": 1,
+              "frontMatter": {
+                "title": "Introduction",
+                "sidebar_position": 1
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Diagram and Designs",
+                "permalink": "/docs/Planning/ProjectDiagrams"
+              },
+              "next": {
+                "title": "Login and Register",
+                "permalink": "/docs/Documentation/login"
+              }
+            },
+            {
+              "unversionedId": "Documentation/History",
+              "id": "Documentation/History",
+              "isDocsHomePage": false,
+              "title": "History Page",
+              "description": "Introduction",
+              "source": "@site/docs/Documentation/History.md",
+              "sourceDirName": "Documentation",
+              "slug": "/Documentation/History",
+              "permalink": "/docs/Documentation/History",
+              "editUrl": "https://github.com/facebook/docusaurus/edit/master/website/docs/Documentation/History.md",
+              "version": "current",
+              "sidebarPosition": 6,
+              "frontMatter": {
+                "title": "History Page",
+                "sidebar_position": 6
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Submission",
+                "permalink": "/docs/Documentation/Submission"
+              },
+              "next": {
+                "title": "Web API",
+                "permalink": "/docs/Endpoints/Backend"
+              }
+            },
+            {
+              "unversionedId": "Documentation/login",
+              "id": "Documentation/login",
+              "isDocsHomePage": false,
+              "title": "Login and Register",
+              "description": "Introduction",
+              "source": "@site/docs/Documentation/login.md",
+              "sourceDirName": "Documentation",
+              "slug": "/Documentation/login",
+              "permalink": "/docs/Documentation/login",
+              "editUrl": "https://github.com/facebook/docusaurus/edit/master/website/docs/Documentation/login.md",
+              "version": "current",
+              "sidebarPosition": 2,
+              "frontMatter": {
+                "title": "Login and Register",
+                "sidebar_position": 2
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Introduction",
+                "permalink": "/docs/Documentation/Frontpage"
+              },
+              "next": {
+                "title": "Dashboard",
+                "permalink": "/docs/Documentation/Dashboard"
+              }
+            },
+            {
+              "unversionedId": "Documentation/Profilepage",
+              "id": "Documentation/Profilepage",
+              "isDocsHomePage": false,
+              "title": "Profile Page",
+              "description": "Introduction",
+              "source": "@site/docs/Documentation/Profilepage.md",
+              "sourceDirName": "Documentation",
+              "slug": "/Documentation/Profilepage",
+              "permalink": "/docs/Documentation/Profilepage",
+              "editUrl": "https://github.com/facebook/docusaurus/edit/master/website/docs/Documentation/Profilepage.md",
+              "version": "current",
+              "sidebarPosition": 4,
+              "frontMatter": {
+                "title": "Profile Page",
+                "sidebar_position": 4
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Dashboard",
+                "permalink": "/docs/Documentation/Dashboard"
+              },
+              "next": {
+                "title": "Submission",
+                "permalink": "/docs/Documentation/Submission"
+              }
+            },
+            {
+              "unversionedId": "Documentation/Submission",
+              "id": "Documentation/Submission",
+              "isDocsHomePage": false,
+              "title": "Submission",
+              "description": "Introduction",
+              "source": "@site/docs/Documentation/Submission.md",
+              "sourceDirName": "Documentation",
+              "slug": "/Documentation/Submission",
+              "permalink": "/docs/Documentation/Submission",
+              "editUrl": "https://github.com/facebook/docusaurus/edit/master/website/docs/Documentation/Submission.md",
+              "version": "current",
+              "sidebarPosition": 5,
+              "frontMatter": {
+                "title": "Submission",
+                "sidebar_position": 5
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Profile Page",
+                "permalink": "/docs/Documentation/Profilepage"
+              },
+              "next": {
+                "title": "History Page",
+                "permalink": "/docs/Documentation/History"
+              }
+            },
+            {
+              "unversionedId": "Endpoints/Backend",
+              "id": "Endpoints/Backend",
+              "isDocsHomePage": false,
+              "title": "Web API",
+              "description": "Introduction",
+              "source": "@site/docs/Endpoints/Backend.md",
+              "sourceDirName": "Endpoints",
+              "slug": "/Endpoints/Backend",
+              "permalink": "/docs/Endpoints/Backend",
+              "editUrl": "https://github.com/facebook/docusaurus/edit/master/website/docs/Endpoints/Backend.md",
+              "version": "current",
+              "sidebarPosition": 7,
+              "frontMatter": {
+                "title": "Web API",
+                "sidebar_position": 7
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "History Page",
+                "permalink": "/docs/Documentation/History"
+              },
+              "next": {
+                "title": "API",
+                "permalink": "/docs/Endpoints/registerapi"
+              }
+            },
+            {
+              "unversionedId": "Endpoints/registerapi",
+              "id": "Endpoints/registerapi",
+              "isDocsHomePage": false,
+              "title": "API",
+              "description": "User API",
+              "source": "@site/docs/Endpoints/registerapi.md",
+              "sourceDirName": "Endpoints",
+              "slug": "/Endpoints/registerapi",
+              "permalink": "/docs/Endpoints/registerapi",
+              "editUrl": "https://github.com/facebook/docusaurus/edit/master/website/docs/Endpoints/registerapi.md",
+              "version": "current",
+              "frontMatter": {
+                "title": "API"
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Web API",
+                "permalink": "/docs/Endpoints/Backend"
+              }
+            },
+            {
+              "unversionedId": "intro",
+              "id": "intro",
+              "isDocsHomePage": false,
+              "title": "Introduction",
+              "description": "This project is a web application project.",
+              "source": "@site/docs/intro.md",
+              "sourceDirName": ".",
+              "slug": "/intro",
+              "permalink": "/docs/intro",
+              "editUrl": "https://github.com/facebook/docusaurus/edit/master/website/docs/intro.md",
+              "version": "current",
+              "sidebarPosition": 1,
+              "frontMatter": {
+                "sidebar_position": 1
+              },
+              "sidebar": "tutorialSidebar",
+              "next": {
+                "title": "Project Plan",
+                "permalink": "/docs/Planning/ProjectPlan"
+              }
+            },
+            {
+              "unversionedId": "Planning/ProjectDiagrams",
+              "id": "Planning/ProjectDiagrams",
+              "isDocsHomePage": false,
+              "title": "Diagram and Designs",
+              "description": "After the plan has been build we proceed to build the necesary diagrams and simulation on what we would build and the functions it would contain.",
+              "source": "@site/docs/Planning/ProjectDiagrams.md",
+              "sourceDirName": "Planning",
+              "slug": "/Planning/ProjectDiagrams",
+              "permalink": "/docs/Planning/ProjectDiagrams",
+              "editUrl": "https://github.com/facebook/docusaurus/edit/master/website/docs/Planning/ProjectDiagrams.md",
+              "version": "current",
+              "sidebarPosition": 2,
+              "frontMatter": {
+                "sidebar_position": 2
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Project Plan",
+                "permalink": "/docs/Planning/ProjectPlan"
+              },
+              "next": {
+                "title": "Introduction",
+                "permalink": "/docs/Documentation/Frontpage"
+              }
+            },
+            {
+              "unversionedId": "Planning/ProjectPlan",
+              "id": "Planning/ProjectPlan",
+              "isDocsHomePage": false,
+              "title": "Project Plan",
+              "description": "Objective",
+              "source": "@site/docs/Planning/ProjectPlan.md",
+              "sourceDirName": "Planning",
+              "slug": "/Planning/ProjectPlan",
+              "permalink": "/docs/Planning/ProjectPlan",
+              "editUrl": "https://github.com/facebook/docusaurus/edit/master/website/docs/Planning/ProjectPlan.md",
+              "version": "current",
+              "sidebarPosition": 1,
+              "frontMatter": {
+                "sidebar_position": 1
+              },
+              "sidebar": "tutorialSidebar",
+              "previous": {
+                "title": "Introduction",
+                "permalink": "/docs/intro"
+              },
+              "next": {
+                "title": "Diagram and Designs",
+                "permalink": "/docs/Planning/ProjectDiagrams"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "docusaurus-plugin-content-blog": {
+    "default": {
+      "blogPosts": [
+        {
+          "id": "History Page",
+          "metadata": {
+            "permalink": "/blog/History",
+            "editUrl": "https://github.com/facebook/docusaurus/edit/master/website/blog/blog/History.md",
+            "source": "@site/blog/History.md",
+            "title": "History Page",
+            "description": "History page is to see what projects that has been submitted and show the when it was submitted and when it was verified.",
+            "date": "2021-05-24T11:07:29.289Z",
+            "formattedDate": "May 24, 2021",
+            "tags": [],
+            "readingTime": 0.265,
+            "truncated": false,
+            "nextItem": {
+              "title": "Introduction",
+              "permalink": "/blog/Frontpage"
+            }
+          }
+        },
+        {
+          "id": "Introduction",
+          "metadata": {
+            "permalink": "/blog/Frontpage",
+            "editUrl": "https://github.com/facebook/docusaurus/edit/master/website/blog/blog/Frontpage.md",
+            "source": "@site/blog/Frontpage.md",
+            "title": "Introduction",
+            "description": "This is a web application that is build by a team of students from Binus. This aim for this application is that any person from Binus can use this website to submit and show their project.",
+            "date": "2021-05-24T11:07:29.245Z",
+            "formattedDate": "May 24, 2021",
+            "tags": [],
+            "readingTime": 0.495,
+            "truncated": false,
+            "prevItem": {
+              "title": "History Page",
+              "permalink": "/blog/History"
+            },
+            "nextItem": {
+              "title": "Dashboard Doc",
+              "permalink": "/blog/Dashboard"
+            }
+          }
+        },
+        {
+          "id": "Dashboard Doc",
+          "metadata": {
+            "permalink": "/blog/Dashboard",
+            "editUrl": "https://github.com/facebook/docusaurus/edit/master/website/blog/blog/Dashboard.md",
+            "source": "@site/blog/Dashboard.md",
+            "title": "Dashboard Doc",
+            "description": "The dashboard is a page where it serves as a main menu for the application.",
+            "date": "2021-05-24T11:07:29.199Z",
+            "formattedDate": "May 24, 2021",
+            "tags": [],
+            "readingTime": 1.875,
+            "truncated": false,
+            "prevItem": {
+              "title": "Introduction",
+              "permalink": "/blog/Frontpage"
+            },
+            "nextItem": {
+              "title": "Backend",
+              "permalink": "/blog/Backend"
+            }
+          }
+        },
+        {
+          "id": "Backend",
+          "metadata": {
+            "permalink": "/blog/Backend",
+            "editUrl": "https://github.com/facebook/docusaurus/edit/master/website/blog/blog/Backend.md",
+            "source": "@site/blog/Backend.md",
+            "title": "Backend",
+            "description": "",
+            "date": "2021-05-24T11:07:29.134Z",
+            "formattedDate": "May 24, 2021",
+            "tags": [],
+            "readingTime": 0,
+            "truncated": false,
+            "prevItem": {
+              "title": "Dashboard Doc",
+              "permalink": "/blog/Dashboard"
+            },
+            "nextItem": {
+              "title": "Submission",
+              "permalink": "/blog/Submission"
+            }
+          }
+        },
+        {
+          "id": "Submission",
+          "metadata": {
+            "permalink": "/blog/Submission",
+            "editUrl": "https://github.com/facebook/docusaurus/edit/master/website/blog/blog/Submission.md",
+            "source": "@site/blog/Submission.md",
+            "title": "Submission",
+            "description": "The submission page would have an input field to put the project and a submit button to submit the project to the web so that the validator can validate the projects.",
+            "date": "2021-05-24T11:07:22.251Z",
+            "formattedDate": "May 24, 2021",
+            "tags": [],
+            "readingTime": 1.33,
+            "truncated": false,
+            "prevItem": {
+              "title": "Backend",
+              "permalink": "/blog/Backend"
+            },
+            "nextItem": {
+              "title": "Profile Page",
+              "permalink": "/blog/Profilepage"
+            }
+          }
+        },
+        {
+          "id": "Profile Page",
+          "metadata": {
+            "permalink": "/blog/Profilepage",
+            "editUrl": "https://github.com/facebook/docusaurus/edit/master/website/blog/blog/Profilepage.md",
+            "source": "@site/blog/Profilepage.md",
+            "title": "Profile Page",
+            "description": "The profile page is a page where it will show the info on the user.",
+            "date": "2021-05-24T11:07:22.190Z",
+            "formattedDate": "May 24, 2021",
+            "tags": [],
+            "readingTime": 0.505,
+            "truncated": false,
+            "prevItem": {
+              "title": "Submission",
+              "permalink": "/blog/Submission"
+            },
+            "nextItem": {
+              "title": "Login and Register",
+              "permalink": "/blog/login"
+            }
+          }
+        },
+        {
+          "id": "Login and Register",
+          "metadata": {
+            "permalink": "/blog/login",
+            "editUrl": "https://github.com/facebook/docusaurus/edit/master/website/blog/blog/login.md",
+            "source": "@site/blog/login.md",
+            "title": "Login and Register",
+            "description": "For the components on this part we imported a library called material ui.",
+            "date": "2021-05-24T11:07:22.141Z",
+            "formattedDate": "May 24, 2021",
+            "tags": [],
+            "readingTime": 1.81,
+            "truncated": false,
+            "prevItem": {
+              "title": "Profile Page",
+              "permalink": "/blog/Profilepage"
+            }
+          }
+        }
+      ],
+      "blogListPaginated": [
+        {
+          "metadata": {
+            "permalink": "/blog",
+            "page": 1,
+            "postsPerPage": 10,
+            "totalPages": 1,
+            "totalCount": 7,
+            "previousPage": null,
+            "nextPage": null,
+            "blogDescription": "Blog",
+            "blogTitle": "Blog"
+          },
+          "items": [
+            "History Page",
+            "Introduction",
+            "Dashboard Doc",
+            "Backend",
+            "Submission",
+            "Profile Page",
+            "Login and Register"
+          ]
+        }
+      ],
+      "blogTags": {},
+      "blogTagsListPath": null
+    }
+  },
+  "docusaurus-plugin-content-pages": {
+    "default": [
+      {
+        "type": "jsx",
+        "permalink": "/",
+        "source": "@site/src/pages/index.js"
+      },
+      {
+        "type": "mdx",
+        "permalink": "/markdown-page",
+        "source": "@site/src/pages/markdown-page.md"
+      }
+    ]
+  },
+  "docusaurus-plugin-debug": {
+    "default": null
+  },
+  "docusaurus-theme-classic": {
+    "default": null
+  }
+}

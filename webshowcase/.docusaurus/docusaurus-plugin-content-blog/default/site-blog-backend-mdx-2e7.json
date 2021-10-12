@@ -1,0 +1,16 @@
+{
+  "permalink": "/blog/Backend",
+  "editUrl": "https://github.com/facebook/docusaurus/edit/master/website/blog/blog/Backend.mdx",
+  "source": "@site/blog/Backend.mdx",
+  "title": "Backend",
+  "description": "",
+  "date": "2021-05-05T09:09:26.841Z",
+  "formattedDate": "May 5, 2021",
+  "tags": [],
+  "readingTime": 0,
+  "truncated": false,
+  "prevItem": {
+    "title": "Dashboard",
+    "permalink": "/blog/Dashboard"
+  }
+}

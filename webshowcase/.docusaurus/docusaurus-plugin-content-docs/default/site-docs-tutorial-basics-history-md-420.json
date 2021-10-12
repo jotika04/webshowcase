@@ -1,0 +1,27 @@
+{
+  "unversionedId": "tutorial-basics/History",
+  "id": "tutorial-basics/History",
+  "isDocsHomePage": false,
+  "title": "Introduction",
+  "description": "History page is to see what projects that has been submitted and show the when it was submitted and when it was verified.",
+  "source": "@site/docs/tutorial-basics/History.md",
+  "sourceDirName": "tutorial-basics",
+  "slug": "/tutorial-basics/History",
+  "permalink": "/docs/tutorial-basics/History",
+  "editUrl": "https://github.com/facebook/docusaurus/edit/master/website/docs/tutorial-basics/History.md",
+  "version": "current",
+  "sidebarPosition": 4,
+  "frontMatter": {
+    "title": "History Page",
+    "sidebar_position": 4
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Dashboard",
+    "permalink": "/docs/tutorial-basics/Dashboard"
+  },
+  "next": {
+    "title": "Backend",
+    "permalink": "/docs/tutorial-basics/Backend"
+  }
+}

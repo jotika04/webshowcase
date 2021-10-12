@@ -1,0 +1,16 @@
+{
+  "permalink": "/blog/login",
+  "editUrl": "https://github.com/facebook/docusaurus/edit/master/website/blog/blog/login.md",
+  "source": "@site/blog/login.md",
+  "title": "Login and Register",
+  "description": "For the components on this part we imported a library called material ui.",
+  "date": "2021-05-24T11:07:22.141Z",
+  "formattedDate": "May 24, 2021",
+  "tags": [],
+  "readingTime": 1.81,
+  "truncated": false,
+  "prevItem": {
+    "title": "Profile Page",
+    "permalink": "/blog/Profilepage"
+  }
+}

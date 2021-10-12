@@ -1,0 +1,26 @@
+{
+  "unversionedId": "tutorial-basics/Backend",
+  "id": "tutorial-basics/Backend",
+  "isDocsHomePage": false,
+  "title": "Backend",
+  "description": "",
+  "source": "@site/docs/tutorial-basics/Backend.md",
+  "sourceDirName": "tutorial-basics",
+  "slug": "/tutorial-basics/Backend",
+  "permalink": "/docs/tutorial-basics/Backend",
+  "editUrl": "https://github.com/facebook/docusaurus/edit/master/website/docs/tutorial-basics/Backend.md",
+  "version": "current",
+  "frontMatter": {
+    "name": "Back end",
+    "menu": "Back-end Documentation"
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Introduction",
+    "permalink": "/docs/tutorial-basics/History"
+  },
+  "next": {
+    "title": "Projectplanning",
+    "permalink": "/docs/tutorial-basics/Projectplanning"
+  }
+}

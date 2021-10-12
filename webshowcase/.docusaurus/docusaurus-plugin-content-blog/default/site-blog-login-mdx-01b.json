@@ -1,0 +1,20 @@
+{
+  "permalink": "/blog/login",
+  "editUrl": "https://github.com/facebook/docusaurus/edit/master/website/blog/blog/login.mdx",
+  "source": "@site/blog/login.mdx",
+  "title": "Introduction",
+  "description": "For the components on this part we imported a library called material ui.",
+  "date": "2021-05-05T09:09:26.918Z",
+  "formattedDate": "May 5, 2021",
+  "tags": [],
+  "readingTime": 1.81,
+  "truncated": false,
+  "prevItem": {
+    "title": "Submission",
+    "permalink": "/blog/Submission"
+  },
+  "nextItem": {
+    "title": "Frontpage",
+    "permalink": "/blog/Frontpage"
+  }
+}

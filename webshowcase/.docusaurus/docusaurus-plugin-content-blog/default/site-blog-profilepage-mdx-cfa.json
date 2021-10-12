@@ -1,0 +1,20 @@
+{
+  "permalink": "/blog/Profilepage",
+  "editUrl": "https://github.com/facebook/docusaurus/edit/master/website/blog/blog/Profilepage.mdx",
+  "source": "@site/blog/Profilepage.mdx",
+  "title": "Introduction",
+  "description": "The profile page is a page where it will show the info on the user.",
+  "date": "2021-05-05T12:55:43.685Z",
+  "formattedDate": "May 5, 2021",
+  "tags": [],
+  "readingTime": 0.505,
+  "truncated": false,
+  "prevItem": {
+    "title": "Hello",
+    "permalink": "/blog/test"
+  },
+  "nextItem": {
+    "title": "Introduction",
+    "permalink": "/blog/History"
+  }
+}

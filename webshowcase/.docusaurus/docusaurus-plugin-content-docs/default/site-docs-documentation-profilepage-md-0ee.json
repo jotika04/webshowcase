@@ -1,0 +1,27 @@
+{
+  "unversionedId": "Documentation/Profilepage",
+  "id": "Documentation/Profilepage",
+  "isDocsHomePage": false,
+  "title": "Profile Page",
+  "description": "Introduction",
+  "source": "@site/docs/Documentation/Profilepage.md",
+  "sourceDirName": "Documentation",
+  "slug": "/Documentation/Profilepage",
+  "permalink": "/docs/Documentation/Profilepage",
+  "editUrl": "https://github.com/facebook/docusaurus/edit/master/website/docs/Documentation/Profilepage.md",
+  "version": "current",
+  "sidebarPosition": 4,
+  "frontMatter": {
+    "title": "Profile Page",
+    "sidebar_position": 4
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Dashboard",
+    "permalink": "/docs/Documentation/Dashboard"
+  },
+  "next": {
+    "title": "Submission",
+    "permalink": "/docs/Documentation/Submission"
+  }
+}

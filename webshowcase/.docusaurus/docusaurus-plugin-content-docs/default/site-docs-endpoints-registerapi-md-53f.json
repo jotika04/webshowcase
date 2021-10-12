@@ -1,0 +1,21 @@
+{
+  "unversionedId": "Endpoints/registerapi",
+  "id": "Endpoints/registerapi",
+  "isDocsHomePage": false,
+  "title": "API",
+  "description": "User API",
+  "source": "@site/docs/Endpoints/registerapi.md",
+  "sourceDirName": "Endpoints",
+  "slug": "/Endpoints/registerapi",
+  "permalink": "/docs/Endpoints/registerapi",
+  "editUrl": "https://github.com/facebook/docusaurus/edit/master/website/docs/Endpoints/registerapi.md",
+  "version": "current",
+  "frontMatter": {
+    "title": "API"
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Web API",
+    "permalink": "/docs/Endpoints/Backend"
+  }
+}

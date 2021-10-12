@@ -1,0 +1,27 @@
+{
+  "unversionedId": "Documentation/Dashboard",
+  "id": "Documentation/Dashboard",
+  "isDocsHomePage": false,
+  "title": "Dashboard",
+  "description": "The dashboard is a page where it serves as a main menu for the application.",
+  "source": "@site/docs/Documentation/Dashboard.md",
+  "sourceDirName": "Documentation",
+  "slug": "/Documentation/Dashboard",
+  "permalink": "/docs/Documentation/Dashboard",
+  "editUrl": "https://github.com/facebook/docusaurus/edit/master/website/docs/Documentation/Dashboard.md",
+  "version": "current",
+  "sidebarPosition": 3,
+  "frontMatter": {
+    "title": "Dashboard",
+    "sidebar_position": 3
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Login and Register",
+    "permalink": "/docs/Documentation/login"
+  },
+  "next": {
+    "title": "Profile Page",
+    "permalink": "/docs/Documentation/Profilepage"
+  }
+}

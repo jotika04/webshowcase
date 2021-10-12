@@ -1,0 +1,20 @@
+{
+  "permalink": "/blog/Submission",
+  "editUrl": "https://github.com/facebook/docusaurus/edit/master/website/blog/blog/Submission.md",
+  "source": "@site/blog/Submission.md",
+  "title": "Submission",
+  "description": "The submission page would have an input field to put the project and a submit button to submit the project to the web so that the validator can validate the projects.",
+  "date": "2021-05-24T11:07:22.251Z",
+  "formattedDate": "May 24, 2021",
+  "tags": [],
+  "readingTime": 1.33,
+  "truncated": false,
+  "prevItem": {
+    "title": "Backend",
+    "permalink": "/blog/Backend"
+  },
+  "nextItem": {
+    "title": "Profile Page",
+    "permalink": "/blog/Profilepage"
+  }
+}

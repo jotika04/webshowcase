@@ -1,0 +1,20 @@
+{
+  "permalink": "/blog/Frontpage",
+  "editUrl": "https://github.com/facebook/docusaurus/edit/master/website/blog/blog/Frontpage.mdx",
+  "source": "@site/blog/Frontpage.mdx",
+  "title": "Frontpage",
+  "description": "This is a web application that is build by a team of students from Binus. This aim for this application is that any person from Binus can use this website to submit and show their project.",
+  "date": "2021-05-05T09:09:26.897Z",
+  "formattedDate": "May 5, 2021",
+  "tags": [],
+  "readingTime": 0.495,
+  "truncated": false,
+  "prevItem": {
+    "title": "Introduction",
+    "permalink": "/blog/login"
+  },
+  "nextItem": {
+    "title": "Dashboard",
+    "permalink": "/blog/Dashboard"
+  }
+}

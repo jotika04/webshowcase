@@ -1,0 +1,143 @@
+{
+  "/-deb": {
+    "component": "component---site-src-pages-index-jsc-4-f-f99",
+    "config": "config---5-e-9-4f3"
+  },
+  "/__docusaurus/debug-3d6": {
+    "component": "component---theme-debug-config-23-a-2ff"
+  },
+  "/__docusaurus/debug/config-914": {
+    "component": "component---theme-debug-config-23-a-2ff"
+  },
+  "/__docusaurus/debug/content-c28": {
+    "component": "component---theme-debug-contentba-8-ce7",
+    "allContent": "allContent---docusaurus-debug-content-246-9aa"
+  },
+  "/__docusaurus/debug/globalData-3cf": {
+    "component": "component---theme-debug-global-dataede-0fa"
+  },
+  "/__docusaurus/debug/metadata-31b": {
+    "component": "component---theme-debug-site-metadata-68-e-3d4"
+  },
+  "/__docusaurus/debug/registry-0da": {
+    "component": "component---theme-debug-registry-679-501"
+  },
+  "/__docusaurus/debug/routes-244": {
+    "component": "component---theme-debug-routes-946-699"
+  },
+  "/blog-1bb": {
+    "component": "component---theme-blog-list-pagea-6-a-7ba",
+    "sidebar": "sidebar---blog-48-b-537",
+    "items": [
+      {
+        "content": "content---blog-975-21e"
+      },
+      {
+        "content": "content---blogd-2-e-24c"
+      },
+      {
+        "content": "content---blogf-00-029"
+      },
+      {
+        "content": "content---blog-96-c-bd5"
+      },
+      {
+        "content": "content---blog-199-0b6"
+      },
+      {
+        "content": "content---blogcf-8-1aa"
+      },
+      {
+        "content": "content---bloge-3-c-b84"
+      }
+    ],
+    "metadata": "metadata---blogb-2-b-df1"
+  },
+  "/blog/Backend-c16": {
+    "component": "component---theme-blog-post-pageccc-cab",
+    "sidebar": "sidebar---blog-48-b-537",
+    "content": "content---blog-backend-7-f-3-a10"
+  },
+  "/blog/Dashboard-6bd": {
+    "component": "component---theme-blog-post-pageccc-cab",
+    "sidebar": "sidebar---blog-48-b-537",
+    "content": "content---blog-dashboard-894-0bb"
+  },
+  "/blog/Frontpage-584": {
+    "component": "component---theme-blog-post-pageccc-cab",
+    "sidebar": "sidebar---blog-48-b-537",
+    "content": "content---blog-frontpage-11-e-a95"
+  },
+  "/blog/History-b9a": {
+    "component": "component---theme-blog-post-pageccc-cab",
+    "sidebar": "sidebar---blog-48-b-537",
+    "content": "content---blog-historyc-2-c-c43"
+  },
+  "/blog/login-634": {
+    "component": "component---theme-blog-post-pageccc-cab",
+    "sidebar": "sidebar---blog-48-b-537",
+    "content": "content---blog-logine-2-c-690"
+  },
+  "/blog/Profilepage-afa": {
+    "component": "component---theme-blog-post-pageccc-cab",
+    "sidebar": "sidebar---blog-48-b-537",
+    "content": "content---blog-profilepagee-74-73e"
+  },
+  "/blog/Submission-897": {
+    "component": "component---theme-blog-post-pageccc-cab",
+    "sidebar": "sidebar---blog-48-b-537",
+    "content": "content---blog-submission-798-68d"
+  },
+  "/markdown-page-be1": {
+    "component": "component---theme-mdx-page-1-f-3-b90",
+    "content": "content---markdown-page-393-028"
+  },
+  "/docs-cc2": {
+    "component": "component---theme-doc-page-1-be-9be",
+    "versionMetadata": "versionMetadata---docs-935-398"
+  },
+  "/docs/Documentation/Dashboard-7e9": {
+    "component": "component---theme-doc-item-178-a40",
+    "content": "content---docs-documentation-dashboardde-6-f01"
+  },
+  "/docs/Documentation/Frontpage-c8c": {
+    "component": "component---theme-doc-item-178-a40",
+    "content": "content---docs-documentation-frontpage-40-b-773"
+  },
+  "/docs/Documentation/History-a66": {
+    "component": "component---theme-doc-item-178-a40",
+    "content": "content---docs-documentation-historydda-cf6"
+  },
+  "/docs/Documentation/login-722": {
+    "component": "component---theme-doc-item-178-a40",
+    "content": "content---docs-documentation-login-15-c-598"
+  },
+  "/docs/Documentation/Profilepage-f89": {
+    "component": "component---theme-doc-item-178-a40",
+    "content": "content---docs-documentation-profilepage-0-ee-875"
+  },
+  "/docs/Documentation/Submission-1f3": {
+    "component": "component---theme-doc-item-178-a40",
+    "content": "content---docs-documentation-submissiona-73-51b"
+  },
+  "/docs/Endpoints/Backend-b14": {
+    "component": "component---theme-doc-item-178-a40",
+    "content": "content---docs-endpoints-backendad-1-fba"
+  },
+  "/docs/Endpoints/registerapi-377": {
+    "component": "component---theme-doc-item-178-a40",
+    "content": "content---docs-endpoints-registerapi-53-f-1a4"
+  },
+  "/docs/intro-e84": {
+    "component": "component---theme-doc-item-178-a40",
+    "content": "content---docs-intro-0-e-3-be1"
+  },
+  "/docs/Planning/ProjectDiagrams-16c": {
+    "component": "component---theme-doc-item-178-a40",
+    "content": "content---docs-planning-project-diagramse-0-f-24c"
+  },
+  "/docs/Planning/ProjectPlan-c36": {
+    "component": "component---theme-doc-item-178-a40",
+    "content": "content---docs-planning-project-plan-8-b-6-3da"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "unversionedId": "tutorial-extras/login",
+  "id": "tutorial-extras/login",
+  "isDocsHomePage": false,
+  "title": "Introduction",
+  "description": "For the components on this part we imported a library called material ui.",
+  "source": "@site/docs/tutorial-extras/login.md",
+  "sourceDirName": "tutorial-extras",
+  "slug": "/tutorial-extras/login",
+  "permalink": "/docs/tutorial-extras/login",
+  "editUrl": "https://github.com/facebook/docusaurus/edit/master/website/docs/tutorial-extras/login.md",
+  "version": "current",
+  "sidebarPosition": 2,
+  "frontMatter": {
+    "title": "Login and Register",
+    "sidebar_position": 2
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Diagram and Designs",
+    "permalink": "/docs/tutorial-basics/ProjectDiagrams"
+  },
+  "next": {
+    "title": "Introduction",
+    "permalink": "/docs/tutorial-extras/Profilepage"
+  }
+}

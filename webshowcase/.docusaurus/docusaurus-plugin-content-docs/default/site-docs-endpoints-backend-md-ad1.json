@@ -1,0 +1,27 @@
+{
+  "unversionedId": "Endpoints/Backend",
+  "id": "Endpoints/Backend",
+  "isDocsHomePage": false,
+  "title": "Web API",
+  "description": "Introduction",
+  "source": "@site/docs/Endpoints/Backend.md",
+  "sourceDirName": "Endpoints",
+  "slug": "/Endpoints/Backend",
+  "permalink": "/docs/Endpoints/Backend",
+  "editUrl": "https://github.com/facebook/docusaurus/edit/master/website/docs/Endpoints/Backend.md",
+  "version": "current",
+  "sidebarPosition": 7,
+  "frontMatter": {
+    "title": "Web API",
+    "sidebar_position": 7
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "History Page",
+    "permalink": "/docs/Documentation/History"
+  },
+  "next": {
+    "title": "API",
+    "permalink": "/docs/Endpoints/registerapi"
+  }
+}

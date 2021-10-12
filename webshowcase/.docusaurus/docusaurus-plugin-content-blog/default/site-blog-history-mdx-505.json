@@ -1,0 +1,20 @@
+{
+  "permalink": "/blog/History",
+  "editUrl": "https://github.com/facebook/docusaurus/edit/master/website/blog/blog/History.mdx",
+  "source": "@site/blog/History.mdx",
+  "title": "Introduction",
+  "description": "History page is to see what projects that has been submitted and show the when it was submitted and when it was verified.",
+  "date": "2021-05-05T12:48:25.627Z",
+  "formattedDate": "May 5, 2021",
+  "tags": [],
+  "readingTime": 0.265,
+  "truncated": false,
+  "prevItem": {
+    "title": "Introduction",
+    "permalink": "/blog/Profilepage"
+  },
+  "nextItem": {
+    "title": "Submission",
+    "permalink": "/blog/Submission"
+  }
+}

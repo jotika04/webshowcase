@@ -1,0 +1,23 @@
+{
+  "unversionedId": "tutorial-extras/Submission",
+  "id": "tutorial-extras/Submission",
+  "isDocsHomePage": false,
+  "title": "Introduction",
+  "description": "The submission page would have an input field to put the project and a submit button to submit the project to the web so that the validator can validate the projects.",
+  "source": "@site/docs/tutorial-extras/Submission.md",
+  "sourceDirName": "tutorial-extras",
+  "slug": "/tutorial-extras/Submission",
+  "permalink": "/docs/tutorial-extras/Submission",
+  "editUrl": "https://github.com/facebook/docusaurus/edit/master/website/docs/tutorial-extras/Submission.md",
+  "version": "current",
+  "sidebarPosition": 6,
+  "frontMatter": {
+    "title": "Submission",
+    "sidebar_position": 6
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Introduction",
+    "permalink": "/docs/tutorial-extras/Profilepage"
+  }
+}

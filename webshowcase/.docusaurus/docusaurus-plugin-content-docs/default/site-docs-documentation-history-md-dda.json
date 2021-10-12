@@ -1,0 +1,27 @@
+{
+  "unversionedId": "Documentation/History",
+  "id": "Documentation/History",
+  "isDocsHomePage": false,
+  "title": "History Page",
+  "description": "Introduction",
+  "source": "@site/docs/Documentation/History.md",
+  "sourceDirName": "Documentation",
+  "slug": "/Documentation/History",
+  "permalink": "/docs/Documentation/History",
+  "editUrl": "https://github.com/facebook/docusaurus/edit/master/website/docs/Documentation/History.md",
+  "version": "current",
+  "sidebarPosition": 6,
+  "frontMatter": {
+    "title": "History Page",
+    "sidebar_position": 6
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Submission",
+    "permalink": "/docs/Documentation/Submission"
+  },
+  "next": {
+    "title": "Web API",
+    "permalink": "/docs/Endpoints/Backend"
+  }
+}

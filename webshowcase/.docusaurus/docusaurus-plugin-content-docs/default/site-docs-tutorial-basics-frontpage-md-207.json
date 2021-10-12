@@ -1,0 +1,27 @@
+{
+  "unversionedId": "tutorial-basics/Frontpage",
+  "id": "tutorial-basics/Frontpage",
+  "isDocsHomePage": false,
+  "title": "Introduction",
+  "description": "This is a web application that is build by a team of students from Binus. This aim for this application is that any person from Binus can use this website to submit and show their project.",
+  "source": "@site/docs/tutorial-basics/Frontpage.md",
+  "sourceDirName": "tutorial-basics",
+  "slug": "/tutorial-basics/Frontpage",
+  "permalink": "/docs/tutorial-basics/Frontpage",
+  "editUrl": "https://github.com/facebook/docusaurus/edit/master/website/docs/tutorial-basics/Frontpage.md",
+  "version": "current",
+  "sidebarPosition": 1,
+  "frontMatter": {
+    "title": "Introduction",
+    "sidebar_position": 1
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Introduction",
+    "permalink": "/docs/intro"
+  },
+  "next": {
+    "title": "Dashboard",
+    "permalink": "/docs/tutorial-basics/Dashboard"
+  }
+}

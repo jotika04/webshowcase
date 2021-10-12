@@ -1,0 +1,27 @@
+{
+  "unversionedId": "Documentation/login",
+  "id": "Documentation/login",
+  "isDocsHomePage": false,
+  "title": "Login and Register",
+  "description": "Introduction",
+  "source": "@site/docs/Documentation/login.md",
+  "sourceDirName": "Documentation",
+  "slug": "/Documentation/login",
+  "permalink": "/docs/Documentation/login",
+  "editUrl": "https://github.com/facebook/docusaurus/edit/master/website/docs/Documentation/login.md",
+  "version": "current",
+  "sidebarPosition": 2,
+  "frontMatter": {
+    "title": "Login and Register",
+    "sidebar_position": 2
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Introduction",
+    "permalink": "/docs/Documentation/Frontpage"
+  },
+  "next": {
+    "title": "Dashboard",
+    "permalink": "/docs/Documentation/Dashboard"
+  }
+}
