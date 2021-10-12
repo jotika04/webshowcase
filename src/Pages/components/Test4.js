@@ -430,7 +430,7 @@ const useStyles = makeStyles((theme) => ({
           </Container>
         </div>
        
-        {/* Search Render result */}
+        {/* Searchlive Render result */}
           
                 <Container className={classes.cardGrid} maxWidth="lg">
                 <Grid container spacing={4} justify="space-evenly">
