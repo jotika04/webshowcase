@@ -347,7 +347,7 @@ export default function Dashboard() {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsperPage, setPostsPerPage] = useState(8);
 
-  const url = 'http://localhost:3000/DummyDatas'
+  const url = 'http://localhost:3003/DummyDatas'
   
   const [data, setData] = useState([])
 

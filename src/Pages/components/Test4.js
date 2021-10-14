@@ -366,7 +366,7 @@ const useStyles = makeStyles((theme) => ({
   const [currentPage, setCurrentPage] = useState(1);
   const [postsperPage, setPostsPerPage] = useState(8);
 
-  const url = 'http://localhost:3000/DummyDatas'
+  const url = 'http://localhost:3003/DummyDatas'
   
   const [data, setData] = useState([])
 
@@ -494,7 +494,13 @@ const useStyles = makeStyles((theme) => ({
             
             {searchresult.message && <p className="message"> {searchresult.message}</p>}
                 
-                {currentPosts.map((data) => (
+                {currentPosts.filter((data) => {
+              if (searchresult.results == ""){
+                return data
+              } else {
+                return null
+              }
+            }).map((data) => (
                   <Grid item key={data.Project_name} xs={8} sm={6} md={4} lg={3} alignContent="center">
                   
                   <Card className={classes.root}>
