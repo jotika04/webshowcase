@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 
 
-import backgroundlogo from 'E:/React Projects/my-app/src/image/Binuslogo.png';
-import logo from 'E:/React Projects/my-app/src/image/Binuslogo.png'
+import backgroundlogo from 'D:/webshowcase-frontend-combined/src/image/Binuslogo.png';
+import logo from 'D:/webshowcase-frontend-combined/src/image/Binuslogo.png'
 // import './App.css';
 import './RegisterPage.css';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import {Grid, Paper, TextField} from '@material-ui/core'
@@ -78,8 +78,38 @@ const useStyles = makeStyles((theme) => ({
         left:'200px'
       },
   }));
-function RegisterPage() {
+const RegisterPage = () => {
     const classes = useStyles();
+
+    const[username,setUsername] = useState('');
+    const[email,setEmail] = useState('');
+    const[userfirstname,setUserFirstName] = useState('');
+    const[userlastname,setUserLastName]= useState('');
+    const[password,setPassword] = useState('');
+    
+    const[redirect,setRedirect] = useState(false);
+
+    const submit = async(e) =>{
+      e.preventDefault();
+
+      await fetch("http://127.0.0.1:3000/api/v1/user/register", {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({
+          username,
+          email,
+          userfirstname,
+          userlastname,
+          password
+        })
+      });
+      setRedirect(true);
+      console.log("a");
+    }
+  
+    if(redirect){
+      return <Redirect to ="/LoginPage"/>
+    }
 
   return (
     <ThemeProvider theme={theme}>
@@ -93,13 +123,24 @@ function RegisterPage() {
                       <img src={logo} className={classes.logo} alt="logo" />
                     </Grid>
                     <Grid item xs={12}>
-                      <TextField id="username" variant="outlined" className="name-text" label='Name' placeholder='Name' fullWidth/>
+                      <TextField id="username" variant="outlined" className="name-text" label='Username' placeholder='Username' fullWidth 
+                      required onChange = {e => setUsername(e.target.value)}/>
                     </Grid>
                     <Grid item xs={12}>
-                      <TextField id="password" variant="outlined" className="email-text" type='email' label='Email' placeholder='Email' required fullWidth/>
+                      <TextField id="password" variant="outlined" className="email-text" type='email' label='Email Address' placeholder='Email address' 
+                      required fullWidth onChange = {e => setEmail(e.target.value)}/>
                     </Grid>
                     <Grid item xs={12}>
-                      <TextField id="password" variant="outlined" className="password-text" type='password' label='Password' placeholder='Password' required fullWidth/>
+                      <TextField id="userfirstname" variant="outlined" className="name-text" label='First Name' placeholder='First Name'  
+                      required fullWidth onChange = {e => setUserFirstName(e.target.value)}/>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField id="userlastname" variant="outlined" className="name-text" label='Last Name' placeholder='Last Name'  
+                      required fullWidth onChange = {e => setUserLastName(e.target.value)}/>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField id="password" variant="outlined" className="password-text" type='password' label='Password' placeholder='Password' 
+                      required fullWidth onChange = {e => setPassword(e.target.value)}/>
                     </Grid>
                     <Grid item xs={12}>
                       <TextField id="password" variant="outlined" className="confirm-text" type='password' label='Confirm Password' placeholder='Confirm Password' required fullWidth/>
@@ -110,16 +151,16 @@ function RegisterPage() {
                         control={<Checkbox value="allowExtraEmails" color="primary" />}
                         label="Guest login"/>
                     </Grid> */}
-                  </Grid>
-                </form>
-                <Link to="/frontlogin" style={{ textDecoration: 'none' }}>
-                    <Button type='submit' variant="contained" color="primary" className={classes.submit} fullWidth>
+                      <Link to="/frontlogin" style={{ textDecoration: 'none' }}>
+                      <Button type='submit' variant="contained" color="primary" className={classes.submit} fullWidth onClick={submit}>
                         Register
-                    </Button>
-                </Link>
-                <Typography align="right"> Already registered?
+                      </Button>
+                      </Link>
+                    </Grid>
+                </form>
+                <Typography align="right"> Already registered ?
                   <a href='/loginpage'>
-                    Login
+                    Click here to login
                   </a>
                 </Typography>
             </Paper>
