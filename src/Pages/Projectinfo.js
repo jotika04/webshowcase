@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
@@ -12,6 +12,8 @@ import Contactinfo from "./Projectcomp/Contactinfo";
 import Slider from "./Projectcomp/Slider";
 import MusicCard from "./Projectcomp/MusicCard";
 import {db} from "./Projectcomp/db";
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
 
 
 // import Footer from './Footer';
@@ -54,7 +56,7 @@ const Contactinfos = {
 
 
 
-export default function Projectinfo() {
+export default function Projectinfo({data}) {
   const classes = useStyles();
 
   return (
@@ -62,10 +64,13 @@ export default function Projectinfo() {
       <CssBaseline />
     <main>
         <Container maxWidth="lg" >
-          
+          <Typography variant="h4" gutterBottom>
+            {data.Project_name}
+          </Typography>
+          <Divider />
           <Slider/>
-          <Grid container spacing={6} className={classes.mainGrid}>
-            <ProjectDesc/>
+          <Grid container spacing={6} className={classes.mainGrid} >
+            <ProjectDesc Data={data}/>
             <Contactinfo
               title={Contactinfos.title}
               description={Contactinfos.description}

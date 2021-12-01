@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
   
 }));
 
-export default function ProjectDescription() {
+export default function ProjectDescription({Data}) {
   const classes = useStyles();
   // const { title } = props;
   const url = 'https://ghibliapi.herokuapp.com/films'
@@ -92,13 +92,14 @@ export default function ProjectDescription() {
       <Divider />
       {/* {posts} */}
       <Typography justify="center" gutterBottom>
-        Definition and synonyms of of any description from the online English dictionary from Macmillan Education.
+        {/* Definition and synonyms of of any description from the online English dictionary from Macmillan Education.
 
         This is the British English definition of of any description.View American English definition of of any description.
 
-        Change your default dictionary to American English.
-        
+        Change your default dictionary to American English. */}
+        {Data.Description}
       </Typography>
+      
       </div>
     </Grid>
   );

@@ -1,6 +1,6 @@
 import React, {Fragment, useState, useContext} from 'react'
 // import backgroundlogo from 'D:/webshowcase-frontend-combined/src/image/Binuslogo.png';
-import logo from 'D:/webshowcase-frontend-combined/src/image/Binuslogo.png'
+import logo from 'E:/React Projects/my-app/src/image/Binuslogo.png'
 // import './App.css';
 import './LoginPage.css';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';

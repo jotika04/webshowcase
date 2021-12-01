@@ -1,4 +1,5 @@
-import React, {useState, useEffect} from 'react'
+import React, {useRef,useState, useEffect} from 'react'
+import ReactDOM from 'react-dom'
 import axios from 'axios'
 import clsx from 'clsx';
 import { CardContent, CardMedia, CssBaseline, Grid,  Typography, Container, Card, 
@@ -14,14 +15,18 @@ import { CardContent, CardMedia, CssBaseline, Grid,  Typography, Container, Card
   import NotificationsIcon from '@material-ui/icons/Notifications';
   import CommentIcon from '@material-ui/icons/Comment';
   import Sidebar from './sidebartest2';
-  import Pagination from './Pagination';
+  import Pagination from '@mui/material/Pagination';
   import Button from '@material-ui/core/Button'
   import Dialog from "@material-ui/core/Dialog"
   import Projectinfo from "../Projectinfo";
   import Datepicker from 'react-datepicker'
-  import 'react-datepicker/dist/react-datepicker.css'
-  import RenderSearchResults from './RenderSearchResults';
+  import TextField from '@material-ui/core/TextField';
+  import Stack from '@mui/material/Stack';
 
+  // import Stack from '@material-ui/material/Stack';
+  // import 'react-datepicker/dist/react-datepicker.css'
+
+  
 
 
 
@@ -165,6 +170,21 @@ const useStyles = makeStyles((theme) => ({
   link: {
     margin: theme.spacing(1, 1.5),
   },
+  search: {
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: fade(theme.palette.common.white, 0.15),
+    '&:hover': {
+      backgroundColor: fade(theme.palette.common.white, 0.25),
+    },
+    marginRight: theme.spacing(2),
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(3),
+      width: 'auto',
+    },
+  },
   toolbar: {
     flexWrap: 'wrap',
   },
@@ -253,19 +273,116 @@ const useStyles = makeStyles((theme) => ({
 // class RenderSerach extends React.component(){
 
  
-
+  class Search extends React.Component{
+    
+    constructor( props ){
+        super( props );
+    
+        // this.state = {
+        //     vsort: this.props.data.valuesort
+        // }
+      
+        this.cancel = '';
+  
+    
+    }
+      
+    fetchSearchResults = ( query ) => {
+        // var searchUrl = 'http://localhost:3002/projectName/'+ query;
+        // const vsort = this.props.data.valuesort
+        const dvalue = this.props.valuesort
+        // console.log(vsort);
+        console.log(dvalue);
+        const Page = this.props.page
+        console.log(Page);
+  
+        var searchUrl = 'http://localhost:3003/DummyDatas?q='+ query + '&_page=' + Page;
+        console.log(searchUrl);
+        if( this.cancel){
+            this.cancel.cancel();
+        }
+        this.cancel = axios.CancelToken.source();
+    
+        axios.get( `http://localhost:3003/DummyDatas?q=${query}&_page=${Page}&_limit=8 `, {
+            cancelToken: this.cancel.token
+        })
+            .then( res =>{
+              console.log(res);
+                const resultNotFoundMsg = ! res.data.length
+                                        ? 'Search Not Found': '';
+           
+                this.props.setSearchResult({
+                    results: res.data,
+                    message: resultNotFoundMsg,
+                    loading: false,
+                })
+            })
+            .catch(error => {
+                if (axios.isCancel(error) || error){
+                    this.props.setSearchResult({
+                        loading:false,
+                        message: 'Failed to fetch the data'
+                    })
+                }
+            })
+    };
+    
+    handleOnInputChange = (event) => {
+        
+        const query = event.target.value;
+        console.log(query)
+          if ( ! query ){
+            this.props.setSearchResult( { query:query, results: [], loading: false, message: '' })
+          } else {
+            
+              this.props.setSearchResult( { query:query,results:[], loading: true, message:'' } );
+            
+          }
+          
+    };
+    
+    handleKeyDown = (e) => {
+      const Page = this.props.page
+     
+      if (e.key === 'Enter' ) {
+        this.fetchSearchResults(e.target.value)
+      }
+    
+      
+    };
+    
+  render() {
+    // const { query } = this.props.setSearchResult({query: event.target.value});
+    // console.warn( this.state );
+    
+    return (
+      
+        <div>
+       
+        <InputBase
+          type="text"
+          name="query"
+          placeholder="Search…"
+          onChange={this.handleOnInputChange}
+          onKeyDown={this.handleKeyDown}
+          inputProps={{ 'aria-label': 'search' }}
+        />
+      </div>
+    )
+  }
+    
+    }
   
   export default function Dashboard() {
-    const [searchresult, setSearchResult] = useState({query: '', results:[], loading: false, message: '' });
     // console.log(searchresult);
-
+    
     // const result = searchresult.results;
     // console.log(result)
-
+    
     // const results = Object.keys(result)
-
-   
-
+    
+    
+    
     const classes = useStyles();
     // const [searchTerm, setSearchTerm] = useState("");
     
@@ -274,29 +391,29 @@ const useStyles = makeStyles((theme) => ({
     const handleExpandClick = () => {
       setExpanded(!expanded);
     };
-
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
-
-  const handleMobileMenuOpen = (event) => {
-    setMobileMoreAnchorEl(event.currentTarget);
-  };
-
-  const menuId = 'primary-search-account-menu';
-
-  const mobileMenuId = 'primary-search-account-menu-mobile';
-  const renderMobileMenu = (
-    <Menu
+    
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+    
+    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+    
+    const handleProfileMenuOpen = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+    
+    const handleMobileMenuClose = () => {
+      setMobileMoreAnchorEl(null);
+    };
+    
+    const handleMobileMenuOpen = (event) => {
+      setMobileMoreAnchorEl(event.currentTarget);
+    };
+    
+    const menuId = 'primary-search-account-menu';
+    
+    const mobileMenuId = 'primary-search-account-menu-mobile';
+    const renderMobileMenu = (
+      <Menu
       anchorEl={mobileMoreAnchorEl}
       anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       id={mobileMenuId}
@@ -304,7 +421,7 @@ const useStyles = makeStyles((theme) => ({
       transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
-    >
+      >
       <MenuItem>
         <IconButton aria-label="show 4 new mails" color="inherit">
           <Badge badgeContent={4} color="secondary">
@@ -327,7 +444,7 @@ const useStyles = makeStyles((theme) => ({
           aria-controls="primary-search-account-menu"
           aria-haspopup="true"
           color="inherit"
-        >
+          >
           <AccountCircle />
         </IconButton>
         <p>
@@ -340,93 +457,158 @@ const useStyles = makeStyles((theme) => ({
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [openOverlay, setOpenOverlay] = React.useState(false);
-
+  
   const handleDrawerOpen = () => {
     setOpen(true);
   };
-
+  
   const handleDrawerClose = () => {
     setOpen(false);
   };
-
+  
   const handleClose = () => {
     setOpen(false);
+    setId(null)
   };
-
+  
   const handleOpen = () => {
     setOpen(true);
   };
-
+  
   const handleToggle = () => {
     setOpen(!open);
   };
   
-  const [postMessage, setPosts] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postsperPage, setPostsPerPage] = useState(8);
-
-  const url = 'http://localhost:3003/DummyDatas'
-  
-  const [data, setData] = useState([])
 
   
   
+  const [ValueSort, setValueSort] = useState("");
+  const [DateValue, setDateValue] = useState("");
+  const [Page, setPage] = useState(1);
+  const [Id, setId] = useState(5);
+  // console.log(Id);
+
+
+  const handleChange2 = (event) => {
+    const RenderingDate = event.target.value;
+    if ( ! RenderingDate){
+      setDateValue(null)
+    }else{
+      setDateValue('Date='+ event.target.value);
+    }
+  };
+  const handleChange = (event) => {
+    setValueSort(event.target.value);
+    // console.log(event.target.value);
+  };
+
+
+  const handleChange3 = (event, value) => {
+    
+    setPage(value);
+    
+    
+  };
+  const url2 = 'http://localhost:3003/DummyDatas?';
+  // const url = 'http://localhost:3003/DummyDatas?' + ValueSort + '&' +  DateValue + '&_page=' + Page + '&_limit=8';
+  // console.log(url2);
+  const [data, setPost] = useState([])
+  const [data2, setPost2] = useState([])
+  // console.log(data);
+  // console.log(data2);
+  // console.log(DateValue);
+  // console.log(ValueSort);
+
+  const [searchresult, setSearchResult] = useState({query: '', results:[], loading: false, message: ''});
+  // console.log(searchresult);
+  
+  // useEffect(() => {
+    //   console.log(url)
+    // })
+  
+    useEffect(() => {
+      axios.get(`http://localhost:3003/DummyDatas?${Id}&${ValueSort}&${DateValue}&_page=${Page}&_limit=8`)
+        .then(res => {
+          // console.log(res)
+          setPost(res.data);})
+        .catch(function (thrown) {
+          if (axios.isCancel(thrown)) {
+            console.log('Request canceled', thrown.message);
+          } else {
+            // handle error
+            console.log("error")
+          }
+
+        });
+      
+    
+  },[ValueSort,DateValue,Page,Id])
+
   useEffect(() => {
-    axios.get(url).then(json => setData(json.data))
+    axios.get(url2).then(json => setPost2(json.data))
   }, [])
 
 
-  const indexOfLastPost = currentPage * postsperPage;
-  const indexOfFirstPost = indexOfLastPost - postsperPage;
-  const currentPosts = data.slice(indexOfFirstPost, indexOfLastPost)
 
-  const Paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-  const [selectedDate, setSelectedDate] = useState(null);
-
- 
+ const pagination = data2.length/8 
   
   return (
     <React.Fragment>
       <CssBaseline />
-      <Sidebar setSearchResult= {setSearchResult}
-                data={searchresult}/>
+      <Sidebar/>
       
     
       <main>
         {/* The Projects */}
         <div className={classes.heroContent} >
+          
+            <div className={classes.search} align="center">
+                <div className={classes.searchIcon} align="center">
+                </div>
+                <Search setSearchResult= {setSearchResult}
+                    data={searchresult}
+                    valuesort = {DateValue}
+                    page={Page}
+                    />
+              </div>
           <Container maxWidth="sm" >
             <Typography component="h1" variant="h4" align="center" color="inherit" gutterBottom>
               Recommendation
             </Typography>
           </Container>
           <Container maxWidth="lg" align="center">
-          <Datepicker 
-            selected={selectedDate} 
-            onChange={date => setSelectedDate(date)} 
-            maxDate = {new Date()}
-            isClearable
-            showYearDropdown
-            scrollableMonthYearDropdown
-            className={classes.formControl}
+          <form noValidate onChange={handleChange2} >
+            <TextField
+              id="date"
+              label="Date"
+              type="date"
+              defaultValue={DateValue}
+              sx={{ width: 220 }}
+              InputLabelProps={{
+                shrink: true,
+              }}
             />
+          </form>
           <FormControl className={classes.formControl}>
             <InputLabel htmlFor="grouped-select">Sorting</InputLabel>
-            <Select defaultValue="" id="grouped-select">
-              <MenuItem value="">
+            <Select 
+            id="grouped-select" 
+            value={ValueSort} 
+            onChange={handleChange}
+            >
+              <MenuItem value= "">
                 <em>None</em>
               </MenuItem>
-              <ListSubheader>Sort 1</ListSubheader>
-              <MenuItem value='Sort 1.1'>Sort 1.1</MenuItem>
-              <MenuItem value='Sort 1.2'>Sort 1.2</MenuItem>
-              <ListSubheader>Sort 2</ListSubheader>
-              <MenuItem value='Sort 2.1'>Sort 2.1</MenuItem>
-              <MenuItem value='Sort 2.2'>Sort 2.2</MenuItem>
+              <ListSubheader>course</ListSubheader>
+              <MenuItem value='course=AI'>AI</MenuItem>
+              <MenuItem value='course=Web Development'>Web Development</MenuItem>
+              <MenuItem value='course=App Development'>App Development</MenuItem>
+              <MenuItem value='course=Software Engineering'>Software Engineering</MenuItem>
+              
             </Select>
           </FormControl>
           
+                {searchresult.message && <p className="message"> {searchresult.message}</p>}
           </Container>
         </div>
        
@@ -434,8 +616,11 @@ const useStyles = makeStyles((theme) => ({
           
                 <Container className={classes.cardGrid} maxWidth="lg">
                 <Grid container spacing={4} justify="space-evenly">
+
+{/* --------------------------------------------------------------------------------------------------------------------- */}
+
                 {searchresult.results.map((data) => (
-              <Grid item key={data.project_name} xs={8} sm={6} md={4} lg={3} alignContent="center">
+              <Grid item key={data.id} xs={8} sm={6} md={4} lg={3} alignContent="center">
                 <Card className={classes.root}>
       <CardHeader
         avatar={
@@ -448,25 +633,27 @@ const useStyles = makeStyles((theme) => ({
             <MoreVertIcon />
           </IconButton>
         }
-        title={data.project_name}
+        title={data.Project_name}
       />
 
 
 
-      
+      <div onClick={() => setId('id='+ data.id)} >
+      <CardActionArea type="button" onClick={handleOpen}>
       <CardMedia
-        className={classes.cardMedia}
-        image="https://source.unsplash.com/random"
-        title="Image title"
+      className={classes.cardMedia}
+      image="https://source.unsplash.com/random"
+      title="Image "
       />
-     
+      </CardActionArea>
+      </div>
 
 
 
       <CardContent className={classes.cardControl} >
         <Typography variant="body2" color="textSecondary" component="p">
-        <p>{data.description.length > 75 ?
-              `${data.description.substring(0,75)}...` : data.description}</p>
+        <p>{data.Description.length > 75 ?
+              `${data.Description.substring(0,75)}...` : data.Description}</p>
         </Typography>
       </CardContent>
 
@@ -488,20 +675,36 @@ const useStyles = makeStyles((theme) => ({
                 <CommentIcon /> 
             </IconButton>
         </Button>
+        {/* Overlay */}
+        <Dialog
+          fullWidth={true}
+          maxWidth="md"
+          className={classes.backdrop}
+          open={open}
+          onClose={handleClose}
+        >
+                      
+          <Grid>
+            <Card className={classes.testroot}>
+              <Projectinfo data={data}/>
+            </Card>
+          </Grid>
+                      
+        </Dialog> 
     </Card>
   </Grid>
             ))}
             
-            {searchresult.message && <p className="message"> {searchresult.message}</p>}
-                
-                {currentPosts.filter((data) => {
+            
+ {/* ------------------------------------------------------------------------------------------------------------------------------                */}
+                {data.filter((data) => {
               if (searchresult.results == ""){
                 return data
               } else {
                 return null
               }
             }).map((data) => (
-                  <Grid item key={data.Project_name} xs={8} sm={6} md={4} lg={3} alignContent="center">
+                  <Grid item key={data.id} xs={8} sm={6} md={4} lg={3} alignContent="center">
                   
                   <Card className={classes.root}>
                   <CardHeader
@@ -518,15 +721,16 @@ const useStyles = makeStyles((theme) => ({
                   title={data.Project_name}
                   />
                   
-                  <CardActionArea type="button" onClick={handleOpen}>
-                  
+                  <div onClick={() => setId('id='+ data.id)} >
+                  <CardActionArea type="button" onClick={handleOpen}  >
                   <CardMedia
                   className={classes.cardMedia}
                   image="https://source.unsplash.com/random"
                   title="Image "
                   />
                   </CardActionArea>
-                  
+                  </div>
+
                   <CardContent className={classes.cardControl} >
                   <Typography variant="body2" color="textSecondary" component="p">
                   <p>{data.Description.length > 75 ?
@@ -541,7 +745,7 @@ const useStyles = makeStyles((theme) => ({
                     </IconButton>
                   
                     
-                    <Button type="button" onClick={handleOpen}>
+                    <Button type="button" onClick={handleOpen} >
                     <IconButton
                     className={clsx(classes.expand, {
                       [classes.expandOpen]: expanded,
@@ -553,17 +757,35 @@ const useStyles = makeStyles((theme) => ({
                     <CommentIcon /> 
                     </IconButton>
                     </Button>
+                    {/* Overlay */}
+                    <Dialog
+                      fullWidth={true}
+                      maxWidth="md"
+                      className={classes.backdrop}
+                      open={open}
+                      onClose={handleClose}
+                    >
+                                  
+                      <Grid>
+                        <Card className={classes.testroot}>
+                          <Projectinfo data={data}/>
+                        </Card>
+                      </Grid>
+                                  
+                    </Dialog>  
                     </Card>
                     </Grid>
+                      
                     ))}
                     </Grid>
                     </Container>
-                    <Container>
-                    <Pagination postsPerPage = {postsperPage} totalPosts = {data.length} paginate={Paginate} />
+                    <Container align="center">
+                    {/* <Pagination postsPerPage = {postsperPage} totalPosts = {data.length} paginate={Paginate} /> */}
+                    <Pagination count={Math.ceil(pagination)} page={Page} onChange={handleChange3} size="large" align="center"/> 
                     </Container>
                     <Copyright/>
                     </main>
-      <Dialog
+      {/* <Dialog
             fullWidth={true}
             maxWidth="md"
             className={classes.backdrop}
@@ -573,11 +795,11 @@ const useStyles = makeStyles((theme) => ({
         
           <Grid>
             <Card className={classes.testroot}>
-                <Projectinfo/>
+                <Projectinfo />
             </Card>
           </Grid>
         
-      </Dialog> 
+      </Dialog>  */}
     </React.Fragment>
   );
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useReducer, createContext} from 'react';
 import Dashboard from './Pages/Dashboard';
 import DashboardLecturer from './Pages/DashboardLecturer';
 import ProfileStudent from './Pages/ProfileStudent';
@@ -29,6 +29,46 @@ import Sidebartest2 from './Pages/components/sidebartest2';
 import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 // import Frontlogin from "./components/FrontLogin";
+
+
+export const AuthContext = createContext()
+
+const initialState = {
+  isAuthenticated: false,
+  userFirstName : null,
+  access_token : null,
+  userID : null
+}
+
+const reducer = (state, action) => {
+  switch (action.type){
+    case "LOGIN":
+      localStorage.setItem("userFirstName",JSON.stringify(action.payload.userFirstName))
+      localStorage.setItem("access_token",JSON.stringify(action.payload.access_token))
+      localStorage.setItem("userID",JSON.stringify(action.payload.userID))
+      // localStorage.setItem("isAuthenticatedS",true)
+    return {
+      ...state,
+      isAuthenticated: true,
+      // isAuthenticatedS: action.payload.isAuthenticated
+      userFirstName: action.payload.userFirstName,
+      access_token: action.payload.access_token,
+      userID: action.payload.userID
+    }
+
+    case "LOGOUT":
+      localStorage.clear()
+      return{
+      ...state,
+      isAuthenticated: false,
+      userFirstName: null,
+      userID: null
+    }
+  default:
+    return state
+  }
+}
+
 
 
 

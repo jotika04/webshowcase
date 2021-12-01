@@ -23,9 +23,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import HistoryIcon from '@material-ui/icons/History';
 // import Searchlive from './Search';
 import axios from 'axios'
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import CommentIcon from '@material-ui/icons/Comment';
+
 
 
 
@@ -204,94 +202,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-class Search extends React.Component{
-    
-  constructor( props ){
-      super( props );
-  
-      // this.state = {
-      //     query: '',
-      //     results: {},
-      //     loading: false,
-      //     message: ''
-      // }
-  
-      this.cancel = '';
 
-  
-  }
-    
-  fetchSearchResults = ( query ) => {
-      var searchUrl = 'http://localhost:3002/projectName/'+ query;
-      // console.log(searchUrl);
-      if( this.cancel){
-          this.cancel.cancel();
-      }
-      this.cancel = axios.CancelToken.source();
-  
-      axios.get( searchUrl, {
-          cancelToken: this.cancel.token
-      })
-          .then( res =>{
-            console.log(res);
-              const resultNotFoundMsg = ! res.data.length
-                                      ? 'Search Not Found': '';
-              this.props.setSearchResult({
-                  results: res.data,
-                  message: resultNotFoundMsg,
-                  loading: false
-              })
-          })
-          .catch(error => {
-              if (axios.isCancel(error) || error){
-                  this.props.setSearchResult({
-                      loading:false,
-                      message: 'Failed to fetch the data'
-                  })
-              }
-          })
-  };
-  
-  handleOnInputChange = (event) => {
-      
-      const query = event.target.value;
-      console.log(query)
-        if ( ! query ){
-          this.props.setSearchResult( { query:query, results: [], loading: false, message: '' })
-        } else {
-          
-            this.props.setSearchResult( { query:query,results:[], loading: true, message:''} );
-          
-        }
-        
-  };
-  
-  handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      this.fetchSearchResults(e.target.value)
-    }
-  };
-  
-render() {
-  // const { query } = this.props.setSearchResult({query: event.target.value});
-  // console.warn( this.state );
-  return (
-    
-      <div>
-     
-      <InputBase
-        type="text"
-        name="query"
-        placeholder="Search…"
-        onChange={this.handleOnInputChange}
-        onKeyDown={this.handleKeyDown}
-        inputProps={{ 'aria-label': 'search' }}
-      />
-    </div>
-  )
-}
-  
-  }
     
 
       export default function Sidebar(props) {
@@ -402,12 +313,11 @@ render() {
           <img src={logo} className="App-logo" alt="logo" width= '100px'/>
           </Link>
           
-          <div className={classes.search}>
+          {/* <div className={classes.search}>
             <div className={classes.searchIcon}>
-              {/* <SearchIcon /> */}
             </div>
             <Search setSearchResult= {props.setSearchResult}/>
-          </div>
+          </div> */}
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <IconButton aria-label="show 17 new notifications" color="inherit">
