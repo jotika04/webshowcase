@@ -4,6 +4,6 @@ from webapp import views
 
 urlpatterns = [
     # path('admin', admin.site.urls),
-    path('webshowcase/', views.webapp_allproject),
-    path('webshowcase/counter/',views.count_project),
+    path('webshowcase/',views.project_pages),
+    path('webshowcase/search/', views.webapp_allproject),
 ]
